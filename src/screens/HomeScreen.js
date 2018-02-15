@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import _ from 'lodash';
+import styled from 'styled-components';
 import FeedItem from '../components/FeedItem';
 import FeedSeparator from '../components/FeedSeparator';
 import LoadingScreen from '../components/LoadingScreen';
 import Loading from '../components/Loading';
 import { getFeed, getMoreFeed } from '../feed/feedActions';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+`;
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -74,7 +73,7 @@ class HomeScreen extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
+      <Container>
         <FlatList
           removeClippedSubviews
           data={posts}
@@ -84,7 +83,7 @@ class HomeScreen extends React.Component {
           ItemSeparatorComponent={FeedSeparator}
           ListFooterComponent={this.renderLoading()}
         />
-      </View>
+      </Container>
     );
   }
 }

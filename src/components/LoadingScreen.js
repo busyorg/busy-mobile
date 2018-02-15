@@ -1,17 +1,16 @@
 import React from 'react';
-import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import styled from 'styled-components';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+`;
 
 const LoadingScreen = () => (
-  <View style={styles.container}>
+  <Container>
     <ActivityIndicator size="large" />
-  </View>
+  </Container>
 );
 
 export default LoadingScreen;

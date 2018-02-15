@@ -1,14 +1,9 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import styled from 'styled-components';
 
-const styles = StyleSheet.create({
-  separator: {
-    backgroundColor: '#E0E0E0',
-    width: '100%',
-    height: 1,
-  },
-});
-
-const FeedSeparator = () => <View style={styles.separator} />;
+const FeedSeparator = styled.View`
+  background-color: #e0e0e0;
+  width: 100%;
+  height: 1px;
+`;
 
 export default FeedSeparator;

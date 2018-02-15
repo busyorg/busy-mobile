@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { AppLoading, Asset, Font } from 'expo';
+import styled from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import store from './store';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  background-color: #fff;
+`;
 
 export default class App extends React.Component {
   static propTypes = { skipLoadingScreen: PropTypes.bool };
@@ -58,9 +56,9 @@ export default class App extends React.Component {
     }
     return (
       <Provider store={store}>
-        <View style={styles.container}>
+        <Container>
           <RootNavigation />
-        </View>
+        </Container>
       </Provider>
     );
   }
