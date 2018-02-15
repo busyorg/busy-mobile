@@ -13,12 +13,16 @@
     "@expo/samples": "2.1.1",
     "@expo/vector-icons": "^6.2.2",
     "expo": "^25.0.0",
+    "lightrpc": "0.0.5",
+    "lodash": "^4.17.5",
+    "moment": "^2.20.1",
     "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
     "react-navigation": "^1.0.0-beta.27",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
     "redux-saga": "^0.16.0"
   },
   "devDependencies": {

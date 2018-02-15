@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
+import { StyleSheet, View, FlatList } from 'react-native';
+import _ from 'lodash';
+import FeedItem from '../components/FeedItem';
+import FeedSeparator from '../components/FeedSeparator';
+import LoadingScreen from '../components/LoadingScreen';
+import Loading from '../components/Loading';
+import { getFeed, getMoreFeed } from '../feed/feedActions';
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flex: 1,
-    justifyContent: 'space-between',
-    padding: 8,
-  },
-  title: {
-    fontSize: 40,
-    textAlign: 'center',
-  },
-  button: {
-    marginBottom: 8,
   },
 });
 
@@ -25,50 +21,78 @@ class HomeScreen extends React.Component {
   };
 
   static propTypes = {
-    value: PropTypes.number,
-    increase: PropTypes.func,
-    increaseAsync: PropTypes.func,
+    posts: PropTypes.arrayOf(PropTypes.shape()),
+    loading: PropTypes.bool,
+    getFeed: PropTypes.func,
+    getMoreFeed: PropTypes.func,
   };
 
   static defaultProps = {
-    value: 0,
-    increase: () => {},
-    increaseAsync: () => {},
+    posts: [],
+    loading: false,
+    getFeed: () => {},
+    getMoreFeed: () => {},
   };
 
-  onPress = () => {
-    this.props.increase();
+  componentDidMount() {
+    this.props.getFeed();
+  }
+
+  handleEndReached = () => {
+    const { posts, loading } = this.props;
+    if (loading) return;
+    const lastPost = posts[posts.length - 1];
+    this.props.getMoreFeed({ startAuthor: lastPost.author, startPermlink: lastPost.permlink });
   };
 
-  onPressAsync = () => {
-    this.props.increaseAsync();
+  renderItem = ({ item }) => {
+    const metadata = _.attempt(JSON.parse, item.json_metadata);
+
+    let image = null;
+    if (!_.isError(metadata)) {
+      image = _.get(metadata, 'image[0]', null);
+    }
+
+    return (
+      <FeedItem author={item.author} title={item.title} created={item.created} image={image} />
+    );
+  };
+
+  renderLoading = () => {
+    const { loading } = this.props;
+
+    if (loading) return <Loading />;
+
+    return null;
   };
 
   render() {
-    const { value } = this.props;
+    const { posts, loading } = this.props;
+
+    if (loading && posts.length === 0) {
+      return <LoadingScreen />;
+    }
 
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>{value}</Text>
-        </View>
-        <View>
-          <View style={styles.button}>
-            <Button title="Increase" onPress={this.onPress} />
-          </View>
-          <Button title="Increase with delay" onPress={this.onPressAsync} />
-        </View>
+        <FlatList
+          removeClippedSubviews
+          data={posts}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+          onEndReached={this.handleEndReached}
+          ItemSeparatorComponent={FeedSeparator}
+          ListFooterComponent={this.renderLoading()}
+        />
       </View>
     );
   }
 }
 
 export default connect(
-  ({ value }) => ({
-    value,
+  ({ posts, loading }) => ({
+    posts,
+    loading,
   }),
-  dispatch => ({
-    increase: () => dispatch({ type: 'INCREMENT' }),
-    increaseAsync: () => dispatch({ type: 'INCREMENT_ASYNC' }),
-  }),
+  { getFeed, getMoreFeed },
 )(HomeScreen);
