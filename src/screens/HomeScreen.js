@@ -16,7 +16,7 @@ const Container = styled.View`
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Home',
+    title: 'Busy',
   };
 
   static propTypes = {
