@@ -20,6 +20,7 @@ class HomeScreen extends React.Component {
   };
 
   static propTypes = {
+    navigation: PropTypes.shape().isRequired,
     posts: PropTypes.arrayOf(PropTypes.shape()),
     loading: PropTypes.bool,
     getFeed: PropTypes.func,
@@ -44,6 +45,10 @@ class HomeScreen extends React.Component {
     this.props.getMoreFeed({ startAuthor: lastPost.author, startPermlink: lastPost.permlink });
   };
 
+  handleNavigate = id => {
+    this.props.navigation.navigate('Post', { id });
+  };
+
   renderItem = ({ item }) => {
     const metadata = _.attempt(JSON.parse, item.json_metadata);
 
@@ -53,7 +58,14 @@ class HomeScreen extends React.Component {
     }
 
     return (
-      <FeedItem author={item.author} title={item.title} created={item.created} image={image} />
+      <FeedItem
+        id={item.id}
+        author={item.author}
+        title={item.title}
+        created={item.created}
+        image={image}
+        onNavigate={this.handleNavigate}
+      />
     );
   };
 

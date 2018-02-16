@@ -1,11 +1,15 @@
 import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
+import PostScreen from '../screens/PostScreen';
 
 const RootStackNavigator = StackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
+    },
+    Post: {
+      screen: PostScreen,
     },
   },
   {

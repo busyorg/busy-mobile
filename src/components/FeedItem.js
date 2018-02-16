@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dimensions, Text } from 'react-native';
+import { Dimensions, TouchableNativeFeedback, Text } from 'react-native';
 import styled, { css } from 'styled-components';
 import moment from 'moment';
 
@@ -55,10 +55,12 @@ const Body = styled.Text`
 
 export default class FeedItem extends React.PureComponent {
   static propTypes = {
+    id: PropTypes.number.isRequired,
     author: PropTypes.string,
     title: PropTypes.string,
     created: PropTypes.string,
     image: PropTypes.string,
+    onNavigate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -66,29 +68,37 @@ export default class FeedItem extends React.PureComponent {
     title: '',
     created: '',
     image: null,
+    onNavigate: () => {},
+  };
+
+  handleTitlePress = () => {
+    const { id } = this.props;
+    this.props.onNavigate(id);
   };
 
   render() {
     const { author, title, created, image } = this.props;
 
     return (
-      <Container>
-        <Header>
-          <Avatar source={{ uri: `https://steemitimages.com/u/${author}/avatar` }} />
-          <HeaderText>
-            <Text>{author}</Text>
-            <Date>{moment(created).fromNow()}</Date>
-          </HeaderText>
-        </Header>
-        {image && <PostImage source={{ uri: image }} />}
-        <Title narrow={!image} numberOfLines={3}>
-          {title}
-        </Title>
-        <Body>
-          These blocks can be organized to promote different types of content. For example, numbers
-          may be emphasized by increasing their typographic scale.
-        </Body>
-      </Container>
+      <TouchableNativeFeedback onPress={this.handleTitlePress}>
+        <Container>
+          <Header>
+            <Avatar source={{ uri: `https://steemitimages.com/u/${author}/avatar` }} />
+            <HeaderText>
+              <Text>{author}</Text>
+              <Date>{moment(created).fromNow()}</Date>
+            </HeaderText>
+          </Header>
+          {image && <PostImage source={{ uri: image }} />}
+          <Title narrow={!image} numberOfLines={3}>
+            {title}
+          </Title>
+          <Body>
+            These blocks can be organized to promote different types of content. For example,
+            numbers may be emphasized by increasing their typographic scale.
+          </Body>
+        </Container>
+      </TouchableNativeFeedback>
     );
   }
 }
