@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FlatList } from 'react-native';
 import _ from 'lodash';
 import styled from 'styled-components';
-import FeedItem from '../components/FeedItem';
+import PostFeed from '../components/PostFeed';
 import FeedSeparator from '../components/FeedSeparator';
 import LoadingScreen from '../components/LoadingScreen';
 import Loading from '../components/Loading';
@@ -58,7 +58,7 @@ class HomeScreen extends React.Component {
     }
 
     return (
-      <FeedItem
+      <PostFeed
         id={item.id}
         author={item.author}
         title={item.title}
