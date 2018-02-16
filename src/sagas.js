@@ -1,42 +1,39 @@
-import { put, takeEvery, all, call, select } from 'redux-saga/effects';
+import { put, take, all, call } from 'redux-saga/effects';
 import steem from './services/steem';
 import { GET_FEED, GET_MORE_FEED } from './ducks/feed';
-import { getLastPostId, getPostById } from './ducks';
 
-export function* getFeed() {
-  yield put({ type: GET_FEED.START });
-  const result = yield call(steem.sendAsync, 'get_discussions_by_trending', [
-    {
-      limit: 10,
-    },
-  ]);
-  yield put({ type: GET_FEED.SUCCESS, payload: result });
-}
+function* feedFlow() {
+  while (true) {
+    yield take(GET_FEED.REQUEST);
+    yield put({ type: GET_FEED.START });
 
-export function* getMoreFeed() {
-  yield put({ type: GET_MORE_FEED.START });
+    const result = yield call(steem.sendAsync, 'get_discussions_by_trending', [
+      {
+        limit: 10,
+      },
+    ]);
 
-  const lastPostId = yield select(getLastPostId);
-  const lastPost = yield select(getPostById, lastPostId);
+    yield put({ type: GET_FEED.SUCCESS, payload: result });
+    let lastPost = result[result.length - 1];
 
-  const result = yield call(steem.sendAsync, 'get_discussions_by_trending', [
-    {
-      limit: 11,
-      start_author: lastPost.author,
-      start_permlink: lastPost.permlink,
-    },
-  ]);
-  yield put({ type: GET_MORE_FEED.SUCCESS, payload: result.slice(1) });
-}
+    while (true) {
+      yield take(GET_MORE_FEED.REQUEST);
+      yield put({ type: GET_MORE_FEED.START });
 
-function* watchGetFeed() {
-  yield takeEvery(GET_FEED.REQUEST, getFeed);
-}
+      const moreResult = yield call(steem.sendAsync, 'get_discussions_by_trending', [
+        {
+          limit: 11,
+          start_author: lastPost.author,
+          start_permlink: lastPost.permlink,
+        },
+      ]);
 
-function* watchGetMoreFeed() {
-  yield takeEvery(GET_MORE_FEED.REQUEST, getMoreFeed);
+      yield put({ type: GET_MORE_FEED.SUCCESS, payload: moreResult.slice(1) });
+      lastPost = moreResult[moreResult.length - 1];
+    }
+  }
 }
 
 export default function* rootSaga() {
-  yield all([watchGetFeed(), watchGetMoreFeed()]);
+  yield all([feedFlow()]);
 }

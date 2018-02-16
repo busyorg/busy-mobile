@@ -12,5 +12,6 @@ module.exports = {
     'react/jsx-filename-extension': OFF,
     'global-require': OFF,
     'no-console': OFF,
+    'no-constant-condition': OFF,
   },
 };
