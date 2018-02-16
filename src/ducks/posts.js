@@ -18,3 +18,5 @@ export default function(state = {}, action) {
       return state;
   }
 }
+
+export const getPostById = (state, id) => state[id];

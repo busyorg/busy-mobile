@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FlatList } from 'react-native';
-import _ from 'lodash';
 import styled from 'styled-components';
-import PostFeed from '../components/PostFeed';
+import PostFeedContainer from '../feed/PostFeedContainer';
 import FeedSeparator from '../components/FeedSeparator';
 import LoadingScreen from '../components/LoadingScreen';
 import Loading from '../components/Loading';
@@ -21,14 +20,14 @@ class HomeScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.shape().isRequired,
-    posts: PropTypes.arrayOf(PropTypes.shape()),
+    list: PropTypes.arrayOf(PropTypes.number),
     loading: PropTypes.bool,
     getFeed: PropTypes.func,
     getMoreFeed: PropTypes.func,
   };
 
   static defaultProps = {
-    posts: [],
+    list: [],
     loading: false,
     getFeed: () => {},
     getMoreFeed: () => {},
@@ -39,35 +38,16 @@ class HomeScreen extends React.Component {
   }
 
   handleEndReached = () => {
-    const { posts, loading } = this.props;
+    const { loading } = this.props;
     if (loading) return;
-    const lastPost = posts[posts.length - 1];
-    this.props.getMoreFeed({ startAuthor: lastPost.author, startPermlink: lastPost.permlink });
+    this.props.getMoreFeed();
   };
 
   handleNavigate = id => {
     this.props.navigation.navigate('Post', { id });
   };
 
-  renderItem = ({ item }) => {
-    const metadata = _.attempt(JSON.parse, item.json_metadata);
-
-    let image = null;
-    if (!_.isError(metadata)) {
-      image = _.get(metadata, 'image[0]', null);
-    }
-
-    return (
-      <PostFeed
-        id={item.id}
-        author={item.author}
-        title={item.title}
-        created={item.created}
-        image={image}
-        onNavigate={this.handleNavigate}
-      />
-    );
-  };
+  renderItem = ({ item }) => <PostFeedContainer id={item} onNavigate={this.handleNavigate} />;
 
   renderLoading = () => {
     const { loading } = this.props;
@@ -78,9 +58,9 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    const { posts, loading } = this.props;
+    const { list, loading } = this.props;
 
-    if (loading && posts.length === 0) {
+    if (loading && list.length === 0) {
       return <LoadingScreen />;
     }
 
@@ -88,9 +68,9 @@ class HomeScreen extends React.Component {
       <Container>
         <FlatList
           removeClippedSubviews
-          data={posts}
+          data={list}
           renderItem={this.renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item}
           onEndReached={this.handleEndReached}
           ItemSeparatorComponent={FeedSeparator}
           ListFooterComponent={this.renderLoading()}
@@ -102,7 +82,7 @@ class HomeScreen extends React.Component {
 
 export default connect(
   ({ feed }) => ({
-    posts: feed.posts,
+    list: feed.list,
     loading: feed.loading,
   }),
   { getFeed, getMoreFeed },

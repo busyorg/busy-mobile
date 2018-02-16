@@ -6,7 +6,7 @@ export const GET_MORE_FEED = createAsyncType('@feed/GET_MORE_FEED');
 
 const initialState = {
   loading: false,
-  posts: [],
+  list: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -22,12 +22,14 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        posts: [...state.posts, ...action.payload],
+        list: [...state.list, ...action.payload.map(post => post.id)],
       };
     default:
       return state;
   }
 }
+
+export const getLastPostId = state => state.list[state.list.length - 1];
 
 export const getFeed = createAction(GET_FEED.REQUEST);
 export const getMoreFeed = createAction(GET_MORE_FEED.REQUEST);

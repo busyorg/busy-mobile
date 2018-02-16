@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ScrollView } from 'react-native';
 import styled from 'styled-components';
+import { getPostById } from '../ducks';
 import Container from '../components/Container';
 import Header from '../components/PostFeed/components/Header';
 import Body from '../components/PostFeed/components/Body';
@@ -40,7 +41,7 @@ const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.navigation.state.params;
 
   return {
-    post: state.posts[id],
+    post: getPostById(state, id),
   };
 };
 
