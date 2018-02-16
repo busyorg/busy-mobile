@@ -1,6 +1,6 @@
 import { put, takeEvery, all, call } from 'redux-saga/effects';
 import steem from './services/steem';
-import { GET_FEED, GET_MORE_FEED } from './feed/feedActions';
+import { GET_FEED, GET_MORE_FEED } from './ducks/feed';
 
 export function* getFeed() {
   yield put({ type: GET_FEED.START });

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableNativeFeedback } from 'react-native';
 
-import Container from './components/Container';
+import Container from '../Container';
 import Header from './components/Header';
 import ImagePreview from './components/ImagePreview';
 import Title from './components/Title';

@@ -1,18 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { ScrollView } from 'react-native';
+import styled from 'styled-components';
+import Container from '../components/Container';
+import Header from '../components/PostFeed/components/Header';
+import Body from '../components/PostFeed/components/Body';
 
-export default class PostScreen extends React.Component {
+const Title = styled.Text`
+  padding: 16px;
+  font-size: 20px;
+  font-weight: 500;
+`;
+
+class PostScreen extends React.Component {
   static navigationOptions = {
     title: 'Post',
   };
 
   static propTypes = {
-    navigation: PropTypes.shape().isRequired,
+    post: PropTypes.shape().isRequired,
   };
 
   render() {
-    console.log('Navigated to post', this.props.navigation.state.params.id);
-    return <View />;
+    const { post } = this.props;
+    return (
+      <Container>
+        <ScrollView>
+          <Header author={post.author} created={post.created} />
+          <Title>{post.title}</Title>
+          <Body>{post.body}</Body>
+        </ScrollView>
+      </Container>
+    );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const { id } = ownProps.navigation.state.params;
+
+  return {
+    post: state.posts[id],
+  };
+};
+
+export default connect(mapStateToProps)(PostScreen);

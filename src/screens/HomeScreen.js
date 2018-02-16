@@ -8,7 +8,7 @@ import PostFeed from '../components/PostFeed';
 import FeedSeparator from '../components/FeedSeparator';
 import LoadingScreen from '../components/LoadingScreen';
 import Loading from '../components/Loading';
-import { getFeed, getMoreFeed } from '../feed/feedActions';
+import { getFeed, getMoreFeed } from '../ducks/feed';
 
 const Container = styled.View`
   flex: 1;
@@ -101,9 +101,9 @@ class HomeScreen extends React.Component {
 }
 
 export default connect(
-  ({ posts, loading }) => ({
-    posts,
-    loading,
+  ({ feed }) => ({
+    posts: feed.posts,
+    loading: feed.loading,
   }),
   { getFeed, getMoreFeed },
 )(HomeScreen);
