@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ScrollView } from 'react-native';
 import styled from 'styled-components';
-import Markdown from 'react-native-simple-markdown';
-import styles from 'react-native-simple-markdown/styles';
 import { getPostById } from '../ducks';
 import Container from '../components/Container';
 import Header from '../components/PostFeed/components/Header';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 
 const Body = styled.View`
   padding: 16px;
@@ -18,23 +17,6 @@ const Title = styled.Text`
   font-size: 20px;
   font-weight: 500;
 `;
-
-const mdStyles = {
-  codeBlock: {
-    ...styles.codeBlock,
-    fontFamily: 'space-mono',
-    fontWeight: '400',
-  },
-  inlineCode: {
-    ...styles.inlineCode,
-    fontFamily: 'space-mono',
-  },
-  paragraph: {
-    ...styles.paragraph,
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-};
 
 class PostScreen extends React.Component {
   static navigationOptions = {
@@ -48,12 +30,12 @@ class PostScreen extends React.Component {
   render() {
     const { post } = this.props;
     return (
-      <Container>
+      <Container full>
         <ScrollView>
           <Header author={post.author} created={post.created} />
           <Title>{post.title}</Title>
           <Body>
-            <Markdown styles={mdStyles}>{post.body}</Markdown>
+            <MarkdownRenderer body={post.body} />
           </Body>
         </ScrollView>
       </Container>
