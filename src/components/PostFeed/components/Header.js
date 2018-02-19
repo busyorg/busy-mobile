@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text } from 'react-native';
+import { TouchableNativeFeedback, Text } from 'react-native';
 import styled from 'styled-components';
 import moment from 'moment';
 import Avatar from './Avatar';
@@ -20,19 +20,26 @@ const Date = styled.Text`
   color: rgba(0, 0, 0, 0.54);
 `;
 
-const Header = ({ author, created }) => (
-  <Container>
-    <Avatar username={author} />
-    <TextContainer>
-      <Text>{author}</Text>
-      <Date>{moment(created).fromNow()}</Date>
-    </TextContainer>
-  </Container>
+const Header = ({ author, created, onPress }) => (
+  <TouchableNativeFeedback onPress={onPress}>
+    <Container>
+      <Avatar username={author} />
+      <TextContainer>
+        <Text>{author}</Text>
+        <Date>{moment(created).fromNow()}</Date>
+      </TextContainer>
+    </Container>
+  </TouchableNativeFeedback>
 );
 
 Header.propTypes = {
   author: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
+  onPress: PropTypes.func,
+};
+
+Header.defaultProps = {
+  onPress: () => {},
 };
 
 export default Header;

@@ -43,11 +43,21 @@ class HomeScreen extends React.Component {
     this.props.getMoreFeed();
   };
 
-  handleNavigate = id => {
+  handleUserNavigate = username => {
+    this.props.navigation.navigate('User', { username });
+  };
+
+  handlePostNavigate = id => {
     this.props.navigation.navigate('Post', { id });
   };
 
-  renderItem = ({ item }) => <PostFeedContainer id={item} onNavigate={this.handleNavigate} />;
+  renderItem = ({ item }) => (
+    <PostFeedContainer
+      id={item}
+      onUserNavigate={this.handleUserNavigate}
+      onPostNavigate={this.handlePostNavigate}
+    />
+  );
 
   renderLoading = () => {
     const { loading } = this.props;

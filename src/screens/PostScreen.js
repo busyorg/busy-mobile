@@ -24,7 +24,13 @@ class PostScreen extends React.Component {
   };
 
   static propTypes = {
+    navigation: PropTypes.shape().isRequired,
     post: PropTypes.shape().isRequired,
+  };
+
+  handleUserNavigate = () => {
+    const { author: username } = this.props.post;
+    this.props.navigation.navigate('User', { username });
   };
 
   render() {
@@ -32,7 +38,7 @@ class PostScreen extends React.Component {
     return (
       <Container full>
         <ScrollView>
-          <Header author={post.author} created={post.created} />
+          <Header author={post.author} created={post.created} onPress={this.handleUserNavigate} />
           <Title>{post.title}</Title>
           <Body>
             <MarkdownRenderer body={post.body} />

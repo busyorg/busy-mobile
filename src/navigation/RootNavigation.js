@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 import PostScreen from '../screens/PostScreen';
+import UserScreen from '../screens/UserScreen';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -11,6 +12,9 @@ const RootStackNavigator = StackNavigator(
     Post: {
       screen: PostScreen,
     },
+    User: {
+      screen: UserScreen,
+    }
   },
   {
     navigationOptions: () => ({
