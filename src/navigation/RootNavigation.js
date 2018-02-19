@@ -14,7 +14,7 @@ const RootStackNavigator = StackNavigator(
     },
     User: {
       screen: UserScreen,
-    }
+    },
   },
   {
     navigationOptions: () => ({

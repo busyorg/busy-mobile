@@ -1,22 +1,11 @@
 import { connect } from 'react-redux';
-import UserProfile from './UserProfile';
-import {
-  getUsersLoading,
-  getUserPostCount,
-  getUserFollowerCount,
-  getUserFollowingCount,
-  getUserDisplayName,
-  getUserAbout,
-} from '../ducks';
+import { getUsersLoading } from '../ducks';
 import { getUser } from '../ducks/users';
+import UserProfile from './UserProfile';
 
-const mapStateToProps = (state, { name }) => ({
-  loading: getUsersLoading(state),
-  postCount: getUserPostCount(state, name),
-  followerCount: getUserFollowerCount(state, name),
-  followingCount: getUserFollowingCount(state, name),
-  displayName: getUserDisplayName(state, name),
-  about: getUserAbout(state, name),
-});
-
-export default connect(mapStateToProps, { getUser })(UserProfile);
+export default connect(
+  state => ({
+    loading: getUsersLoading(state),
+  }),
+  { getUser },
+)(UserProfile);

@@ -17,6 +17,7 @@ class Feed extends React.Component {
     navigation: PropTypes.shape().isRequired,
     list: PropTypes.arrayOf(PropTypes.number),
     loading: PropTypes.bool,
+    header: PropTypes.node,
     getFeed: PropTypes.func,
     getMoreFeed: PropTypes.func,
   };
@@ -24,6 +25,7 @@ class Feed extends React.Component {
   static defaultProps = {
     list: [],
     loading: false,
+    header: null,
     getFeed: () => {},
     getMoreFeed: () => {},
   };
@@ -63,7 +65,7 @@ class Feed extends React.Component {
   };
 
   render() {
-    const { list, loading } = this.props;
+    const { list, loading, header } = this.props;
 
     if (loading && list.length === 0) {
       return <LoadingScreen />;
@@ -78,6 +80,7 @@ class Feed extends React.Component {
           keyExtractor={item => item}
           onEndReached={this.handleEndReached}
           ItemSeparatorComponent={FeedSeparator}
+          ListHeaderComponent={header}
           ListFooterComponent={this.renderLoading()}
         />
       </Container>
