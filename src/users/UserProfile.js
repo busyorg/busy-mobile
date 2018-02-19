@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import LoadingScreen from '../components/LoadingScreen';
 
 const Container = styled.View`
-  flex: 1;
   align-items: center;
   padding: 16px;
   background-color: white;
