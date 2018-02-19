@@ -39,13 +39,18 @@ function* feedFlow() {
 function* getUser(action) {
   yield put({ type: GET_USER.START });
 
-  const result = yield call(steem.sendAsync, 'get_accounts', [[action.payload]]);
+  const [users, followCount] = yield all([
+    call(steem.sendAsync, 'get_accounts', [[action.payload]]),
+    call(steem.sendAsync, 'call', ['follow_api', 'get_follow_count', [action.payload]]),
+  ]);
 
-  const user = result[0];
+  const user = users[0];
   const metadata = _.attempt(JSON.parse, user.json_metadata);
   user.json_metadata = !_.isError(metadata) ? metadata : {};
+  user.follower_count = followCount.follower_count;
+  user.following_count = followCount.following_count;
 
-  yield put({ type: GET_USER.SUCCESS, payload: result[0] });
+  yield put({ type: GET_USER.SUCCESS, payload: user });
 }
 
 function* watchGetUser() {

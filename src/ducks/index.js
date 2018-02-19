@@ -14,6 +14,11 @@ export const getLastPostId = state => fromFeed.getLastPostId(state.feed);
 export const getPostById = (state, id) => fromPosts.getPostById(state.posts, id);
 
 export const getUsersLoading = state => fromUsers.getUsersLoading(state.users);
+export const getUserPostCount = (state, name) => fromUsers.getUserPostCount(state.users, name);
+export const getUserFollowerCount = (state, name) =>
+  fromUsers.getUserFollowerCount(state.users, name);
+export const getUserFollowingCount = (state, name) =>
+  fromUsers.getUserFollowingCount(state.users, name);
 export const getUserMetadata = (state, name) => fromUsers.getUserMetadata(state.users, name);
 export const getUserDisplayName = (state, name) => fromUsers.getUserDisplayName(state.users, name);
 export const getUserAbout = (state, name) => fromUsers.getUserAbout(state.users, name);

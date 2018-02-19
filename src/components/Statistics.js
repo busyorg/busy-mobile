@@ -1,13 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import numeral from 'numeral';
+
+function formatNumber(number) {
+  let result = '';
+  if (number < 10000) {
+    result = `${number}`;
+  } else {
+    result = numeral(number).format('0.[0]a');
+  }
+  return result.toUpperCase();
+}
 
 const StatisticsContainer = styled.View`
   flex-direction: row;
-  justify-content: space-around;
 `;
 
 const StatisticContainer = styled.View`
+  flex: 1;
   align-items: center;
 `;
 
@@ -21,12 +32,23 @@ const Title = styled.Text`
 
 const StatisticsItem = ({ number, title }) => (
   <StatisticContainer>
-    <Number>{number}</Number>
+    <Number>{formatNumber(number)}</Number>
     <Title>{title}</Title>
   </StatisticContainer>
 );
+StatisticsItem.propTypes = {
+  number: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 const Statistics = ({ children }) => <StatisticsContainer>{children}</StatisticsContainer>;
+Statistics.propTypes = {
+  children: PropTypes.node,
+};
+Statistics.defaultProps = {
+  children: null,
+};
+
 Statistics.Item = StatisticsItem;
 
 export default Statistics;

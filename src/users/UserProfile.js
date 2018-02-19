@@ -41,6 +41,9 @@ export default class UserProfile extends React.Component {
     loading: PropTypes.bool,
     displayName: PropTypes.string,
     about: PropTypes.string,
+    postCount: PropTypes.number,
+    followerCount: PropTypes.number,
+    followingCount: PropTypes.number,
     getUser: PropTypes.func,
   };
 
@@ -48,6 +51,9 @@ export default class UserProfile extends React.Component {
     loading: true,
     displayName: '',
     about: '',
+    postCount: 0,
+    followerCount: 0,
+    followingCount: 0,
     getUser: () => {},
   };
 
@@ -57,7 +63,15 @@ export default class UserProfile extends React.Component {
   }
 
   render() {
-    const { loading, name, displayName, about } = this.props;
+    const {
+      loading,
+      name,
+      displayName,
+      about,
+      postCount,
+      followerCount,
+      followingCount,
+    } = this.props;
 
     if (loading) return <LoadingScreen />;
 
@@ -70,9 +84,9 @@ export default class UserProfile extends React.Component {
         </Center>
         <Footer>
           <Statistics>
-            <Statistics.Item title="posts" number="24K" />
-            <Statistics.Item title="followers" number="1.4M" />
-            <Statistics.Item title="following" number="412" />
+            <Statistics.Item title="posts" number={postCount} />
+            <Statistics.Item title="followers" number={followerCount} />
+            <Statistics.Item title="following" number={followingCount} />
           </Statistics>
         </Footer>
       </Container>
