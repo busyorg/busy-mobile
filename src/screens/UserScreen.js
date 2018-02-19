@@ -1,16 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
+import PropTypes from 'prop-types';
+import UserProfileContainer from '../users/UserProfileContainer';
 
 export default class ProfileScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    const { params } = navigation.state;
+  static navigationOptions = ({ navigation }) => ({ title: navigation.state.params.name });
 
-    return {
-      title: params ? params.username : 'A Nested Details Screen',
-    }
+  static propTypes = {
+    navigation: PropTypes.shape().isRequired,
   };
 
   render() {
-    return <View />;
+    return <UserProfileContainer name={this.props.navigation.state.params.name} />;
   }
 }

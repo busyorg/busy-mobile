@@ -29,8 +29,8 @@ class PostScreen extends React.Component {
   };
 
   handleUserNavigate = () => {
-    const { author: username } = this.props.post;
-    this.props.navigation.navigate('User', { username });
+    const { author: name } = this.props.post;
+    this.props.navigation.navigate('User', { name });
   };
 
   render() {
