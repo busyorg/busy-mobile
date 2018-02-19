@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import LoadingScreen from '../components/LoadingScreen';
+import Statistics from '../components/Statistics';
 
 const Container = styled.View`
-  align-items: center;
   padding: 16px;
   background-color: white;
+`;
+
+const Center = styled.View`
+  align-items: center;
 `;
 
 const Avatar = styled.Image`
@@ -25,6 +29,10 @@ const About = styled.Text`
   text-align: center;
   color: rgba(0, 0, 0, 0.54);
   font-size: 14px;
+`;
+
+const Footer = styled.View`
+  padding-top: 16px;
 `;
 
 export default class UserProfile extends React.Component {
@@ -55,9 +63,18 @@ export default class UserProfile extends React.Component {
 
     return (
       <Container>
-        <Avatar source={{ uri: `https://steemitimages.com/u/${name}/avatar` }} />
-        <Name>{displayName || name}</Name>
-        <About>{about}</About>
+        <Center>
+          <Avatar source={{ uri: `https://steemitimages.com/u/${name}/avatar` }} />
+          <Name>{displayName || name}</Name>
+          <About>{about}</About>
+        </Center>
+        <Footer>
+          <Statistics>
+            <Statistics.Item title="posts" number="24K" />
+            <Statistics.Item title="followers" number="1.4M" />
+            <Statistics.Item title="following" number="412" />
+          </Statistics>
+        </Footer>
       </Container>
     );
   }
