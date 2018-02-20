@@ -1,39 +1,58 @@
-import { takeEvery, put, take, all, call } from 'redux-saga/effects';
+import { takeEvery, put, take, all, call, fork, select } from 'redux-saga/effects';
 import steem from './services/steem';
 import { GET_FEED, GET_MORE_FEED } from './ducks/feed';
 import { GET_USER } from './ducks/users';
+import { getLastPostId, getPostById } from './ducks';
 
-function* feedFlow() {
+function* loadFeed(sortBy, tag) {
+  let result;
+  if (tag) {
+    result = yield call([steem, steem.getTag], tag, sortBy);
+  } else {
+    result = yield call([steem, steem.getGlobal], sortBy);
+  }
+
+  yield put({ type: GET_FEED.SUCCESS, payload: result, meta: { sortBy, tag } });
+}
+
+function* loadMoreFeed(sortBy, tag) {
+  const postId = yield select(getLastPostId, sortBy, tag);
+  const lastPost = yield select(getPostById, postId);
+
+  let result;
+  if (tag) {
+    result = yield call([steem, steem.getMoreTag], tag, sortBy, lastPost.author, lastPost.permlink);
+  } else {
+    result = yield call([steem, steem.getMoreGlobal], sortBy, lastPost.author, lastPost.permlink);
+  }
+
+  yield put({ type: GET_MORE_FEED.SUCCESS, payload: result, meta: { sortBy, tag } });
+}
+
+function* watchLoadFeed() {
   while (true) {
-    yield take(GET_FEED.REQUEST);
-    yield put({ type: GET_FEED.START });
+    const { meta } = yield take(GET_FEED.REQUEST);
+    const { sortBy, tag } = meta;
+    yield fork(loadFeed, sortBy, tag);
+  }
+}
 
-    const result = yield call([steem, steem.getGlobal], 'trending');
-    yield put({ type: GET_FEED.SUCCESS, payload: result });
-    let lastPost = result[result.length - 1];
-
-    while (true) {
-      yield take(GET_MORE_FEED.REQUEST);
-      yield put({ type: GET_MORE_FEED.START });
-
-      const moreResult = yield call(
-        [steem, steem.getMoreGlobal],
-        'trending',
-        lastPost.author,
-        lastPost.permlink,
-      );
-      yield put({ type: GET_MORE_FEED.SUCCESS, payload: moreResult });
-      lastPost = moreResult[moreResult.length - 1];
-    }
+function* watchLoadMoreFeed() {
+  while (true) {
+    const { meta } = yield take(GET_MORE_FEED.REQUEST);
+    const { sortBy, tag } = meta;
+    yield fork(loadMoreFeed, sortBy, tag);
   }
 }
 
 function* getUser(action) {
-  yield put({ type: GET_USER.START });
+  try {
+    const user = yield call([steem, steem.getUser], action.payload);
 
-  const user = yield call([steem, steem.getUser], action.payload);
-
-  yield put({ type: GET_USER.SUCCESS, payload: user });
+    yield put({ type: GET_USER.SUCCESS, payload: user });
+  } catch (err) {
+    console.log('err', err);
+  }
 }
 
 function* watchGetUser() {
@@ -41,5 +60,5 @@ function* watchGetUser() {
 }
 
 export default function* rootSaga() {
-  yield all([feedFlow(), watchGetUser()]);
+  yield all([watchLoadFeed(), watchLoadMoreFeed(), watchGetUser()]);
 }

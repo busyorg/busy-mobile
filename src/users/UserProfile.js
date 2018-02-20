@@ -26,6 +26,6 @@ export default class UserProfile extends React.Component {
 
     if (loading) return <LoadingScreen />;
 
-    return <FeedContainer header={<UserHeaderContainer name={name} />} />;
+    return <FeedContainer sortBy="blog" tag={name} header={<UserHeaderContainer name={name} />} />;
   }
 }

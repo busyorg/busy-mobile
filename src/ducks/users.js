@@ -11,7 +11,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case GET_USER.START:
+    case GET_USER.REQUEST:
       return {
         ...state,
         loading: true,

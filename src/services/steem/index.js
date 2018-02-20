@@ -29,6 +29,22 @@ Client.prototype.getMoreGlobal = async function getMoreGlobal(sortBy, startAutho
   return result.slice(1);
 };
 
+Client.prototype.getTag = async function getTag(tag, sortBy) {
+  return this.sendAsync(`get_discussions_by_${sortBy}`, [{ tag, limit: 10 }]);
+};
+
+Client.prototype.getMoreTag = async function getMoreTag(tag, sortBy, startAuthor, startPermlink) {
+  const result = await this.sendAsync(`get_discussions_by_${sortBy}`, [
+    {
+      tag,
+      limit: 11,
+      start_author: startAuthor,
+      start_permlink: startPermlink,
+    },
+  ]);
+  return result.slice(1);
+};
+
 Client.prototype.getUser = async function getUser(username) {
   const [users, followCount] = await Promise.all([
     this.sendAsync('get_accounts', [[username]]),

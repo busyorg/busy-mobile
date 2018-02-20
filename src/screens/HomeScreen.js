@@ -5,7 +5,8 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Busy',
   };
+
   render() {
-    return <FeedContainer />;
+    return <FeedContainer sortBy="trending" />;
   }
 }

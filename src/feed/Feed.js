@@ -15,6 +15,8 @@ const Container = styled.View`
 class Feed extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape().isRequired,
+    sortBy: PropTypes.string.isRequired,
+    tag: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.number),
     loading: PropTypes.bool,
     header: PropTypes.node,
@@ -23,6 +25,7 @@ class Feed extends React.Component {
   };
 
   static defaultProps = {
+    tag: null,
     list: [],
     loading: false,
     header: null,
@@ -31,13 +34,18 @@ class Feed extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getFeed();
+    const { sortBy, tag, list } = this.props;
+
+    if (list.length === 0) {
+      this.props.getFeed(sortBy, tag);
+    }
   }
 
   handleEndReached = () => {
-    const { loading } = this.props;
-    if (loading) return;
-    this.props.getMoreFeed();
+    // const { sortBy, tag, loading } = this.props;
+    // if (!loading) {
+    //   this.props.getMoreFeed(sortBy, tag);
+    // }
   };
 
   handleUserNavigate = name => {

@@ -9,7 +9,11 @@ export default combineReducers({
   users,
 });
 
-export const getLastPostId = state => fromFeed.getLastPostId(state.feed);
+export const getFeedList = (state, sortBy, tag) => fromFeed.getFeedList(state.feed, sortBy, tag);
+export const getFeedLoading = (state, sortBy, tag) =>
+  fromFeed.getFeedLoading(state.feed, sortBy, tag);
+export const getLastPostId = (state, sortBy, tag) =>
+  fromFeed.getLastPostId(state.feed, sortBy, tag);
 
 export const getPostById = (state, id) => fromPosts.getPostById(state.posts, id);
 
