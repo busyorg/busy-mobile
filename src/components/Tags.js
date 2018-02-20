@@ -9,12 +9,18 @@ const Container = styled.View`
   padding: 0 8px;
 `;
 
-const Tags = ({ tags }) => <Container>{tags.map(tag => <Tag key={tag} name={tag} />)}</Container>;
+const Tags = ({ tags, onSelect }) => (
+  <Container>
+    {tags.map(tag => <Tag key={tag} name={tag} onPress={() => onSelect(tag)} />)}
+  </Container>
+);
 Tags.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
+  onSelect: PropTypes.func,
 };
 Tags.defaultProps = {
   tags: [],
+  onSelect: () => {},
 };
 
 export default Tags;

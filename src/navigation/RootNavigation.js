@@ -3,6 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import MainTabNavigator from './MainTabNavigator';
 import PostScreen from '../screens/PostScreen';
 import UserScreen from '../screens/UserScreen';
+import TagScreen from '../screens/TagScreen';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -14,6 +15,9 @@ const RootStackNavigator = StackNavigator(
     },
     User: {
       screen: UserScreen,
+    },
+    Tag: {
+      screen: TagScreen,
     },
   },
   {

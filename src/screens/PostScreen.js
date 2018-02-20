@@ -39,6 +39,10 @@ class PostScreen extends React.Component {
     this.props.navigation.navigate('User', { name });
   };
 
+  handleTagNavigate = tag => {
+    this.props.navigation.navigate('Tag', { tag });
+  };
+
   render() {
     const { post } = this.props;
 
@@ -56,7 +60,7 @@ class PostScreen extends React.Component {
             <MarkdownRenderer body={post.body} />
           </Body>
           <TagsContainer>
-            <Tags tags={tags} />
+            <Tags tags={tags} onSelect={this.handleTagNavigate} />
           </TagsContainer>
         </ScrollView>
       </Container>
