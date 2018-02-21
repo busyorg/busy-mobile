@@ -34,18 +34,18 @@ class Feed extends React.Component {
   };
 
   componentDidMount() {
-    const { sortBy, tag, list } = this.props;
+    const { sortBy, tag, loading, list } = this.props;
 
-    if (list.length === 0) {
+    if (!loading && list.length === 0) {
       this.props.getFeed(sortBy, tag);
     }
   }
 
   handleEndReached = () => {
-    // const { sortBy, tag, loading } = this.props;
-    // if (!loading) {
-    //   this.props.getMoreFeed(sortBy, tag);
-    // }
+    const { sortBy, tag, loading } = this.props;
+    if (!loading) {
+      this.props.getMoreFeed(sortBy, tag);
+    }
   };
 
   handleUserNavigate = name => {
