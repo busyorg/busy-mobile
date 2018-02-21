@@ -26,7 +26,7 @@ const Header = ({ author, created, onPress }) => (
       <Avatar username={author} />
       <TextContainer>
         <Text>{author}</Text>
-        <Date>{moment(created).fromNow()}</Date>
+        <Date>{moment(`${created}Z`).fromNow()}</Date>
       </TextContainer>
     </Container>
   </TouchableNativeFeedback>
