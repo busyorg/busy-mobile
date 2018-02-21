@@ -57,7 +57,8 @@ class PostScreen extends React.Component {
           <Header author={post.author} created={post.created} onPress={this.handleUserNavigate} />
           <Title>{post.title}</Title>
           <Body>
-            <MarkdownRenderer body={post.body} />
+            <MarkdownRenderer body="" />
+            {/* <MarkdownRenderer body={post.body} /> */}
           </Body>
           <TagsContainer>
             <Tags tags={tags} onSelect={this.handleTagNavigate} />

@@ -1,12 +1,68 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ToolbarMenu from '../components/ToolbarMenu';
 import FeedContainer from '../feed/FeedContainer';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Busy',
+  static navigationOptions = ({ navigation }) => {
+    const params = navigation.state.params || {};
+
+    return {
+      title: params.tag || 'Feed',
+      headerRight: params.headerRight,
+    };
+  };
+
+  static propTypes = {
+    navigation: PropTypes.shape().isRequired,
+  };
+
+  state = {
+    sort: 'trending',
+  };
+
+  componentWillMount() {
+    this.setNavigationParams();
+  }
+
+  setNavigationParams = () => {
+    const headerRight = (
+      <ToolbarMenu options={['Trending', 'New', 'Active', 'Hot']} onSelect={this.handleSelect} />
+    );
+
+    this.props.navigation.setParams({
+      headerRight,
+    });
+  };
+
+  getSort = id => {
+    switch (id) {
+      case 0:
+        return 'trending';
+      case 1:
+        return 'created';
+      case 2:
+        return 'active';
+      case 3:
+        return 'hot';
+      default:
+        return 'trending';
+    }
+  };
+
+  handleSelect = (eventName, id) => {
+    const sort = this.getSort(id);
+    this.setState({
+      sort,
+    });
   };
 
   render() {
-    return <FeedContainer sortBy="trending" />;
+    const { navigation } = this.props;
+    const { sort } = this.state;
+
+    const params = navigation.state.params || {};
+
+    return <FeedContainer sortBy={sort} tag={params.tag} />;
   }
 }

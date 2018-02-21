@@ -41,6 +41,16 @@ class Feed extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { sortBy, tag } = this.props;
+
+    const changed = sortBy !== nextProps.sortBy || tag !== nextProps.tag;
+
+    if (changed) {
+      this.props.getFeed(nextProps.sortBy, nextProps.tag);
+    }
+  }
+
   handleEndReached = () => {
     const { sortBy, tag, loading } = this.props;
     if (!loading) {

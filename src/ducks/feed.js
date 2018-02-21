@@ -28,6 +28,7 @@ function feedList(state = initialFeedState.list, action) {
 function feed(state = initialFeedState, action) {
   switch (action.type) {
     case GET_FEED.REQUEST:
+      return { ...state, loading: true, list: [] };
     case GET_MORE_FEED.REQUEST:
       return { ...state, loading: true };
     case GET_FEED.SUCCESS:

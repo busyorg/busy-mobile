@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { AppLoading, Asset, Font } from 'expo';
 import styled from 'styled-components';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import store from './store';
 
@@ -28,6 +28,7 @@ export default class App extends React.Component {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Ionicons.font,
+        ...MaterialIcons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
