@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { TabNavigator, TabBarBottom } from 'react-navigation';
+import { TabNavigator } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
@@ -29,7 +29,7 @@ export default TabNavigator(
         let iconName;
         switch (routeName) {
           case 'Home':
-            iconName = Platform.OS === 'ios' ? `ios-alarm${focused ? '' : '-outline'}` : 'md-alarm';
+            iconName = Platform.OS === 'ios' ? `ios-alarm${focused ? '' : '-outline'}` : 'md-home';
             break;
           case 'Notifications':
             iconName =
@@ -54,8 +54,16 @@ export default TabNavigator(
         );
       },
     }),
-    tabBarComponent: TabBarBottom,
-    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      showIcon: true,
+      showLabel: false,
+      style: {
+        backgroundColor: '#4757b2',
+      },
+      indicatorStyle: {
+        backgroundColor: 'white',
+      },
+    },
     animationEnabled: false,
     swipeEnabled: true,
   },

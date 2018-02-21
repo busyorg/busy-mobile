@@ -24,6 +24,7 @@ const RootStackNavigator = StackNavigator(
     navigationOptions: () => ({
       headerStyle: {
         backgroundColor: '#4757b2',
+        elevation: 0,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
