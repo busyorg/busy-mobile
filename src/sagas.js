@@ -1,6 +1,6 @@
 import { takeEvery, put, take, all, call, fork, select } from 'redux-saga/effects';
 import steem from './services/steem';
-import { GET_FEED, GET_MORE_FEED } from './ducks/feed';
+import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from './ducks/feed';
 import { GET_USER } from './ducks/users';
 import { getLastPostId, getPostById } from './ducks';
 
@@ -29,6 +29,17 @@ function* loadMoreFeed(sortBy, tag) {
   yield put({ type: GET_MORE_FEED.SUCCESS, payload: result, meta: { sortBy, tag } });
 }
 
+function* refreshFeed(sortBy, tag) {
+  let result;
+  if (tag) {
+    result = yield call([steem, steem.getTag], tag, sortBy);
+  } else {
+    result = yield call([steem, steem.getGlobal], sortBy);
+  }
+
+  yield put({ type: REFRESH_FEED.SUCCESS, payload: result, meta: { sortBy, tag } });
+}
+
 function* watchLoadFeed() {
   while (true) {
     const { meta } = yield take(GET_FEED.REQUEST);
@@ -42,6 +53,14 @@ function* watchLoadMoreFeed() {
     const { meta } = yield take(GET_MORE_FEED.REQUEST);
     const { sortBy, tag } = meta;
     yield fork(loadMoreFeed, sortBy, tag);
+  }
+}
+
+function* watchRefreshFeed() {
+  while (true) {
+    const { meta } = yield take(REFRESH_FEED.REQUEST);
+    const { sortBy, tag } = meta;
+    yield fork(refreshFeed, sortBy, tag);
   }
 }
 
@@ -60,5 +79,5 @@ function* watchGetUser() {
 }
 
 export default function* rootSaga() {
-  yield all([watchLoadFeed(), watchLoadMoreFeed(), watchGetUser()]);
+  yield all([watchLoadFeed(), watchLoadMoreFeed(), watchRefreshFeed(), watchGetUser()]);
 }

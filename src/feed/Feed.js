@@ -19,20 +19,24 @@ class Feed extends React.Component {
     tag: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.number),
     loading: PropTypes.bool,
+    refreshing: PropTypes.bool,
     userLoading: PropTypes.bool,
     header: PropTypes.node,
     getFeed: PropTypes.func,
     getMoreFeed: PropTypes.func,
+    refreshFeed: PropTypes.func,
   };
 
   static defaultProps = {
     tag: null,
     list: [],
     loading: false,
+    refreshing: false,
     userLoading: false,
     header: null,
     getFeed: () => {},
     getMoreFeed: () => {},
+    refreshFeed: () => {},
   };
 
   componentDidMount() {
@@ -60,6 +64,11 @@ class Feed extends React.Component {
     }
   };
 
+  handleRefresh = () => {
+    const { sortBy, tag } = this.props;
+    this.props.refreshFeed(sortBy, tag);
+  };
+
   handleUserNavigate = name => {
     this.props.navigation.navigate('User', { name });
   };
@@ -85,7 +94,7 @@ class Feed extends React.Component {
   };
 
   render() {
-    const { list, loading, userLoading, header } = this.props;
+    const { list, loading, refreshing, userLoading, header } = this.props;
 
     if (userLoading || (loading && list.length === 0)) {
       return <LoadingScreen />;
@@ -95,6 +104,8 @@ class Feed extends React.Component {
       <Container>
         <FlatList
           removeClippedSubviews
+          refreshing={refreshing}
+          onRefresh={this.handleRefresh}
           data={list}
           renderItem={this.renderItem}
           keyExtractor={item => item}
