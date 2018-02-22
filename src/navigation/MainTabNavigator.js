@@ -58,10 +58,10 @@ export default TabNavigator(
       showIcon: true,
       showLabel: false,
       style: {
-        backgroundColor: '#1eacf8',
+        backgroundColor: Colors.primary,
       },
       indicatorStyle: {
-        backgroundColor: 'white',
+        backgroundColor: Colors.tabIndicator,
       },
     },
     animationEnabled: false,

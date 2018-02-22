@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FlatList, RefreshControl } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import styled from 'styled-components';
+import Colors from '../constants/Colors';
 import PostFeedContainer from '../feed/PostFeedContainer';
 import FeedSeparator from '../components/FeedSeparator';
 import LoadingScreen from '../components/LoadingScreen';
@@ -106,7 +107,7 @@ class Feed extends React.Component {
           removeClippedSubviews
           refreshControl={
             <RefreshControl
-              colors={['#ff4081', '#1eacf8', '#0274dc']}
+              colors={[Colors.accent, Colors.primary, Colors.secondary]}
               refreshing={refreshing}
               onRefresh={this.handleRefresh}
             />

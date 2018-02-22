@@ -1,5 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 
+import Colors from '../constants/Colors';
+
 import MainTabNavigator from './MainTabNavigator';
 import PostScreen from '../screens/PostScreen';
 import UserScreen from '../screens/UserScreen';
@@ -23,7 +25,7 @@ const RootStackNavigator = StackNavigator(
   {
     navigationOptions: () => ({
       headerStyle: {
-        backgroundColor: '#1eacf8',
+        backgroundColor: Colors.primary,
         elevation: 0,
       },
       headerTintColor: '#fff',
