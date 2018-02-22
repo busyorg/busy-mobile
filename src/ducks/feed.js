@@ -21,9 +21,9 @@ function feedList(state = initialFeedState.list, action) {
   switch (action.type) {
     case GET_FEED.SUCCESS:
     case GET_MORE_FEED.SUCCESS:
-      return [...state, ...action.payload.map(post => post.id)];
+      return [...state, ...action.payload.result];
     case REFRESH_FEED.SUCCESS:
-      return action.payload.map(post => post.id);
+      return action.payload.result;
     default:
       return state;
   }

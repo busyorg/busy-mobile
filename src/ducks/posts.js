@@ -7,13 +7,7 @@ export default function(state = {}, action) {
     case REFRESH_FEED.SUCCESS:
       return {
         ...state,
-        ...action.payload.reduce(
-          (a, b) => ({
-            ...a,
-            [b.id]: b,
-          }),
-          {},
-        ),
+        ...action.payload.entities.posts,
       };
     default:
       return state;

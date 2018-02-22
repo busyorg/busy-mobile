@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import { createClient } from 'lightrpc';
+import { normalize } from 'normalizr';
+import { postsSchema } from './schemas';
 
 function Client() {
   this.client = createClient('https://api.steemit.com');
@@ -15,7 +17,8 @@ Client.prototype.sendAsync = function sendAsync(message, params) {
 };
 
 Client.prototype.getGlobal = async function getGlobal(sortBy) {
-  return this.sendAsync(`get_discussions_by_${sortBy}`, [{ limit: 10 }]);
+  const result = await this.sendAsync(`get_discussions_by_${sortBy}`, [{ limit: 10 }]);
+  return normalize(result, postsSchema);
 };
 
 Client.prototype.getMoreGlobal = async function getMoreGlobal(sortBy, startAuthor, startPermlink) {
@@ -26,11 +29,12 @@ Client.prototype.getMoreGlobal = async function getMoreGlobal(sortBy, startAutho
       start_permlink: startPermlink,
     },
   ]);
-  return result.slice(1);
+  return normalize(result.slice(1), postsSchema);
 };
 
 Client.prototype.getTag = async function getTag(tag, sortBy) {
-  return this.sendAsync(`get_discussions_by_${sortBy}`, [{ tag, limit: 10 }]);
+  const result = await this.sendAsync(`get_discussions_by_${sortBy}`, [{ tag, limit: 10 }]);
+  return normalize(result, postsSchema);
 };
 
 Client.prototype.getMoreTag = async function getMoreTag(tag, sortBy, startAuthor, startPermlink) {
@@ -42,7 +46,7 @@ Client.prototype.getMoreTag = async function getMoreTag(tag, sortBy, startAuthor
       start_permlink: startPermlink,
     },
   ]);
-  return result.slice(1);
+  return normalize(result.slice(1), postsSchema);
 };
 
 Client.prototype.getUser = async function getUser(username) {
