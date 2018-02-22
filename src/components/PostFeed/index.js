@@ -46,7 +46,9 @@ export default class PostFeed extends React.PureComponent {
         <Header author={author} created={created} onPress={this.handleUserPress} />
         <TouchableNativeFeedback onPress={this.handlePostPress}>
           <View>
-            {image && <ImagePreview source={{ uri: image }} />}
+            {image && (
+              <ImagePreview source={{ uri: `https://steemitimages.com/400x400/${image}` }} />
+            )}
             <Title narrow={!image} numberOfLines={3}>
               {title}
             </Title>
