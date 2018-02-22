@@ -2,13 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { ScrollView } from 'react-native';
+import { ScrollView, Dimensions } from 'react-native';
 import styled from 'styled-components';
+import Remarkable from 'remarkable';
+import HTML from 'react-native-render-html';
 import { getPostById } from '../ducks';
 import Container from '../components/Container';
 import Header from '../components/PostFeed/components/Header';
-import MarkdownRenderer from '../components/MarkdownRenderer';
 import Tags from '../components/Tags';
+
+const md = new Remarkable({
+  html: true, // remarkable renders first then sanitize runs...
+  breaks: true,
+  linkify: false, // linkify is done locally
+  typographer: false, // https://github.com/jonschlinkert/remarkable/issues/142#issuecomment-221546793
+  quotes: '“”‘’',
+});
 
 const Body = styled.View`
   padding: 16px;
@@ -51,14 +60,15 @@ class PostScreen extends React.Component {
 
     const tags = _.union(_.get(metadata, 'tags', []), [post.category]);
 
+    const htmlContent = md.render(post.body);
+
     return (
       <Container full>
         <ScrollView>
           <Header author={post.author} created={post.created} onPress={this.handleUserNavigate} />
           <Title>{post.title}</Title>
           <Body>
-            <MarkdownRenderer body="" />
-            {/* <MarkdownRenderer body={post.body} /> */}
+            <HTML html={htmlContent} imagesMaxWidth={Dimensions.get('window').width - 32} />
           </Body>
           <TagsContainer>
             <Tags tags={tags} onSelect={this.handleTagNavigate} />
