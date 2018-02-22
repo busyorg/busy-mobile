@@ -6,7 +6,7 @@ import Tag from './Tag';
 const Container = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 0 8px;
+  padding: 0 16px;
 `;
 
 const Tags = ({ tags, onSelect }) => (
