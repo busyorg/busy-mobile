@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UserHeaderContainer from './UserHeaderContainer';
 import FeedContainer from '../feed/FeedContainer';
-import LoadingScreen from '../components/LoadingScreen';
 
 export default class UserProfile extends React.Component {
   static propTypes = {
@@ -24,8 +23,13 @@ export default class UserProfile extends React.Component {
   render() {
     const { loading, name } = this.props;
 
-    if (loading) return <LoadingScreen />;
-
-    return <FeedContainer sortBy="blog" tag={name} header={<UserHeaderContainer name={name} />} />;
+    return (
+      <FeedContainer
+        sortBy="blog"
+        tag={name}
+        userLoading={loading}
+        header={<UserHeaderContainer name={name} />}
+      />
+    );
   }
 }

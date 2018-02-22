@@ -19,6 +19,7 @@ class Feed extends React.Component {
     tag: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.number),
     loading: PropTypes.bool,
+    userLoading: PropTypes.bool,
     header: PropTypes.node,
     getFeed: PropTypes.func,
     getMoreFeed: PropTypes.func,
@@ -28,15 +29,16 @@ class Feed extends React.Component {
     tag: null,
     list: [],
     loading: false,
+    userLoading: false,
     header: null,
     getFeed: () => {},
     getMoreFeed: () => {},
   };
 
   componentDidMount() {
-    const { sortBy, tag, loading, list } = this.props;
+    const { sortBy, tag, loading, list, userLoading } = this.props;
 
-    if (!loading && list.length === 0) {
+    if (!userLoading && !loading && list.length === 0) {
       this.props.getFeed(sortBy, tag);
     }
   }
@@ -83,9 +85,9 @@ class Feed extends React.Component {
   };
 
   render() {
-    const { list, loading, header } = this.props;
+    const { list, loading, userLoading, header } = this.props;
 
-    if (loading && list.length === 0) {
+    if (userLoading || (loading && list.length === 0)) {
       return <LoadingScreen />;
     }
 
