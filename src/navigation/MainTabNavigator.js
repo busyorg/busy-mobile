@@ -58,7 +58,7 @@ export default TabNavigator(
       showIcon: true,
       showLabel: false,
       style: {
-        backgroundColor: '#4757b2',
+        backgroundColor: '#1eacf8',
       },
       indicatorStyle: {
         backgroundColor: 'white',

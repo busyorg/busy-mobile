@@ -23,7 +23,7 @@ const RootStackNavigator = StackNavigator(
   {
     navigationOptions: () => ({
       headerStyle: {
-        backgroundColor: '#4757b2',
+        backgroundColor: '#1eacf8',
         elevation: 0,
       },
       headerTintColor: '#fff',
