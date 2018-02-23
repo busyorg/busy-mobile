@@ -3,7 +3,7 @@ import steem from '../services/steem';
 import * as feedActions from './actions';
 import { getLastPostId, getPostById } from '../reducers';
 
-function* loadFeed(sortBy, tag) {
+export function* loadFeed(sortBy, tag) {
   let result;
   if (tag) {
     result = yield call([steem, steem.getTag], tag, sortBy);
@@ -14,7 +14,7 @@ function* loadFeed(sortBy, tag) {
   yield put(feedActions.getFeedSuccess(result, sortBy, tag));
 }
 
-function* loadMoreFeed(sortBy, tag) {
+export function* loadMoreFeed(sortBy, tag) {
   const postId = yield select(getLastPostId, sortBy, tag);
   const lastPost = yield select(getPostById, postId);
 
@@ -28,7 +28,7 @@ function* loadMoreFeed(sortBy, tag) {
   yield put(feedActions.getMoreFeedSuccess(result, sortBy, tag));
 }
 
-function* refreshFeed(sortBy, tag) {
+export function* refreshFeed(sortBy, tag) {
   let result;
   if (tag) {
     result = yield call([steem, steem.getTag], tag, sortBy);
@@ -39,7 +39,7 @@ function* refreshFeed(sortBy, tag) {
   yield put(feedActions.refreshFeedSuccess(result, sortBy, tag));
 }
 
-function* watchLoadFeed() {
+export function* watchLoadFeed() {
   while (true) {
     const { meta } = yield take(feedActions.GET_FEED.REQUEST);
     const { sortBy, tag } = meta;
@@ -47,7 +47,7 @@ function* watchLoadFeed() {
   }
 }
 
-function* watchLoadMoreFeed() {
+export function* watchLoadMoreFeed() {
   while (true) {
     const { meta } = yield take(feedActions.GET_MORE_FEED.REQUEST);
     const { sortBy, tag } = meta;
@@ -55,7 +55,7 @@ function* watchLoadMoreFeed() {
   }
 }
 
-function* watchRefreshFeed() {
+export function* watchRefreshFeed() {
   while (true) {
     const { meta } = yield take(feedActions.REFRESH_FEED.REQUEST);
     const { sortBy, tag } = meta;
