@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { getUsersLoading } from '../ducks';
-import { getUser } from '../ducks/users';
+import { getUsersLoading } from '../reducers';
+import { getUser } from './actions';
 import UserProfile from './UserProfile';
 
 export default connect(

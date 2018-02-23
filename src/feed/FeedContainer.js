@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { getFeedList, getFeedLoading, getFeedRefreshing } from '../ducks';
-import { getFeed, getMoreFeed, refreshFeed } from '../ducks/feed';
+import { getFeedList, getFeedLoading, getFeedRefreshing } from '../reducers';
+import { getFeed, getMoreFeed, refreshFeed } from './actions';
 import Feed from './Feed';
 
 export default connect(

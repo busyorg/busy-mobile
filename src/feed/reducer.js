@@ -1,9 +1,5 @@
 import _ from 'lodash';
-import createAsyncType from '../helpers/createAsyncType';
-
-export const GET_FEED = createAsyncType('@feed/GET_FEED');
-export const GET_MORE_FEED = createAsyncType('@feed/GET_MORE_FEED');
-export const REFRESH_FEED = createAsyncType('@feed/REFRESH_FEED');
+import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from './actions';
 
 function getFeedName(sortBy, tag) {
   return tag ? `tag/${tag}/${sortBy}` : `global/${sortBy}`;
@@ -85,10 +81,3 @@ export const getLastPostId = (state, sortBy, tag) => {
   const list = getFeedList(state, sortBy, tag);
   return list[list.length - 1];
 };
-
-export const getFeed = (sortBy, tag) => ({ type: GET_FEED.REQUEST, meta: { sortBy, tag } });
-export const getMoreFeed = (sortBy, tag) => ({
-  type: GET_MORE_FEED.REQUEST,
-  meta: { sortBy, tag },
-});
-export const refreshFeed = (sortBy, tag) => ({ type: REFRESH_FEED.REQUEST, meta: { sortBy, tag } });

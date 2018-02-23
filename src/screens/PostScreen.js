@@ -6,7 +6,7 @@ import { ScrollView, Dimensions } from 'react-native';
 import styled from 'styled-components';
 import Remarkable from 'remarkable';
 import HTML from 'react-native-render-html';
-import { getPostById } from '../ducks';
+import { getPostById } from '../reducers';
 import Container from '../components/Container';
 import Header from '../components/PostFeed/components/Header';
 import Tags from '../components/Tags';

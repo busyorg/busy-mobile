@@ -6,8 +6,8 @@ import {
   getUserFollowingCount,
   getUserDisplayName,
   getUserAbout,
-} from '../ducks';
-import { getUser } from '../ducks/users';
+} from '../reducers';
+import { getUser } from './actions';
 
 const mapStateToProps = (state, { name }) => ({
   postCount: getUserPostCount(state, name),

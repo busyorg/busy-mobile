@@ -1,8 +1,5 @@
 import _ from 'lodash';
-import { createAction } from 'redux-actions';
-import createAsyncType from '../helpers/createAsyncType';
-
-export const GET_USER = createAsyncType('@users/GET_USER');
+import { GET_USER } from './actions';
 
 const initialState = {
   loading: false,
@@ -43,5 +40,3 @@ export const getUserDisplayName = (state, name) =>
   _.get(getUserMetadata(state, name), 'profile.name', '');
 export const getUserAbout = (state, name) =>
   _.get(getUserMetadata(state, name), 'profile.about', '');
-
-export const getUser = createAction(GET_USER.REQUEST);

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { getPostById } from '../ducks';
+import { getPostById } from '../reducers';
 import PostFeed from '../components/PostFeed';
 
 const mapStateToProps = (state, { id }) => {

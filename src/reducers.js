@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import feed, * as fromFeed from './feed';
-import posts, * as fromPosts from './posts';
-import users, * as fromUsers from './users';
+import feed, * as fromFeed from './feed/reducer';
+import posts, * as fromPosts from './posts/reducer';
+import users, * as fromUsers from './users/reducer';
 
 export default combineReducers({
   feed,

@@ -1,4 +1,4 @@
-import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from './feed';
+import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from '../feed/actions';
 
 export default function(state = {}, action) {
   switch (action.type) {
