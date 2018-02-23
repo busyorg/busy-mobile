@@ -19,7 +19,7 @@ export default function reducer(state = initialState, action) {
         loading: false,
         users: {
           ...state.users,
-          [action.payload.name]: action.payload,
+          [action.meta.username]: action.payload,
         },
       };
     default:

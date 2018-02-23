@@ -1,15 +1,16 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import steem from '../services/steem';
-import { GET_USER } from './actions';
+import * as usersActions from './actions';
 
 function* getUser(action) {
-  const user = yield call([steem, steem.getUser], action.payload);
+  const { username } = action.meta;
+  const user = yield call([steem, steem.getUser], username);
 
-  yield put({ type: GET_USER.SUCCESS, payload: user });
+  yield put(usersActions.getUserSuccess(user, username));
 }
 
 function* watchGetUser() {
-  yield takeEvery(GET_USER.REQUEST, getUser);
+  yield takeEvery(usersActions.GET_USER.REQUEST, getUser);
 }
 
 export default function* usersSagas() {
