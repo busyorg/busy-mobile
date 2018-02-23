@@ -1,6 +1,6 @@
 import { all, put, take, call, fork, select } from 'redux-saga/effects';
 import steem from '../services/steem';
-import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from './actions';
+import * as feedActions from './actions';
 import { getLastPostId, getPostById } from '../reducers';
 
 function* loadFeed(sortBy, tag) {
@@ -11,7 +11,7 @@ function* loadFeed(sortBy, tag) {
     result = yield call([steem, steem.getGlobal], sortBy);
   }
 
-  yield put({ type: GET_FEED.SUCCESS, payload: result, meta: { sortBy, tag } });
+  yield put(feedActions.getFeedSuccess(result, sortBy, tag));
 }
 
 function* loadMoreFeed(sortBy, tag) {
@@ -25,7 +25,7 @@ function* loadMoreFeed(sortBy, tag) {
     result = yield call([steem, steem.getMoreGlobal], sortBy, lastPost.author, lastPost.permlink);
   }
 
-  yield put({ type: GET_MORE_FEED.SUCCESS, payload: result, meta: { sortBy, tag } });
+  yield put(feedActions.getMoreFeedSuccess(result, sortBy, tag));
 }
 
 function* refreshFeed(sortBy, tag) {
@@ -36,12 +36,12 @@ function* refreshFeed(sortBy, tag) {
     result = yield call([steem, steem.getGlobal], sortBy);
   }
 
-  yield put({ type: REFRESH_FEED.SUCCESS, payload: result, meta: { sortBy, tag } });
+  yield put(feedActions.refreshFeedSuccess(result, sortBy, tag));
 }
 
 function* watchLoadFeed() {
   while (true) {
-    const { meta } = yield take(GET_FEED.REQUEST);
+    const { meta } = yield take(feedActions.GET_FEED.REQUEST);
     const { sortBy, tag } = meta;
     yield fork(loadFeed, sortBy, tag);
   }
@@ -49,7 +49,7 @@ function* watchLoadFeed() {
 
 function* watchLoadMoreFeed() {
   while (true) {
-    const { meta } = yield take(GET_MORE_FEED.REQUEST);
+    const { meta } = yield take(feedActions.GET_MORE_FEED.REQUEST);
     const { sortBy, tag } = meta;
     yield fork(loadMoreFeed, sortBy, tag);
   }
@@ -57,7 +57,7 @@ function* watchLoadMoreFeed() {
 
 function* watchRefreshFeed() {
   while (true) {
-    const { meta } = yield take(REFRESH_FEED.REQUEST);
+    const { meta } = yield take(feedActions.REFRESH_FEED.REQUEST);
     const { sortBy, tag } = meta;
     yield fork(refreshFeed, sortBy, tag);
   }
