@@ -18,7 +18,7 @@ function users(state = {}, action) {
     case GET_USER.SUCCESS:
       return {
         ...state,
-        [action.meta.username]: action.payload,
+        ...action.payload.entities.users,
       };
     default:
       return state;

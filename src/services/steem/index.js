@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { createClient } from 'lightrpc';
 import { normalize } from 'normalizr';
-import { postsSchema } from './schemas';
+import { postsSchema, userSchema } from './schemas';
 
 function Client() {
   this.client = createClient('https://api.steemit.com');
@@ -61,7 +61,7 @@ Client.prototype.getUser = async function getUser(username) {
   user.follower_count = followCount.follower_count;
   user.following_count = followCount.following_count;
 
-  return user;
+  return normalize(user, userSchema);
 };
 
 export default new Client();
