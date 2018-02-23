@@ -9,7 +9,7 @@ export default combineReducers({
   users,
 });
 
-export const getFeedList = (state, sortBy, tag) => fromFeed.getFeedList(state.feed, sortBy, tag);
+export const getFeedIds = (state, sortBy, tag) => fromFeed.getFeedIds(state.feed, sortBy, tag);
 export const getFeedLoading = (state, sortBy, tag) =>
   fromFeed.getFeedLoading(state.feed, sortBy, tag);
 export const getFeedRefreshing = (state, sortBy, tag) =>
