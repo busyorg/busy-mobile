@@ -2,7 +2,7 @@ import { all, takeEvery, put, call } from 'redux-saga/effects';
 import steem from '../services/steem';
 import * as usersActions from './actions';
 
-function* getUser(action) {
+export function* getUser(action) {
   const { username } = action.meta;
   const user = yield call([steem, steem.getUser], username);
 
