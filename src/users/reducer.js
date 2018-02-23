@@ -1,31 +1,34 @@
 import _ from 'lodash';
+import { combineReducers } from 'redux';
 import { GET_USER } from './actions';
 
-const initialState = {
-  loading: false,
-  users: [],
-};
-
-export default function reducer(state = initialState, action) {
+function loading(state = false, action) {
   switch (action.type) {
     case GET_USER.REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
+      return true;
+    case GET_USER.SUCCESS:
+      return false;
+    default:
+      return state;
+  }
+}
+
+function users(state = {}, action) {
+  switch (action.type) {
     case GET_USER.SUCCESS:
       return {
         ...state,
-        loading: false,
-        users: {
-          ...state.users,
-          [action.meta.username]: action.payload,
-        },
+        [action.meta.username]: action.payload,
       };
     default:
       return state;
   }
 }
+
+export default combineReducers({
+  loading,
+  users,
+});
 
 export const getUsersLoading = state => state.loading;
 export const getUserByName = (state, name) => _.get(state, `users[${name}]`, {});
