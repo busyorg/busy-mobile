@@ -1,13 +1,18 @@
 import { combineReducers } from 'redux';
+import auth, * as fromAuth from './auth/reducer';
 import feed, * as fromFeed from './feed/reducer';
 import posts, * as fromPosts from './posts/reducer';
 import users, * as fromUsers from './users/reducer';
 
 export default combineReducers({
+  auth,
   feed,
   posts,
   users,
 });
+
+export const getIsAuthLoading = state => fromAuth.getIsAuthLoading(state.auth);
+export const getAuthUser = state => fromAuth.getAuthUser(state.auth);
 
 export const getFeedIds = (state, sortBy, tag) => fromFeed.getFeedIds(state.feed, sortBy, tag);
 export const getFeedLoading = (state, sortBy, tag) =>
