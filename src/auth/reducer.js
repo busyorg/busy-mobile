@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOGIN } from './actions';
+import { LOGIN, LOGOUT } from './actions';
 
 function loading(state = false, action) {
   switch (action.type) {
@@ -16,6 +16,8 @@ function user(state = null, action) {
   switch (action.type) {
     case LOGIN.SUCCESS:
       return action.payload;
+    case LOGOUT:
+      return null;
     default:
       return state;
   }

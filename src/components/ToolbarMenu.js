@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { UIManager, findNodeHandle, TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components';
-import { MaterialIcons } from '@expo/vector-icons';
 
 const IconContainer = styled.View`
   align-items: center;
@@ -42,9 +41,7 @@ export default class PopupMenu extends React.Component {
         background={TouchableNativeFeedback.Ripple('#AAF', true)}
         onPress={this.onPress}
       >
-        <IconContainer>
-          <MaterialIcons name="sort" size={28} color="white" />
-        </IconContainer>
+        <IconContainer>{this.props.children}</IconContainer>
       </TouchableNativeFeedback>
     );
   }

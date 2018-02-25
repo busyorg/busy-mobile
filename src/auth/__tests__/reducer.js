@@ -47,4 +47,20 @@ describe('auth reducer', () => {
 
     expect(actual).toEqual(expected);
   });
+
+  it('should handle LOGOUT', () => {
+    const initialState = {
+      loading: false,
+      user: { name: 'sekhmet' },
+    };
+    const action = actions.logout();
+
+    const expected = {
+      loading: false,
+      user: null,
+    };
+    const actual = reducer(initialState, action);
+
+    expect(actual).toEqual(expected);
+  });
 });

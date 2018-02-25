@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MaterialIcons } from '@expo/vector-icons';
 import ToolbarMenu from '../components/ToolbarMenu';
 import FeedContainer from '../feed/FeedContainer';
 
@@ -27,7 +28,9 @@ export default class HomeScreen extends React.Component {
 
   setNavigationParams = () => {
     const headerRight = (
-      <ToolbarMenu options={['Trending', 'New', 'Active', 'Hot']} onSelect={this.handleSelect} />
+      <ToolbarMenu options={['Trending', 'New', 'Active', 'Hot']} onSelect={this.handleSelect}>
+        <MaterialIcons name="sort" size={28} color="white" />
+      </ToolbarMenu>
     );
 
     this.props.navigation.setParams({

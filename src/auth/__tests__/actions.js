@@ -24,4 +24,13 @@ describe('auth actions', () => {
 
     expect(actual).toEqual(expected);
   });
+
+  it('should create logout action', () => {
+    const expected = {
+      type: fromActions.LOGOUT,
+    };
+    const actual = fromActions.logout();
+
+    expect(actual).toEqual(expected);
+  });
 });
