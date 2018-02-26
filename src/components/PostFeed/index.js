@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components';
+import numeral from 'numeral';
 import Container from '../Container';
 import Header from './components/Header';
 import ImagePreview from './components/ImagePreview';
@@ -10,6 +11,8 @@ import Body from './components/Body';
 
 const Footer = styled.View`
   padding: 0 16px 8px;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Data = styled.View``;
@@ -54,7 +57,7 @@ export default class PostFeed extends React.PureComponent {
   };
 
   render() {
-    const { author, title, created, upvoteCount, commentCount, image } = this.props;
+    const { author, title, created, upvoteCount, commentCount, image, payout } = this.props;
 
     return (
       <Container>
@@ -76,6 +79,9 @@ export default class PostFeed extends React.PureComponent {
                 <Count>
                   Likes: {upvoteCount} Comments: {commentCount}
                 </Count>
+              </Data>
+              <Data>
+                <Count>{numeral(payout).format('$0.00')}</Count>
               </Data>
             </Footer>
           </View>

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { calculatePayout } from '../helpers/steemitHelpers';
 
 export default function parsePost(post) {
   const newPost = {};
@@ -18,6 +19,10 @@ export default function parsePost(post) {
   newPost.commentCount = post.children;
   newPost.upvoteCount = post.active_votes.filter(vote => vote.percent >= 0).length;
   newPost.flagCount = newPost.upvoteCount - post.active_votes.length;
+
+  const payout = calculatePayout(post);
+
+  newPost.payout = payout.cashoutInTime ? payout.potentialPayout : payout.pastPayouts;
 
   return newPost;
 }
