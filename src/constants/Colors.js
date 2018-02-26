@@ -1,5 +1,5 @@
 export default {
-  primary: '#1eacf8',
+  primary: '#2088ff',
   secondary: '#0274dc',
   accent: '#ff4081',
   tabIconDefault: 'white',
