@@ -5,16 +5,11 @@ import PostFeed from '../components/PostFeed';
 
 const mapStateToProps = (state, { id }) => {
   const post = getPostById(state, id);
-  const { author, title, created, json_metadata: jsonMetadata } = post;
+  const { author, title, created, upvoteCount, commentCount, metadata } = post;
 
-  const metadata = _.attempt(JSON.parse, jsonMetadata);
+  const image = _.get(metadata, 'image[0]', null);
 
-  let image = null;
-  if (!_.isError(metadata)) {
-    image = _.get(metadata, 'image[0]', null);
-  }
-
-  return { id, author, title, created, image };
+  return { id, author, title, created, upvoteCount, commentCount, image };
 };
 
 export default connect(mapStateToProps)(PostFeed);

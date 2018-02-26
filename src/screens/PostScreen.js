@@ -55,10 +55,7 @@ class PostScreen extends React.Component {
   render() {
     const { post } = this.props;
 
-    let metadata = _.attempt(JSON.parse, post.json_metadata);
-    if (_.isError(metadata)) metadata = {};
-
-    const tags = _.union(_.get(metadata, 'tags', []), [post.category]);
+    const tags = _.union(_.get(post.metadata, 'tags', []), [post.category]);
 
     const htmlContent = md.render(post.body);
 

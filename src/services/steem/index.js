@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { createClient } from 'lightrpc';
 import { normalize } from 'normalizr';
+import parsePost from '../../helpers/parsePost';
 import { postsSchema, userSchema } from './schemas';
 
 function Client() {
@@ -17,28 +18,31 @@ Client.prototype.sendAsync = function sendAsync(message, params) {
 };
 
 Client.prototype.getGlobal = async function getGlobal(sortBy) {
-  const result = await this.sendAsync(`get_discussions_by_${sortBy}`, [{ limit: 10 }]);
+  let result = await this.sendAsync(`get_discussions_by_${sortBy}`, [{ limit: 10 }]);
+  result = result.map(parsePost);
   return normalize(result, postsSchema);
 };
 
 Client.prototype.getMoreGlobal = async function getMoreGlobal(sortBy, startAuthor, startPermlink) {
-  const result = await this.sendAsync(`get_discussions_by_${sortBy}`, [
+  let result = await this.sendAsync(`get_discussions_by_${sortBy}`, [
     {
       limit: 11,
       start_author: startAuthor,
       start_permlink: startPermlink,
     },
   ]);
-  return normalize(result.slice(1), postsSchema);
+  result = result.slice(1).map(parsePost);
+  return normalize(result, postsSchema);
 };
 
 Client.prototype.getTag = async function getTag(tag, sortBy) {
-  const result = await this.sendAsync(`get_discussions_by_${sortBy}`, [{ tag, limit: 10 }]);
+  let result = await this.sendAsync(`get_discussions_by_${sortBy}`, [{ tag, limit: 10 }]);
+  result = result.map(parsePost);
   return normalize(result, postsSchema);
 };
 
 Client.prototype.getMoreTag = async function getMoreTag(tag, sortBy, startAuthor, startPermlink) {
-  const result = await this.sendAsync(`get_discussions_by_${sortBy}`, [
+  let result = await this.sendAsync(`get_discussions_by_${sortBy}`, [
     {
       tag,
       limit: 11,
@@ -46,7 +50,8 @@ Client.prototype.getMoreTag = async function getMoreTag(tag, sortBy, startAuthor
       start_permlink: startPermlink,
     },
   ]);
-  return normalize(result.slice(1), postsSchema);
+  result = result.slice(1).map(parsePost);
+  return normalize(result, postsSchema);
 };
 
 Client.prototype.getUser = async function getUser(username) {
