@@ -19,6 +19,7 @@ const Data = styled.View``;
 
 const Count = styled.Text`
   color: rgba(0, 0, 0, 0.54);
+  font-weight: 500;
   font-size: 16px;
 `;
 
@@ -77,7 +78,7 @@ export default class PostFeed extends React.PureComponent {
             <Footer>
               <Data>
                 <Count>
-                  Likes: {upvoteCount} Comments: {commentCount}
+                  👍 {upvoteCount} ✍️ {commentCount}
                 </Count>
               </Data>
               <Data>
