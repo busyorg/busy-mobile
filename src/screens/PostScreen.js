@@ -10,6 +10,7 @@ import { getPostById } from '../reducers';
 import Container from '../components/Container';
 import Header from '../components/PostFeed/components/Header';
 import Tags from '../components/Tags';
+import Footer from '../components/PostFeed/components/Footer';
 
 const md = new Remarkable({
   html: true, // remarkable renders first then sanitize runs...
@@ -70,6 +71,11 @@ class PostScreen extends React.Component {
           <TagsContainer>
             <Tags tags={tags} onSelect={this.handleTagNavigate} />
           </TagsContainer>
+          <Footer
+            upvoteCount={post.upvoteCount}
+            commentCount={post.commentCount}
+            payout={post.payout}
+          />
         </ScrollView>
       </Container>
     );
