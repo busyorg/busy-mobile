@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { AppLoading, Font } from 'expo';
 import styled from 'styled-components';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import store from './store';
 import initialize from './auth/initialize';
 import RootNavigation from './navigation/RootNavigation';
@@ -25,6 +25,7 @@ export default class App extends React.Component {
       Font.loadAsync({
         ...Ionicons.font,
         ...MaterialIcons.font,
+        ...MaterialCommunityIcons.font,
       }),
       initialize(store),
     ]);
