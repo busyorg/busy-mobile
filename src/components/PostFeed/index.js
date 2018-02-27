@@ -1,27 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, TouchableNativeFeedback } from 'react-native';
-import styled from 'styled-components';
-import numeral from 'numeral';
 import Container from '../Container';
 import Header from './components/Header';
 import ImagePreview from './components/ImagePreview';
 import Title from './components/Title';
 import Body from './components/Body';
-
-const Footer = styled.View`
-  padding: 0 16px 8px;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const Data = styled.View``;
-
-const Count = styled.Text`
-  color: rgba(0, 0, 0, 0.54);
-  font-weight: 500;
-  font-size: 16px;
-`;
+import Footer from './components/Footer';
 
 export default class PostFeed extends React.PureComponent {
   static propTypes = {
@@ -31,6 +16,7 @@ export default class PostFeed extends React.PureComponent {
     created: PropTypes.string,
     upvoteCount: PropTypes.number,
     commentCount: PropTypes.number,
+    payout: PropTypes.number,
     image: PropTypes.string,
     onPostNavigate: PropTypes.func,
     onUserNavigate: PropTypes.func,
@@ -42,6 +28,7 @@ export default class PostFeed extends React.PureComponent {
     created: '',
     upvoteCount: 0,
     commentCount: 0,
+    payout: 0,
     image: null,
     onPostNavigate: () => {},
     onUserNavigate: () => {},
@@ -75,16 +62,7 @@ export default class PostFeed extends React.PureComponent {
               These blocks can be organized to promote different types of content. For example,
               numbers may be emphasized by increasing their typographic scale.
             </Body>
-            <Footer>
-              <Data>
-                <Count>
-                  👍 {upvoteCount} ✍️ {commentCount}
-                </Count>
-              </Data>
-              <Data>
-                <Count>{numeral(payout).format('$0.00')}</Count>
-              </Data>
-            </Footer>
+            <Footer upvoteCount={upvoteCount} commentCount={commentCount} payout={payout} />
           </View>
         </TouchableNativeFeedback>
       </Container>
