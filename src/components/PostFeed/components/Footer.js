@@ -6,7 +6,8 @@ import numeral from 'numeral';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Container = styled.View`
-  margin: 0 8px;
+  background: #fafafa;
+  padding: 0 8px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -28,7 +29,7 @@ const CounterText = styled.Text`
   color: rgba(0, 0, 0, 0.54);
   font-weight: 500;
   font-size: 16px;
-  margin: 0 8px;
+  margin-left: 8px;
 `;
 
 const Footer = ({ upvoteCount, commentCount, payout }) => (
@@ -52,7 +53,9 @@ const Footer = ({ upvoteCount, commentCount, payout }) => (
       </TouchableNativeFeedback>
     </Data>
     <Data>
-      <CounterText>{numeral(payout).format('$0.00')}</CounterText>
+      <Counter>
+        <CounterText>{numeral(payout).format('$0.00')}</CounterText>
+      </Counter>
     </Data>
   </Container>
 );
