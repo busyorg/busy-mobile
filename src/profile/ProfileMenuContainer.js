@@ -16,7 +16,7 @@ class ProfileMenu extends React.Component {
     logout: () => {},
   };
 
-  handleSelect = async (eventName, id) => {
+  handleSelect = async id => {
     if (id === 1) {
       await SecureStore.deleteItemAsync('accessToken');
       sc2.setAccessToken(null);

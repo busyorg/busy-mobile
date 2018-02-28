@@ -53,7 +53,7 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  handleSelect = (eventName, id) => {
+  handleSelect = id => {
     const sort = this.getSort(id);
     this.setState({
       sort,

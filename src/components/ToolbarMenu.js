@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { UIManager, findNodeHandle } from 'react-native';
+import { Platform, UIManager, findNodeHandle, ActionSheetIOS } from 'react-native';
 import styled from 'styled-components';
 import CrossTouchable from './CrossTouchable';
 
@@ -32,7 +32,25 @@ export default class PopupMenu extends React.Component {
     if (!this.icon) return;
     const { options, onSelect } = this.props;
 
-    UIManager.showPopupMenu(findNodeHandle(this.icon), options, () => {}, onSelect);
+    if (Platform.OS === 'ios') {
+      const newOptions = [...options, 'Cancel'];
+
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          title: 'Sort by',
+          options: newOptions,
+          destructiveButtonIndex: newOptions.length - 1,
+        },
+        onSelect,
+      );
+    } else {
+      UIManager.showPopupMenu(
+        findNodeHandle(this.icon),
+        options,
+        () => {},
+        (type, id) => onSelect(id),
+      );
+    }
   };
 
   render() {
