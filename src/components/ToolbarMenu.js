@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { UIManager, findNodeHandle, TouchableNativeFeedback } from 'react-native';
+import { UIManager, findNodeHandle } from 'react-native';
 import styled from 'styled-components';
+import CrossTouchable from './CrossTouchable';
 
 const IconContainer = styled.View`
   align-items: center;
@@ -36,13 +37,9 @@ export default class PopupMenu extends React.Component {
 
   render() {
     return (
-      <TouchableNativeFeedback
-        ref={this.onRef}
-        background={TouchableNativeFeedback.Ripple('#AAF', true)}
-        onPress={this.onPress}
-      >
-        <IconContainer>{this.props.children}</IconContainer>
-      </TouchableNativeFeedback>
+      <CrossTouchable cricle onPress={this.onPress}>
+        <IconContainer ref={this.onRef}>{this.props.children}</IconContainer>
+      </CrossTouchable>
     );
   }
 }
