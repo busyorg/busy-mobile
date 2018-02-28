@@ -5,7 +5,7 @@ import sc2 from '../services/sc2';
 const initialize = store =>
   new Promise(async resolve => {
     const accessToken = await SecureStore.getItemAsync('accessToken');
-    if (accessToken === null) return resolve();
+    if (accessToken === null || accessToken === undefined) return resolve();
 
     sc2.setAccessToken(accessToken);
     const result = await sc2.me();
