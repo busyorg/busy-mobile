@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, TouchableNativeFeedback } from 'react-native';
+import { View } from 'react-native';
+import CrossTouchable from '../CrossTouchable';
 import Container from '../Container';
 import Header from './components/Header';
 import ImagePreview from './components/ImagePreview';
@@ -50,7 +51,7 @@ export default class PostFeed extends React.PureComponent {
     return (
       <Container>
         <Header author={author} created={created} onPress={this.handleUserPress} />
-        <TouchableNativeFeedback onPress={this.handlePostPress}>
+        <CrossTouchable onPress={this.handlePostPress}>
           <View>
             {image && (
               <ImagePreview source={{ uri: `https://steemitimages.com/400x400/${image}` }} />
@@ -64,7 +65,7 @@ export default class PostFeed extends React.PureComponent {
             </Body>
             <Footer upvoteCount={upvoteCount} commentCount={commentCount} payout={payout} />
           </View>
-        </TouchableNativeFeedback>
+        </CrossTouchable>
       </Container>
     );
   }

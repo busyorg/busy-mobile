@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TouchableNativeFeedback, Text } from 'react-native';
+import { Text } from 'react-native';
 import styled from 'styled-components';
 import moment from 'moment';
+import CrossTouchable from '../../CrossTouchable';
 import Avatar from './Avatar';
 
 const Container = styled.View`
@@ -21,7 +22,7 @@ const Date = styled.Text`
 `;
 
 const Header = ({ author, created, onPress }) => (
-  <TouchableNativeFeedback onPress={onPress}>
+  <CrossTouchable onPress={onPress}>
     <Container>
       <Avatar username={author} />
       <TextContainer>
@@ -29,7 +30,7 @@ const Header = ({ author, created, onPress }) => (
         <Date>{moment(`${created}Z`).fromNow()}</Date>
       </TextContainer>
     </Container>
-  </TouchableNativeFeedback>
+  </CrossTouchable>
 );
 
 Header.propTypes = {

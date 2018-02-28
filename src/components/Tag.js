@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components';
+import CrossTouchable from './CrossTouchable';
 
 const Container = styled.View`
   margin: 0 4px 4px 0;
@@ -16,11 +16,11 @@ const Text = styled.Text`
 `;
 
 const Tag = ({ name, onPress }) => (
-  <TouchableNativeFeedback onPress={onPress}>
+  <CrossTouchable onPress={onPress}>
     <Container>
       <Text>{name}</Text>
     </Container>
-  </TouchableNativeFeedback>
+  </CrossTouchable>
 );
 Tag.propTypes = {
   name: PropTypes.string.isRequired,

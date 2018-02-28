@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components';
 import numeral from 'numeral';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../../../constants/Colors';
+import CrossTouchable from '../../CrossTouchable';
 
 const Container = styled.View`
   background: #fafafa;
@@ -50,7 +50,7 @@ class Footer extends React.Component {
     return (
       <Container>
         <Data>
-          <TouchableNativeFeedback onPress={this.handleLikeClick}>
+          <CrossTouchable onPress={this.handleLikeClick}>
             <Counter>
               <MaterialCommunityIcons
                 name="arrow-up-bold-circle"
@@ -59,13 +59,13 @@ class Footer extends React.Component {
               />
               <CounterText>{upvoteCount}</CounterText>
             </Counter>
-          </TouchableNativeFeedback>
-          <TouchableNativeFeedback>
+          </CrossTouchable>
+          <CrossTouchable>
             <Counter>
               <MaterialCommunityIcons name="comment-text" size={18} color={Colors.secondaryText} />
               <CounterText>{commentCount}</CounterText>
             </Counter>
-          </TouchableNativeFeedback>
+          </CrossTouchable>
         </Data>
         <Data>
           <Counter>
