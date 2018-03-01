@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
 
   setNavigationParams = () => {
     const headerRight = (
-      <ToolbarMenu options={['Trending', 'New', 'Active', 'Hot']} onSelect={this.handleSelect}>
+      <ToolbarMenu title='Sort by' options={['Trending', 'New', 'Active', 'Hot']} onSelect={this.handleSelect}>
         <MaterialIcons name="sort" size={28} color="white" />
       </ToolbarMenu>
     );

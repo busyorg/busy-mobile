@@ -15,11 +15,13 @@ const IconContainer = styled.View`
 
 export default class PopupMenu extends React.Component {
   static propTypes = {
+    title: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.string),
     onSelect: PropTypes.func,
   };
 
   static defaultProps = {
+    title: undefined,
     options: [],
     onSelect: () => {},
   };
@@ -30,14 +32,14 @@ export default class PopupMenu extends React.Component {
 
   onPress = () => {
     if (!this.icon) return;
-    const { options, onSelect } = this.props;
+    const { title, options, onSelect } = this.props;
 
     if (Platform.OS === 'ios') {
       const newOptions = [...options, 'Cancel'];
 
       ActionSheetIOS.showActionSheetWithOptions(
         {
-          title: 'Sort by',
+          title,
           options: newOptions,
           destructiveButtonIndex: newOptions.length - 1,
         },
