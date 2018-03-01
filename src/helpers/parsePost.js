@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Remarkable from 'remarkable';
+import striptags from 'striptags';
 import { calculatePayout } from '../helpers/steemitHelpers';
 
 const md = new Remarkable({
@@ -27,6 +28,9 @@ export default function parsePost(post) {
   newPost.tags = _.union(_.get(newPost.metadata, 'tags', []), [post.category]);
 
   newPost.htmlBody = md.render(post.body);
+  newPost.excerpt = _.unescape(striptags(newPost.htmlBody).replace(/\n/g, ' '))
+    .slice(0, 200)
+    .trim();
 
   const upvotes = post.active_votes.filter(vote => vote.percent >= 0);
 

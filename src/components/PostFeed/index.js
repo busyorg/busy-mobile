@@ -15,6 +15,7 @@ export default class PostFeed extends React.PureComponent {
     author: PropTypes.string,
     title: PropTypes.string,
     created: PropTypes.string,
+    excerpt: PropTypes.string,
     upvoteCount: PropTypes.number,
     commentCount: PropTypes.number,
     payout: PropTypes.number,
@@ -28,6 +29,7 @@ export default class PostFeed extends React.PureComponent {
     author: '',
     title: '',
     created: '',
+    excerpt: '',
     upvoteCount: 0,
     commentCount: 0,
     payout: 0,
@@ -52,6 +54,7 @@ export default class PostFeed extends React.PureComponent {
       author,
       title,
       created,
+      excerpt,
       upvoteCount,
       commentCount,
       image,
@@ -70,10 +73,7 @@ export default class PostFeed extends React.PureComponent {
             <Title narrow={!image} numberOfLines={3}>
               {title}
             </Title>
-            <Body>
-              These blocks can be organized to promote different types of content. For example,
-              numbers may be emphasized by increasing their typographic scale.
-            </Body>
+            <Body numberOfLines={3}>{excerpt}</Body>
             <Footer
               upvoted={upvoted}
               upvoteCount={upvoteCount}
