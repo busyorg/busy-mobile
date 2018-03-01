@@ -16,9 +16,12 @@ export default function parsePost(post) {
   if (_.isError(metadata)) metadata = {};
   newPost.metadata = metadata;
 
+  const upvotes = post.active_votes.filter(vote => vote.percent >= 0);
+
   newPost.commentCount = post.children;
-  newPost.upvoteCount = post.active_votes.filter(vote => vote.percent >= 0).length;
+  newPost.upvoteCount = upvotes.length;
   newPost.flagCount = newPost.upvoteCount - post.active_votes.length;
+  newPost.upvoters = upvotes.map(vote => vote.voter);
 
   const payout = calculatePayout(post);
 

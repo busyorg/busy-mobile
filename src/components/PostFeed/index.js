@@ -18,6 +18,7 @@ export default class PostFeed extends React.PureComponent {
     upvoteCount: PropTypes.number,
     commentCount: PropTypes.number,
     payout: PropTypes.number,
+    upvoted: PropTypes.bool,
     image: PropTypes.string,
     onPostNavigate: PropTypes.func,
     onUserNavigate: PropTypes.func,
@@ -30,6 +31,7 @@ export default class PostFeed extends React.PureComponent {
     upvoteCount: 0,
     commentCount: 0,
     payout: 0,
+    upvoted: false,
     image: null,
     onPostNavigate: () => {},
     onUserNavigate: () => {},
@@ -46,7 +48,16 @@ export default class PostFeed extends React.PureComponent {
   };
 
   render() {
-    const { author, title, created, upvoteCount, commentCount, image, payout } = this.props;
+    const {
+      author,
+      title,
+      created,
+      upvoteCount,
+      commentCount,
+      image,
+      payout,
+      upvoted,
+    } = this.props;
 
     return (
       <Container>
@@ -63,7 +74,12 @@ export default class PostFeed extends React.PureComponent {
               These blocks can be organized to promote different types of content. For example,
               numbers may be emphasized by increasing their typographic scale.
             </Body>
-            <Footer upvoteCount={upvoteCount} commentCount={commentCount} payout={payout} />
+            <Footer
+              upvoted={upvoted}
+              upvoteCount={upvoteCount}
+              commentCount={commentCount}
+              payout={payout}
+            />
           </View>
         </CrossTouchable>
       </Container>

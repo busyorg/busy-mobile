@@ -6,7 +6,7 @@ import { ScrollView, Dimensions } from 'react-native';
 import styled from 'styled-components';
 import Remarkable from 'remarkable';
 import HTML from 'react-native-render-html';
-import { getPostById } from '../reducers';
+import { getPostById, getAuthUser } from '../reducers';
 import Container from '../components/Container';
 import Header from '../components/PostFeed/components/Header';
 import Tags from '../components/Tags';
@@ -42,6 +42,11 @@ class PostScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape().isRequired,
     post: PropTypes.shape().isRequired,
+    user: PropTypes.shape(),
+  };
+
+  static defaultProps = {
+    user: null,
   };
 
   handleUserNavigate = () => {
@@ -54,11 +59,13 @@ class PostScreen extends React.Component {
   };
 
   render() {
-    const { post } = this.props;
+    const { post, user } = this.props;
 
     const tags = _.union(_.get(post.metadata, 'tags', []), [post.category]);
 
     const htmlContent = md.render(post.body);
+
+    const upvoted = user && user.name && post.upvoters.indexOf(user.name) !== -1;
 
     return (
       <Container full>
@@ -72,6 +79,7 @@ class PostScreen extends React.Component {
             <Tags tags={tags} onSelect={this.handleTagNavigate} />
           </TagsContainer>
           <Footer
+            upvoted={upvoted}
             upvoteCount={post.upvoteCount}
             commentCount={post.commentCount}
             payout={post.payout}
@@ -87,6 +95,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     post: getPostById(state, id),
+    user: getAuthUser(state),
   };
 };
 

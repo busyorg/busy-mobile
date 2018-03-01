@@ -34,18 +34,10 @@ const CounterText = styled.Text`
 `;
 
 class Footer extends React.Component {
-  state = {
-    liked: false,
-  };
-
-  handleLikeClick = () =>
-    this.setState(prevState => ({
-      liked: !prevState.liked,
-    }));
+  handleLikeClick = () => {};
 
   render() {
-    const { upvoteCount, commentCount, payout } = this.props;
-    const { liked } = this.state;
+    const { upvoteCount, commentCount, payout, upvoted } = this.props;
 
     return (
       <Container>
@@ -55,7 +47,7 @@ class Footer extends React.Component {
               <MaterialCommunityIcons
                 name="arrow-up-bold-circle"
                 size={18}
-                color={liked ? Colors.accent : Colors.secondaryText}
+                color={upvoted ? Colors.accent : Colors.secondaryText}
               />
               <CounterText>{upvoteCount}</CounterText>
             </Counter>
@@ -80,11 +72,13 @@ Footer.propTypes = {
   upvoteCount: PropTypes.number,
   commentCount: PropTypes.number,
   payout: PropTypes.number,
+  upvoted: PropTypes.bool,
 };
 Footer.defaultProps = {
   upvoteCount: 0,
   commentCount: 0,
   payout: 0,
+  upvoted: false,
 };
 
 export default Footer;
