@@ -1,6 +1,6 @@
 import React from 'react';
-import ProfileMenuContainer from '../profile/ProfileMenuContainer';
-import ProfileContainer from '../profile/ProfileContainer';
+import ProfileMenuContainer from '../profile/containers/ProfileMenuContainer';
+import ProfileContainer from '../profile/containers/ProfileContainer';
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions = {

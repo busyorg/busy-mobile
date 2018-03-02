@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SinglePostContainer from '../posts/SinglePostContainer';
+import SinglePostContainer from '../posts/containers/SinglePostContainer';
 
 export default class PostScreen extends React.Component {
   static navigationOptions = {

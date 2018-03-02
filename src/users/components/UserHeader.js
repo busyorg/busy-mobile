@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Statistics from '../components/Statistics';
+import Avatar from '../../components/Avatar';
+import Statistics from '../../components/Statistics';
 
 const Container = styled.View`
   padding: 16px;
@@ -11,12 +12,6 @@ const Container = styled.View`
 
 const Center = styled.View`
   align-items: center;
-`;
-
-const Avatar = styled.Image`
-  width: 72px;
-  height: 72px;
-  border-radius: 36px;
 `;
 
 const Name = styled.Text`
@@ -38,7 +33,7 @@ const Footer = styled.View`
 const UserHeader = ({ name, displayName, about, postCount, followerCount, followingCount }) => (
   <Container>
     <Center>
-      <Avatar source={{ uri: `https://steemitimages.com/u/${name}/avatar` }} />
+      <Avatar size={72} username={name} />
       <Name>{displayName || name}</Name>
       <About>{about}</About>
     </Center>

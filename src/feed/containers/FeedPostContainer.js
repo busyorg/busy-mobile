@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { votePost } from '../posts/actions';
-import { getPostById, getAuthUser, getIsPostPendingVote } from '../reducers';
-import PostFeed from '../components/PostFeed';
+import { votePost } from '../../posts/actions';
+import { getPostById, getAuthUser, getIsPostPendingVote } from '../../reducers';
+import FeedPost from '../components/FeedPost';
 
 const mapStateToProps = (state, { id }) => {
   const post = getPostById(state, id);
@@ -39,4 +39,4 @@ const mapStateToProps = (state, { id }) => {
   };
 };
 
-export default connect(mapStateToProps, { votePost })(PostFeed);
+export default connect(mapStateToProps, { votePost })(FeedPost);

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { getUsersLoading } from '../reducers';
-import { getUser } from './actions';
-import UserProfile from './UserProfile';
+import { getUsersLoading } from '../../reducers';
+import { getUser } from '../actions';
+import UserProfile from '../components/UserProfile';
 
 export default connect(
   state => ({

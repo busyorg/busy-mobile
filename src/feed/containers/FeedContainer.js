@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { getFeedIds, getFeedLoading, getFeedRefreshing } from '../reducers';
-import { getFeed, getMoreFeed, refreshFeed } from './actions';
-import Feed from './Feed';
+import { getFeedIds, getFeedLoading, getFeedRefreshing } from '../../reducers';
+import { getFeed, getMoreFeed, refreshFeed } from '../actions';
+import Feed from '../components/Feed';
 
 export default connect(
   (state, { sortBy, tag }) => ({

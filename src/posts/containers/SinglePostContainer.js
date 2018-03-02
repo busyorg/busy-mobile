@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { getPostById, getAuthUser, getIsPostPendingVote } from '../reducers';
-import { votePost } from './actions';
-import SinglePost from './SinglePost';
+import { getPostById, getAuthUser, getIsPostPendingVote } from '../../reducers';
+import { votePost } from '../actions';
+import SinglePost from '../components/SinglePost';
 
 class SinglePostContainer extends React.Component {
   static propTypes = {

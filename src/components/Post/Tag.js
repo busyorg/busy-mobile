@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import CrossTouchable from './CrossTouchable';
+import CrossTouchable from '../CrossTouchable';
 
 const Container = styled.View`
   margin: 0 4px 4px 0;

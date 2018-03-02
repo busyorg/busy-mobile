@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getAuthUser, getIsAuthLoading } from '../reducers';
-import LoadingScreen from '../components/LoadingScreen';
-import Login from '../auth/Login';
-import UserProfileContainer from '../users/UserProfileContainer';
+import { getAuthUser, getIsAuthLoading } from '../../reducers';
+import LoadingScreen from '../../components/LoadingScreen';
+import Login from '../../auth/Login';
+import UserProfileContainer from '../../users/containers/UserProfileContainer';
 
 const ProfileContainer = ({ loading, user }) => {
   if (loading) {

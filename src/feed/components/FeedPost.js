@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
-import CrossTouchable from '../CrossTouchable';
-import Container from '../Container';
-import Header from './components/Header';
-import ImagePreview from './components/ImagePreview';
-import Title from './components/Title';
-import Body from './components/Body';
-import Footer from './components/Footer';
+import CrossTouchable from '../../components/CrossTouchable';
+import Container from '../../components/Container';
+import Header from '../../components/Post/Header';
+import ImagePreview from '../../components/Post/ImagePreview';
+import Title from '../../components/Post/Title';
+import Body from '../../components/Post/Body';
+import Footer from '../../components/Post/Footer';
 
 export default class PostFeed extends React.PureComponent {
   static propTypes = {

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { FlatList, RefreshControl } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import styled from 'styled-components';
-import Colors from '../constants/Colors';
-import PostFeedContainer from '../feed/PostFeedContainer';
-import FeedSeparator from '../components/FeedSeparator';
-import LoadingScreen from '../components/LoadingScreen';
-import Loading from '../components/Loading';
+import Colors from '../../constants/Colors';
+import FeedPostContainer from '../containers/FeedPostContainer';
+import FeedSeparator from './FeedSeparator';
+import LoadingScreen from '../../components/LoadingScreen';
+import Loading from '../../components/Loading';
 
 const Container = styled.View`
   flex: 1;
@@ -79,7 +79,7 @@ class Feed extends React.Component {
   };
 
   renderItem = ({ item }) => (
-    <PostFeedContainer
+    <FeedPostContainer
       id={item}
       onUserNavigate={this.handleUserNavigate}
       onPostNavigate={this.handlePostNavigate}

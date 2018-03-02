@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UserProfileContainer from '../users/UserProfileContainer';
+import UserProfileContainer from '../users/containers/UserProfileContainer';
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({ title: navigation.state.params.name });

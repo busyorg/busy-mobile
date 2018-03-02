@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 import styled from 'styled-components';
 import moment from 'moment';
-import CrossTouchable from '../../CrossTouchable';
-import Avatar from './Avatar';
+import CrossTouchable from '../CrossTouchable';
+import Avatar from '../Avatar';
 
 const Container = styled.View`
   flex-direction: row;
@@ -24,7 +24,7 @@ const Date = styled.Text`
 const Header = ({ author, created, onPress }) => (
   <CrossTouchable onPress={onPress}>
     <Container>
-      <Avatar username={author} />
+      <Avatar size={32} username={author} />
       <TextContainer>
         <Text>{author}</Text>
         <Date>{moment(`${created}Z`).fromNow()}</Date>

@@ -4,8 +4,8 @@ import { ActivityIndicator } from 'react-native';
 import styled from 'styled-components';
 import numeral from 'numeral';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Colors from '../../../constants/Colors';
-import CrossTouchable from '../../CrossTouchable';
+import Colors from '../../constants/Colors';
+import CrossTouchable from '../CrossTouchable';
 
 const Container = styled.View`
   background: #fafafa;

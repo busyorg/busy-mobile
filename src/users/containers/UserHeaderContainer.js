@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import UserHeader from './UserHeader';
 import {
   getUserPostCount,
   getUserFollowerCount,
   getUserFollowingCount,
   getUserDisplayName,
   getUserAbout,
-} from '../reducers';
-import { getUser } from './actions';
+} from '../../reducers';
+import { getUser } from '../actions';
+import UserHeader from '../components/UserHeader';
 
 const mapStateToProps = (state, { name }) => ({
   postCount: getUserPostCount(state, name),

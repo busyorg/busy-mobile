@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { ScrollView, Dimensions } from 'react-native';
 import styled from 'styled-components';
 import HTML from 'react-native-render-html';
-import Container from '../components/Container';
-import Header from '../components/PostFeed/components/Header';
-import Tags from '../components/Tags';
-import Footer from '../components/PostFeed/components/Footer';
+import Container from '../../components/Container';
+import Header from '../../components/Post/Header';
+import Tags from '../../components/Post/Tags';
+import Footer from '../../components/Post/Footer';
 
 const Body = styled.View`
   padding: 16px;

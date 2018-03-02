@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UserHeaderContainer from './UserHeaderContainer';
-import FeedContainer from '../feed/FeedContainer';
+import UserHeaderContainer from '../containers/UserHeaderContainer';
+import FeedContainer from '../../feed/containers/FeedContainer';
 
 export default class UserProfile extends React.Component {
   static propTypes = {
