@@ -4,6 +4,7 @@ import * as actions from '../actions';
 import { getAuthUser, getPostById } from '../../reducers';
 import steem from '../../services/steem';
 import sc2 from '../../services/sc2';
+import showAuthDialog from '../../helpers/showAuthDialog';
 
 describe('posts sagas', () => {
   test('loadPost', () => {
@@ -35,7 +36,7 @@ describe('posts sagas', () => {
     expect(next.done).toBe(true);
   });
 
-  test('votePost', () => {
+  it('should votePost when logged in', () => {
     const postId = 5225;
     const author = 'sekhmet';
     const permlink = 'hello-world';
@@ -64,6 +65,34 @@ describe('posts sagas', () => {
 
     next = saga.next();
     expect(next.value).toEqual(put(actions.getPost(author, permlink, true)));
+
+    next = saga.next();
+    expect(next.done).toBe(true);
+  });
+
+  it('should show dialog when not logged in', () => {
+    const postId = 5225;
+    const author = 'sekhmet';
+    const permlink = 'hello-world';
+    const weight = 7500;
+    const user = null;
+    const post = { author, permlink };
+
+    const action = { meta: { postId, weight } };
+
+    const saga = sagas.votePost(action);
+
+    let next = saga.next();
+    expect(next.value).toEqual(select(getAuthUser));
+
+    next = saga.next(user);
+    expect(next.value).toEqual(select(getPostById, postId));
+
+    next = saga.next(post);
+    expect(next.value).toEqual(call(showAuthDialog));
+
+    next = saga.next();
+    expect(next.value).toEqual(put(actions.votePostError(postId)));
 
     next = saga.next();
     expect(next.done).toBe(true);

@@ -1,7 +1,8 @@
 import { all, takeEvery, select, call, put } from 'redux-saga/effects';
 import steem from '../services/steem';
 import sc2 from '../services/sc2';
-import { VOTE_POST, getPost, getPostSuccess, GET_POST } from './actions';
+import showAuthDialog from '../helpers/showAuthDialog';
+import { VOTE_POST, GET_POST, getPost, getPostSuccess, votePostError } from './actions';
 import { getPostById, getAuthUser } from '../reducers';
 
 export function* loadPost(action) {
@@ -18,7 +19,11 @@ export function* votePost(action) {
   const user = yield select(getAuthUser);
   const post = yield select(getPostById, postId);
 
-  if (!user) return;
+  if (!user) {
+    yield call(showAuthDialog);
+    yield put(votePostError(postId));
+    return;
+  }
 
   const { author, permlink } = post;
   yield call([sc2, sc2.vote], user.name, author, permlink, weight);

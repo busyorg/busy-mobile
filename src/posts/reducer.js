@@ -21,6 +21,8 @@ function pendingVotes(state = [], action) {
   switch (action.type) {
     case VOTE_POST.REQUEST:
       return [...state, action.meta.postId];
+    case VOTE_POST.ERROR:
+      return state.filter(postId => postId !== action.meta.postId);
     case GET_POST.SUCCESS:
       if (action.meta && action.meta.refresh) {
         return state.filter(postId => postId !== action.payload.result);

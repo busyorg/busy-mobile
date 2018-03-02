@@ -22,3 +22,12 @@ export const votePost = (postId, weight = 10000) => ({
     weight,
   },
 });
+
+export function votePostError(postId) {
+  return {
+    type: VOTE_POST.ERROR,
+    meta: {
+      postId,
+    },
+  };
+}
