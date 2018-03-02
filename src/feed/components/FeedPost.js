@@ -25,6 +25,7 @@ export default class PostFeed extends React.PureComponent {
     votePost: PropTypes.func,
     onPostNavigate: PropTypes.func,
     onUserNavigate: PropTypes.func,
+    onCommentsNavigate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -41,6 +42,7 @@ export default class PostFeed extends React.PureComponent {
     votePost: () => {},
     onPostNavigate: () => {},
     onUserNavigate: () => {},
+    onCommentsNavigate: () => {},
   };
 
   handleLikeClick = () => {
@@ -60,6 +62,11 @@ export default class PostFeed extends React.PureComponent {
   handlePostPress = () => {
     const { id } = this.props;
     this.props.onPostNavigate(id);
+  };
+
+  handleCommentsClick = () => {
+    const { id } = this.props;
+    this.props.onCommentsNavigate(id);
   };
 
   render() {
@@ -95,6 +102,7 @@ export default class PostFeed extends React.PureComponent {
               commentCount={commentCount}
               payout={payout}
               onLikeClick={this.handleLikeClick}
+              onCommentsClick={this.handleCommentsClick}
             />
           </View>
         </CrossTouchable>

@@ -10,6 +10,7 @@ import SinglePost from '../components/SinglePost';
 class SinglePostContainer extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape().isRequired,
+    id: PropTypes.number.isRequired,
     author: PropTypes.string,
   };
 
@@ -26,12 +27,18 @@ class SinglePostContainer extends React.Component {
     this.props.navigation.navigate('Tag', { tag });
   };
 
+  handleCommentsNavigate = () => {
+    const { id } = this.props;
+    this.props.navigation.navigate('Comments', { id });
+  };
+
   render() {
     return (
       <SinglePost
         {...this.props}
         onUserNavigate={this.handleUserNavigate}
         onTagNavigate={this.handleTagNavigate}
+        onCommentsNavigate={this.handleCommentsNavigate}
       />
     );
   }

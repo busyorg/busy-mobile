@@ -4,6 +4,7 @@ import Colors from '../constants/Colors';
 
 import MainTabNavigator from './MainTabNavigator';
 import PostScreen from '../screens/PostScreen';
+import CommentsScreen from '../screens/CommentsScreen';
 import UserScreen from '../screens/UserScreen';
 import HomeScreen from '../screens/HomeScreen';
 
@@ -14,6 +15,9 @@ const RootStackNavigator = StackNavigator(
     },
     Post: {
       screen: PostScreen,
+    },
+    Comments: {
+      screen: CommentsScreen,
     },
     User: {
       screen: UserScreen,

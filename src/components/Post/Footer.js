@@ -34,7 +34,15 @@ const CounterText = styled.Text`
   margin-left: 8px;
 `;
 
-const Footer = ({ upvoteCount, commentCount, payout, pendingVote, upvoted, onLikeClick }) => {
+const Footer = ({
+  upvoteCount,
+  commentCount,
+  payout,
+  pendingVote,
+  upvoted,
+  onLikeClick,
+  onCommentsClick,
+}) => {
   let likeIcon = null;
   if (pendingVote) {
     likeIcon = <ActivityIndicator size="small" />;
@@ -57,7 +65,7 @@ const Footer = ({ upvoteCount, commentCount, payout, pendingVote, upvoted, onLik
             <CounterText>{upvoteCount}</CounterText>
           </Counter>
         </CrossTouchable>
-        <CrossTouchable>
+        <CrossTouchable onPress={onCommentsClick}>
           <Counter>
             <MaterialCommunityIcons name="comment-text" size={18} color={Colors.secondaryText} />
             <CounterText>{commentCount}</CounterText>
@@ -79,6 +87,7 @@ Footer.propTypes = {
   upvoted: PropTypes.bool,
   pendingVote: PropTypes.bool,
   onLikeClick: PropTypes.func,
+  onCommentsClick: PropTypes.func,
 };
 Footer.defaultProps = {
   upvoteCount: 0,
@@ -87,6 +96,7 @@ Footer.defaultProps = {
   upvoted: false,
   pendingVote: false,
   onLikeClick: () => {},
+  onCommentsClick: () => {},
 };
 
 export default Footer;

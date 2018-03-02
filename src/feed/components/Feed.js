@@ -78,11 +78,16 @@ class Feed extends React.Component {
     this.props.navigation.navigate('Post', { id });
   };
 
+  handleCommentsNavigate = id => {
+    this.props.navigation.navigate('Comments', { id });
+  };
+
   renderItem = ({ item }) => (
     <FeedPostContainer
       id={item}
       onUserNavigate={this.handleUserNavigate}
       onPostNavigate={this.handlePostNavigate}
+      onCommentsNavigate={this.handleCommentsNavigate}
     />
   );
 

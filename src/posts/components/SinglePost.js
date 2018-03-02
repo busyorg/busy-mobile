@@ -38,6 +38,7 @@ class SinglePost extends React.PureComponent {
     votePost: PropTypes.func,
     onUserNavigate: PropTypes.func,
     onTagNavigate: PropTypes.func,
+    onCommentsNavigate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -54,6 +55,7 @@ class SinglePost extends React.PureComponent {
     votePost: () => {},
     onUserNavigate: () => {},
     onTagNavigate: () => {},
+    onCommentsNavigate: () => {},
   };
 
   handleLikeClick = () => {
@@ -79,6 +81,7 @@ class SinglePost extends React.PureComponent {
       payout,
       onUserNavigate,
       onTagNavigate,
+      onCommentsNavigate,
     } = this.props;
 
     return (
@@ -99,6 +102,7 @@ class SinglePost extends React.PureComponent {
             commentCount={commentCount}
             payout={payout}
             onLikeClick={this.handleLikeClick}
+            onCommentsClick={onCommentsNavigate}
           />
         </ScrollView>
       </Container>
