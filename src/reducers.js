@@ -23,6 +23,7 @@ export const getLastPostId = (state, sortBy, tag) =>
   fromFeed.getLastPostId(state.feed, sortBy, tag);
 
 export const getPostById = (state, id) => fromPosts.getPostById(state.posts, id);
+export const getIsPostPendingVote = (state, id) => fromPosts.getIsPostPendingVote(state.posts, id);
 
 export const getUsersLoading = state => fromUsers.getUsersLoading(state.users);
 export const getUserPostCount = (state, name) => fromUsers.getUserPostCount(state.users, name);

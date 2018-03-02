@@ -32,7 +32,7 @@ export default function parsePost(post) {
     .slice(0, 200)
     .trim();
 
-  const upvotes = post.active_votes.filter(vote => vote.percent >= 0);
+  const upvotes = post.active_votes.filter(vote => vote.percent > 0);
 
   newPost.commentCount = post.children;
   newPost.upvoteCount = upvotes.length;

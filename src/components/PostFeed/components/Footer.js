@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ActivityIndicator } from 'react-native';
 import styled from 'styled-components';
 import numeral from 'numeral';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -33,52 +34,59 @@ const CounterText = styled.Text`
   margin-left: 8px;
 `;
 
-class Footer extends React.Component {
-  handleLikeClick = () => {};
-
-  render() {
-    const { upvoteCount, commentCount, payout, upvoted } = this.props;
-
-    return (
-      <Container>
-        <Data>
-          <CrossTouchable onPress={this.handleLikeClick}>
-            <Counter>
-              <MaterialCommunityIcons
-                name="arrow-up-bold-circle"
-                size={18}
-                color={upvoted ? Colors.accent : Colors.secondaryText}
-              />
-              <CounterText>{upvoteCount}</CounterText>
-            </Counter>
-          </CrossTouchable>
-          <CrossTouchable>
-            <Counter>
-              <MaterialCommunityIcons name="comment-text" size={18} color={Colors.secondaryText} />
-              <CounterText>{commentCount}</CounterText>
-            </Counter>
-          </CrossTouchable>
-        </Data>
-        <Data>
-          <Counter>
-            <CounterText>{numeral(payout).format('$0.00')}</CounterText>
-          </Counter>
-        </Data>
-      </Container>
+const Footer = ({ upvoteCount, commentCount, payout, pendingVote, upvoted, onLikeClick }) => {
+  let likeIcon = null;
+  if (pendingVote) {
+    likeIcon = <ActivityIndicator size="small" />;
+  } else {
+    likeIcon = (
+      <MaterialCommunityIcons
+        name="arrow-up-bold-circle"
+        size={18}
+        color={upvoted ? Colors.accent : Colors.secondaryText}
+      />
     );
   }
-}
+
+  return (
+    <Container>
+      <Data>
+        <CrossTouchable onPress={onLikeClick}>
+          <Counter>
+            {likeIcon}
+            <CounterText>{upvoteCount}</CounterText>
+          </Counter>
+        </CrossTouchable>
+        <CrossTouchable>
+          <Counter>
+            <MaterialCommunityIcons name="comment-text" size={18} color={Colors.secondaryText} />
+            <CounterText>{commentCount}</CounterText>
+          </Counter>
+        </CrossTouchable>
+      </Data>
+      <Data>
+        <Counter>
+          <CounterText>{numeral(payout).format('$0.00')}</CounterText>
+        </Counter>
+      </Data>
+    </Container>
+  );
+};
 Footer.propTypes = {
   upvoteCount: PropTypes.number,
   commentCount: PropTypes.number,
   payout: PropTypes.number,
   upvoted: PropTypes.bool,
+  pendingVote: PropTypes.bool,
+  onLikeClick: PropTypes.func,
 };
 Footer.defaultProps = {
   upvoteCount: 0,
   commentCount: 0,
   payout: 0,
   upvoted: false,
+  pendingVote: false,
+  onLikeClick: () => {},
 };
 
 export default Footer;

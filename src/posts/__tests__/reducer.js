@@ -1,4 +1,5 @@
 import reducer, * as selectors from '../reducer';
+import * as actions from '../actions';
 import * as feedActions from '../../feed/actions';
 
 describe('posts reducer', () => {
@@ -25,21 +26,24 @@ describe('posts reducer', () => {
   };
 
   it('should return initial state', () => {
-    const expected = {};
+    const expected = { posts: {}, pendingVotes: [] };
     const actual = reducer(undefined, {});
 
     expect(actual).toEqual(expected);
   });
 
   it('should handle GET_FEED_SUCCESS', () => {
-    const initialState = {};
+    const initialState = { posts: {}, pendingVotes: [] };
     const sortBy = 'trending';
     const action = feedActions.getFeedSuccess(responseA, sortBy);
 
     const expected = {
-      256: { title: 'some post 1' },
-      257: { title: 'some post 2' },
-      258: { title: 'some post 3' },
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+      },
+      pendingVotes: [],
     };
     const actual = reducer(initialState, action);
 
@@ -48,20 +52,26 @@ describe('posts reducer', () => {
 
   it('should handle GET_MORE_FEED_SUCCESS', () => {
     const initialState = {
-      256: { title: 'some post 1' },
-      257: { title: 'some post 2' },
-      258: { title: 'some post 3' },
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+      },
+      pendingVotes: [],
     };
     const sortBy = 'trending';
     const action = feedActions.getMoreFeedSuccess(responseB, sortBy);
 
     const expected = {
-      256: { title: 'some post 1' },
-      257: { title: 'some post 2' },
-      258: { title: 'some post 3' },
-      259: { title: 'some post 4' },
-      260: { title: 'some post 5' },
-      261: { title: 'some post 6' },
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+        259: { title: 'some post 4' },
+        260: { title: 'some post 5' },
+        261: { title: 'some post 6' },
+      },
+      pendingVotes: [],
     };
     const actual = reducer(initialState, action);
 
@@ -70,20 +80,79 @@ describe('posts reducer', () => {
 
   it('should handle REFRESH_FEED_SUCCESS', () => {
     const initialState = {
-      256: { title: 'some post 1' },
-      257: { title: 'some post 2' },
-      258: { title: 'some post 3' },
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+      },
+      pendingVotes: [],
     };
     const sortBy = 'trending';
     const action = feedActions.refreshFeedSuccess(responseB, sortBy);
 
     const expected = {
-      256: { title: 'some post 1' },
-      257: { title: 'some post 2' },
-      258: { title: 'some post 3' },
-      259: { title: 'some post 4' },
-      260: { title: 'some post 5' },
-      261: { title: 'some post 6' },
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+        259: { title: 'some post 4' },
+        260: { title: 'some post 5' },
+        261: { title: 'some post 6' },
+      },
+      pendingVotes: [],
+    };
+    const actual = reducer(initialState, action);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should handle VOTE_POST.REQUEST', () => {
+    const initialState = {
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+      },
+      pendingVotes: [],
+    };
+    const postId = 525;
+    const weight = 5200;
+    const action = actions.votePost(postId, weight);
+
+    const expected = {
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+      },
+      pendingVotes: [525],
+    };
+    const actual = reducer(initialState, action);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should remove pendingVote after GET_CONTENT.SUCCESS', () => {
+    const initialState = {
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+      },
+      pendingVotes: [525],
+    };
+    const postId = 525;
+
+    const payload = { entities: [{ postId: { id: postId } }], result: postId };
+    const action = actions.getPostSuccess(payload, 'author', 'permlink', true);
+
+    const expected = {
+      posts: {
+        256: { title: 'some post 1' },
+        257: { title: 'some post 2' },
+        258: { title: 'some post 3' },
+      },
+      pendingVotes: [],
     };
     const actual = reducer(initialState, action);
 
@@ -93,20 +162,31 @@ describe('posts reducer', () => {
 
 describe('posts selectors', () => {
   const state = {
-    256: { title: 'some post 1' },
-    257: { title: 'some post 2' },
-    258: { title: 'some post 3' },
-    259: { title: 'some post 4' },
-    260: { title: 'some post 5' },
-    261: { title: 'some post 6' },
+    posts: {
+      256: { title: 'some post 1' },
+      257: { title: 'some post 2' },
+      258: { title: 'some post 3' },
+      259: { title: 'some post 4' },
+      260: { title: 'some post 5' },
+      261: { title: 'some post 6' },
+    },
+    pendingVotes: [260],
   };
 
   it('should get post by id', () => {
     const postId = 259;
 
-    const expected = state[postId];
+    const expected = state.posts[postId];
     const actual = selectors.getPostById(state, postId);
 
     expect(actual).toEqual(expected);
+  });
+
+  it('should get is post pending vote', () => {
+    const postId = 260;
+
+    const actual = selectors.getIsPostPendingVote(state, postId);
+
+    expect(actual).toBe(true);
   });
 });

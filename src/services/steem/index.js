@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { createClient } from 'lightrpc';
 import { normalize } from 'normalizr';
 import parsePost from '../../helpers/parsePost';
-import { postsSchema, userSchema } from './schemas';
+import { postSchema, postsSchema, userSchema } from './schemas';
 
 function Client() {
   this.client = createClient('https://api.steemit.com');
@@ -67,6 +67,12 @@ Client.prototype.getUser = async function getUser(username) {
   user.following_count = followCount.following_count;
 
   return normalize(user, userSchema);
+};
+
+Client.prototype.getPost = async function getPost(author, permlink) {
+  let result = await this.sendAsync('get_content', [author, permlink]);
+  result = parsePost(result);
+  return normalize(result, postSchema);
 };
 
 export default new Client();

@@ -20,7 +20,9 @@ export default class PostFeed extends React.PureComponent {
     commentCount: PropTypes.number,
     payout: PropTypes.number,
     upvoted: PropTypes.bool,
+    pendingVote: PropTypes.bool,
     image: PropTypes.string,
+    votePost: PropTypes.func,
     onPostNavigate: PropTypes.func,
     onUserNavigate: PropTypes.func,
   };
@@ -34,9 +36,20 @@ export default class PostFeed extends React.PureComponent {
     commentCount: 0,
     payout: 0,
     upvoted: false,
+    pendingVote: false,
     image: null,
+    votePost: () => {},
     onPostNavigate: () => {},
     onUserNavigate: () => {},
+  };
+
+  handleLikeClick = () => {
+    const { id, pendingVote, upvoted } = this.props;
+
+    if (pendingVote) return;
+
+    const weight = upvoted ? 0 : 10000;
+    this.props.votePost(id, weight);
   };
 
   handleUserPress = () => {
@@ -60,6 +73,7 @@ export default class PostFeed extends React.PureComponent {
       image,
       payout,
       upvoted,
+      pendingVote,
     } = this.props;
 
     return (
@@ -76,9 +90,11 @@ export default class PostFeed extends React.PureComponent {
             <Body numberOfLines={3}>{excerpt}</Body>
             <Footer
               upvoted={upvoted}
+              pendingVote={pendingVote}
               upvoteCount={upvoteCount}
               commentCount={commentCount}
               payout={payout}
+              onLikeClick={this.handleLikeClick}
             />
           </View>
         </CrossTouchable>

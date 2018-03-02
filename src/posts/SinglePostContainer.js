@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { getPostById, getAuthUser } from '../reducers';
+import { getPostById, getAuthUser, getIsPostPendingVote } from '../reducers';
+import { votePost } from './actions';
 import SinglePost from './SinglePost';
 
 class SinglePostContainer extends React.Component {
@@ -38,6 +39,7 @@ class SinglePostContainer extends React.Component {
 
 const mapStateToProps = (state, { id }) => {
   const post = getPostById(state, id);
+  const pendingVote = getIsPostPendingVote(state, id);
   const user = getAuthUser(state);
   const { metadata, upvoters } = post;
 
@@ -45,7 +47,7 @@ const mapStateToProps = (state, { id }) => {
 
   const upvoted = user && user.name && upvoters.indexOf(user.name) !== -1;
 
-  return { ...post, image, upvoted };
+  return { ...post, image, upvoted, pendingVote };
 };
 
-export default connect(mapStateToProps)(withNavigation(SinglePostContainer));
+export default connect(mapStateToProps, { votePost })(withNavigation(SinglePostContainer));
