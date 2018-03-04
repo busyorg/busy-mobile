@@ -1,12 +1,12 @@
-import * as fromActions from '../actions';
+import * as actions from '../actions';
 
 describe('posts actions', () => {
   it('should create VOTE_POST.REQUEST action', () => {
     const postId = 4525;
     const weight = 525;
 
-    const expected = { type: fromActions.VOTE_POST.REQUEST, meta: { postId, weight } };
-    const actual = fromActions.votePost(postId, weight);
+    const expected = { type: actions.VOTE_POST.REQUEST, meta: { postId, weight } };
+    const actual = actions.votePost(postId, weight);
 
     expect(actual).toEqual(expected);
   });
@@ -14,8 +14,8 @@ describe('posts actions', () => {
   it('should create VOTE_POST.REQUEST action with default weight', () => {
     const postId = 4525;
 
-    const expected = { type: fromActions.VOTE_POST.REQUEST, meta: { postId, weight: 10000 } };
-    const actual = fromActions.votePost(postId);
+    const expected = { type: actions.VOTE_POST.REQUEST, meta: { postId, weight: 10000 } };
+    const actual = actions.votePost(postId);
 
     expect(actual).toEqual(expected);
   });
@@ -25,10 +25,10 @@ describe('posts actions', () => {
     const permlink = 'my-post';
 
     const expected = {
-      type: fromActions.GET_POST.REQUEST,
+      type: actions.GET_POST.REQUEST,
       meta: { author, permlink, refresh: false },
     };
-    const actual = fromActions.getPost(author, permlink);
+    const actual = actions.getPost(author, permlink);
 
     expect(actual).toEqual(expected);
   });
@@ -42,11 +42,11 @@ describe('posts actions', () => {
     };
 
     const expected = {
-      type: fromActions.GET_POST.SUCCESS,
+      type: actions.GET_POST.SUCCESS,
       payload,
       meta: { author, permlink, refresh: false },
     };
-    const actual = fromActions.getPostSuccess(payload, author, permlink);
+    const actual = actions.getPostSuccess(payload, author, permlink);
 
     expect(actual).toEqual(expected);
   });

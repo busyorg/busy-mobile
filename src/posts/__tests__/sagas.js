@@ -1,10 +1,10 @@
 import { call, put, select } from 'redux-saga/effects';
-import * as sagas from '../sagas';
-import * as actions from '../actions';
-import { getAuthUser, getPostById } from '../../reducers';
 import steem from '../../services/steem';
 import sc2 from '../../services/sc2';
 import showAuthDialog from '../../helpers/showAuthDialog';
+import { getAuthUser, getPostById } from '../../reducers';
+import * as actions from '../actions';
+import * as sagas from '../sagas';
 
 describe('posts sagas', () => {
   test('loadPost', () => {

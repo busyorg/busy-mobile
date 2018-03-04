@@ -1,11 +1,11 @@
-import * as fromActions from '../actions';
+import * as actions from '../actions';
 
 describe('users actions', () => {
   const username = 'sekhmet';
 
   it('should create get user request action', () => {
-    const expected = { type: fromActions.GET_USER.REQUEST, meta: { username } };
-    const actual = fromActions.getUser(username);
+    const expected = { type: actions.GET_USER.REQUEST, meta: { username } };
+    const actual = actions.getUser(username);
 
     expect(actual).toEqual(expected);
   });
@@ -13,8 +13,8 @@ describe('users actions', () => {
   it('should craete get user success action', () => {
     const payload = { id: 42, name: 'sekhmet' };
 
-    const expected = { type: fromActions.GET_USER.SUCCESS, payload, meta: { username } };
-    const actual = fromActions.getUserSuccess(payload, username);
+    const expected = { type: actions.GET_USER.SUCCESS, payload, meta: { username } };
+    const actual = actions.getUserSuccess(payload, username);
 
     expect(actual).toEqual(expected);
   });

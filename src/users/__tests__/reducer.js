@@ -1,5 +1,5 @@
-import reducer, * as selectors from '../reducer';
 import * as actions from '../actions';
+import reducer, * as selectors from '../reducer';
 
 describe('users reducer', () => {
   const responseA = {

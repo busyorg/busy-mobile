@@ -1,8 +1,8 @@
 import { call, put, select, take, fork } from 'redux-saga/effects';
-import * as sagas from '../sagas';
+import steem from '../../services/steem';
 import * as actions from '../actions';
 import { getLastPostId, getPostById } from '../../reducers';
-import steem from '../../services/steem';
+import * as sagas from '../sagas';
 
 describe('feed sagas', () => {
   describe('actions', () => {

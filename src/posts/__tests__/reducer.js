@@ -1,6 +1,6 @@
-import reducer, * as selectors from '../reducer';
 import * as actions from '../actions';
 import * as feedActions from '../../feed/actions';
+import reducer, * as selectors from '../reducer';
 
 describe('posts reducer', () => {
   const responseA = {

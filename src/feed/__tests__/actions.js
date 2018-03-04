@@ -1,13 +1,13 @@
-import * as fromActions from '../actions';
+import * as actions from '../actions';
 
 describe('feed actions', () => {
   it('should create get feed request action', () => {
     const sortBy = 'active';
     const tag = 'busy';
 
-    const expected = { type: fromActions.GET_FEED.REQUEST, meta: { sortBy, tag } };
+    const expected = { type: actions.GET_FEED.REQUEST, meta: { sortBy, tag } };
 
-    const actual = fromActions.getFeed(sortBy, tag);
+    const actual = actions.getFeed(sortBy, tag);
 
     expect(actual).toEqual(expected);
   });
@@ -17,9 +17,9 @@ describe('feed actions', () => {
     const tag = 'programming';
     const payload = [{ id: 42 }];
 
-    const expected = { type: fromActions.GET_FEED.SUCCESS, meta: { sortBy, tag }, payload };
+    const expected = { type: actions.GET_FEED.SUCCESS, meta: { sortBy, tag }, payload };
 
-    const actual = fromActions.getFeedSuccess(payload, sortBy, tag);
+    const actual = actions.getFeedSuccess(payload, sortBy, tag);
 
     expect(actual).toEqual(expected);
   });
@@ -28,9 +28,9 @@ describe('feed actions', () => {
     const sortBy = 'trending';
     const tag = 'steem';
 
-    const expected = { type: fromActions.GET_MORE_FEED.REQUEST, meta: { sortBy, tag } };
+    const expected = { type: actions.GET_MORE_FEED.REQUEST, meta: { sortBy, tag } };
 
-    const actual = fromActions.getMoreFeed(sortBy, tag);
+    const actual = actions.getMoreFeed(sortBy, tag);
 
     expect(actual).toEqual(expected);
   });
@@ -40,9 +40,9 @@ describe('feed actions', () => {
     const tag = 'steemit';
     const payload = [{ id: 21 }];
 
-    const expected = { type: fromActions.GET_MORE_FEED.SUCCESS, meta: { sortBy, tag }, payload };
+    const expected = { type: actions.GET_MORE_FEED.SUCCESS, meta: { sortBy, tag }, payload };
 
-    const actual = fromActions.getMoreFeedSuccess(payload, sortBy, tag);
+    const actual = actions.getMoreFeedSuccess(payload, sortBy, tag);
 
     expect(actual).toEqual(expected);
   });
@@ -51,9 +51,9 @@ describe('feed actions', () => {
     const sortBy = 'trending';
     const tag = 'steem';
 
-    const expected = { type: fromActions.REFRESH_FEED.REQUEST, meta: { sortBy, tag } };
+    const expected = { type: actions.REFRESH_FEED.REQUEST, meta: { sortBy, tag } };
 
-    const actual = fromActions.refreshFeed(sortBy, tag);
+    const actual = actions.refreshFeed(sortBy, tag);
 
     expect(actual).toEqual(expected);
   });
@@ -63,9 +63,9 @@ describe('feed actions', () => {
     const tag = 'steemit';
     const payload = [{ id: 21 }];
 
-    const expected = { type: fromActions.REFRESH_FEED.SUCCESS, meta: { sortBy, tag }, payload };
+    const expected = { type: actions.REFRESH_FEED.SUCCESS, meta: { sortBy, tag }, payload };
 
-    const actual = fromActions.refreshFeedSuccess(payload, sortBy, tag);
+    const actual = actions.refreshFeedSuccess(payload, sortBy, tag);
 
     expect(actual).toEqual(expected);
   });

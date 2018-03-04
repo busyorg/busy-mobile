@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
-import * as sagas from '../sagas';
-import * as actions from '../actions';
 import steem from '../../services/steem';
+import * as actions from '../actions';
+import * as sagas from '../sagas';
 
 describe('users sagas', () => {
   const username = 'sekhmet';
