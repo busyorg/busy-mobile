@@ -8,8 +8,12 @@ const initialize = store =>
     if (accessToken === null || accessToken === undefined) return resolve();
 
     sc2.setAccessToken(accessToken);
-    const result = await sc2.me();
-    store.dispatch(loginSuccess(result.account));
+    try {
+      const result = await sc2.me();
+      store.dispatch(loginSuccess(result.account));
+    } catch (err) {
+      console.log('login failed');
+    }
     return resolve();
   });
 
