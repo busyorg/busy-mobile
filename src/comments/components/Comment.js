@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text } from 'react-native';
+import { Text, Button } from 'react-native';
 import styled from 'styled-components';
 import Colors from '../../constants/Colors';
 
@@ -31,16 +31,17 @@ const Username = styled.Text`
   color: ${Colors.secondaryText};
 `;
 
-export default function Comment({ level, author, contents }) {
+export default function Comment({ level, author, contents, children }) {
   return (
     <CommentContainer>
       <LevelIndicator level={level} />
       <Main>
         <React.Fragment>
-          <Username>{author}</Username>
+          <Username>{author} - {children}</Username>
           <Content>
             <Text>{contents}</Text>
           </Content>
+          {children > 0 && <Button title={`Show ${children} children`} onPress={() => {}} />}
         </React.Fragment>
       </Main>
     </CommentContainer>
@@ -49,8 +50,10 @@ export default function Comment({ level, author, contents }) {
 Comment.propTypes = {
   author: PropTypes.string.isRequired,
   contents: PropTypes.string.isRequired,
+  children: PropTypes.number,
   level: PropTypes.number,
 };
 Comment.defaultProps = {
+  children: 0,
   level: 1,
 };
