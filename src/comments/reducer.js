@@ -1,7 +1,8 @@
+import _ from 'lodash';
 import { combineReducers } from 'redux';
 import { GET_COMMENTS } from './actions';
 
-function postReplies(state = [], action) {
+function replies(state = [], action) {
   switch (action.type) {
     case GET_COMMENTS.SUCCESS:
       return [...state, ...action.payload.result];
@@ -22,18 +23,41 @@ function loading(state = false, action) {
   }
 }
 
-function replies(state = {}, action) {
+function loaded(state = false, action) {
   switch (action.type) {
+    case GET_COMMENTS.REQUEST:
+    case GET_COMMENTS.ERROR:
+      return false;
     case GET_COMMENTS.SUCCESS:
-      return { ...state, [action.meta.postId]: postReplies(state[action.meta.postId], action) };
+      return true;
     default:
       return state;
   }
 }
 
-export default combineReducers({
+const byId = combineReducers({
   replies,
   loading,
+  loaded,
 });
-export const getCommentsIdsByPostId = (state, id) => state.replies[id];
-export const getIsCommentsLoading = state => state.loading;
+
+export default function(state = {}, action) {
+  switch (action.type) {
+    case GET_COMMENTS.REQUEST:
+    case GET_COMMENTS.SUCCESS:
+    case GET_COMMENTS.ERROR:
+      return {
+        ...state,
+        [action.meta.postId]: {
+          ...state[action.meta.postId],
+          ...byId(state[action.meta.postId], action),
+        },
+      };
+    default:
+      return state;
+  }
+}
+
+export const getCommentsIdsByPostId = (state, id) => _.get(state[id], 'replies', []);
+export const getIsCommentsLoading = (state, id) => _.get(state[id], 'loading', false);
+export const getIsCommentsLoaded = (state, id) => _.get(state[id], 'loaded', false);

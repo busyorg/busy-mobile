@@ -40,7 +40,7 @@ class CommentsContainer extends React.Component {
 
 export default connect(
   (state, { id }) => ({
-    loading: getIsCommentsLoading(state),
+    loading: getIsCommentsLoading(state, id),
     comments: getCommentsIdsByPostId(state, id),
   }),
   {

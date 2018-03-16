@@ -50,7 +50,18 @@ export default class Comment extends React.PureComponent {
   loadRepliesClick = () => this.props.getComments(this.props.id);
 
   render() {
-    const { id, level, author, contents, commentCount } = this.props;
+    const {
+      id,
+      level,
+      author,
+      contents,
+      commentCount,
+      commentsLoaded,
+      commentsLoading,
+    } = this.props;
+
+    const shouldShowButton = !commentsLoaded && !commentsLoading && commentCount > 0;
+
     return (
       <CommentContainer>
         <LevelIndicator level={level} />
@@ -62,7 +73,7 @@ export default class Comment extends React.PureComponent {
             <Content>
               <Text>{contents}</Text>
             </Content>
-            {commentCount > 0 && (
+            {shouldShowButton && (
               <Button title={`Show ${commentCount} children`} onPress={this.loadRepliesClick} />
             )}
             <CommentsContainer autoload={false} id={id} />

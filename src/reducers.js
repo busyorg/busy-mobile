@@ -18,7 +18,10 @@ export const getAuthUser = state => fromAuth.getAuthUser(state.auth);
 
 export const getCommentsIdsByPostId = (state, id) =>
   fromComments.getCommentsIdsByPostId(state.comments, id);
-export const getIsCommentsLoading = state => fromComments.getIsCommentsLoading(state.comments);
+export const getIsCommentsLoading = (state, id) =>
+  fromComments.getIsCommentsLoading(state.comments, id);
+export const getIsCommentsLoaded = (state, id) =>
+  fromComments.getIsCommentsLoaded(state.comments, id);
 
 export const getFeedIds = (state, sortBy, tag) => fromFeed.getFeedIds(state.feed, sortBy, tag);
 export const getFeedLoading = (state, sortBy, tag) =>
