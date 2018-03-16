@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Text, Button } from 'react-native';
 import styled from 'styled-components';
 import Colors from '../../constants/Colors';
+import CommentsContainer from '../containers/CommentsContainer';
 
 const colors = ['#F44336', '#2196F3', '#4CAF50', '#FFEB3B', '#FF5722'];
 
@@ -49,7 +50,7 @@ export default class Comment extends React.PureComponent {
   loadRepliesClick = () => this.props.getComments(this.props.id);
 
   render() {
-    const { level, author, contents, commentCount } = this.props;
+    const { id, level, author, contents, commentCount } = this.props;
     return (
       <CommentContainer>
         <LevelIndicator level={level} />
@@ -64,6 +65,7 @@ export default class Comment extends React.PureComponent {
             {commentCount > 0 && (
               <Button title={`Show ${commentCount} children`} onPress={this.loadRepliesClick} />
             )}
+            <CommentsContainer autoload={false} id={id} />
           </React.Fragment>
         </Main>
       </CommentContainer>

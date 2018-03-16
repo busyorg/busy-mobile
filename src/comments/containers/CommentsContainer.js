@@ -24,7 +24,9 @@ class CommentsContainer extends React.Component {
   };
 
   componentDidMount() {
-    const { id, loading, comments } = this.props;
+    const { id, autoload, loading, comments } = this.props;
+
+    if (!autoload) return;
 
     if (!loading && comments.length === 0) {
       this.props.getComments(id);

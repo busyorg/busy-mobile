@@ -13,6 +13,6 @@ export default class PostScreen extends React.Component {
 
   render() {
     const { id } = this.props.navigation.state.params;
-    return <CommentsContainer id={id} />;
+    return <CommentsContainer autoload id={id} />;
   }
 }
