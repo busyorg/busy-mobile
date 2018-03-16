@@ -31,29 +31,42 @@ const Username = styled.Text`
   color: ${Colors.secondaryText};
 `;
 
-export default function Comment({ level, author, contents, children }) {
-  return (
-    <CommentContainer>
-      <LevelIndicator level={level} />
-      <Main>
-        <React.Fragment>
-          <Username>{author} - {children}</Username>
-          <Content>
-            <Text>{contents}</Text>
-          </Content>
-          {children > 0 && <Button title={`Show ${children} children`} onPress={() => {}} />}
-        </React.Fragment>
-      </Main>
-    </CommentContainer>
-  );
+export default class Comment extends React.PureComponent {
+  static propTypes = {
+    author: PropTypes.string.isRequired,
+    contents: PropTypes.string.isRequired,
+    commentCount: PropTypes.number,
+    level: PropTypes.number,
+    getComments: PropTypes.func,
+  };
+
+  static defaultProps = {
+    commentCount: 0,
+    level: 1,
+    getComments: () => {},
+  };
+
+  loadRepliesClick = () => this.props.getComments(this.props.id);
+
+  render() {
+    const { level, author, contents, commentCount } = this.props;
+    return (
+      <CommentContainer>
+        <LevelIndicator level={level} />
+        <Main>
+          <React.Fragment>
+            <Username>
+              {author} - {commentCount}
+            </Username>
+            <Content>
+              <Text>{contents}</Text>
+            </Content>
+            {commentCount > 0 && (
+              <Button title={`Show ${commentCount} children`} onPress={this.loadRepliesClick} />
+            )}
+          </React.Fragment>
+        </Main>
+      </CommentContainer>
+    );
+  }
 }
-Comment.propTypes = {
-  author: PropTypes.string.isRequired,
-  contents: PropTypes.string.isRequired,
-  children: PropTypes.number,
-  level: PropTypes.number,
-};
-Comment.defaultProps = {
-  children: 0,
-  level: 1,
-};

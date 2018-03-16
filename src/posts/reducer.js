@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { GET_POST, VOTE_POST } from './actions';
 import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from '../feed/actions';
+import { GET_COMMENTS } from '../comments/actions';
 
 function posts(state = {}, action) {
   switch (action.type) {
@@ -8,10 +9,9 @@ function posts(state = {}, action) {
     case GET_FEED.SUCCESS:
     case GET_MORE_FEED.SUCCESS:
     case REFRESH_FEED.SUCCESS:
-      return {
-        ...state,
-        ...action.payload.entities.posts,
-      };
+      return { ...state, ...action.payload.entities.posts };
+    case GET_COMMENTS.SUCCESS:
+      return { ...state, ...action.payload.entities.comments };
     default:
       return state;
   }

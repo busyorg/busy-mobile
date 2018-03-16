@@ -1,15 +1,6 @@
 import { combineReducers } from 'redux';
 import { GET_COMMENTS } from './actions';
 
-function byId(state = {}, action) {
-  switch (action.type) {
-    case GET_COMMENTS.SUCCESS:
-      return { ...state, ...action.payload.entities.comments };
-    default:
-      return state;
-  }
-}
-
 function postReplies(state = [], action) {
   switch (action.type) {
     case GET_COMMENTS.SUCCESS:
@@ -41,10 +32,8 @@ function replies(state = {}, action) {
 }
 
 export default combineReducers({
-  byId,
   replies,
   loading,
 });
-export const getCommentById = (state, id) => state.byId[id];
 export const getCommentsIdsByPostId = (state, id) => state.replies[id];
 export const getIsCommentsLoading = state => state.loading;

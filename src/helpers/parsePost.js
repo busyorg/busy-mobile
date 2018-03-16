@@ -25,6 +25,7 @@ export default function parsePost(post) {
   newPost.permlink = post.permlink;
   newPost.created = post.created;
   newPost.category = post.category;
+  newPost.depth = post.depth;
   newPost.tags = _.union(_.get(newPost.metadata, 'tags', []), [post.category]);
 
   newPost.htmlBody = md.render(post.body);

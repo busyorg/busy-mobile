@@ -16,7 +16,6 @@ export default combineReducers({
 export const getIsAuthLoading = state => fromAuth.getIsAuthLoading(state.auth);
 export const getAuthUser = state => fromAuth.getAuthUser(state.auth);
 
-export const getCommentById = (state, id) => fromComments.getCommentById(state.comments, id);
 export const getCommentsIdsByPostId = (state, id) =>
   fromComments.getCommentsIdsByPostId(state.comments, id);
 export const getIsCommentsLoading = state => fromComments.getIsCommentsLoading(state.comments);

@@ -9,7 +9,7 @@ const options = {
 };
 
 function Client() {
-  this.client = createClient('https://api.steemit.com', options);
+  this.client = createClient('https://steemd.privex.io', options);
 }
 
 Client.prototype.sendAsync = function sendAsync(message, params) {
@@ -80,7 +80,8 @@ Client.prototype.getPost = async function getPost(author, permlink) {
 };
 
 Client.prototype.getComments = async function getComments(author, permlink) {
-  const result = await this.sendAsync('get_content_replies', [author, permlink]);
+  let result = await this.sendAsync('get_content_replies', [author, permlink]);
+  result = result.map(parsePost);
   return normalize(result, commentsSchema);
 };
 

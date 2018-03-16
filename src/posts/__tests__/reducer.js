@@ -1,5 +1,6 @@
 import * as actions from '../actions';
 import * as feedActions from '../../feed/actions';
+import * as commentsActions from '../../comments/actions';
 import reducer, * as selectors from '../reducer';
 
 describe('posts reducer', () => {
@@ -23,6 +24,17 @@ describe('posts reducer', () => {
       },
     },
     result: [259, 260, 261],
+  };
+
+  const responseC = {
+    entities: {
+      comments: {
+        41: { title: 'some comment 1' },
+        42: { title: 'some comment 2' },
+        43: { title: 'some comment 3' },
+      },
+    },
+    result: [41, 42, 43],
   };
 
   it('should return initial state', () => {
@@ -126,6 +138,23 @@ describe('posts reducer', () => {
         258: { title: 'some post 3' },
       },
       pendingVotes: [525],
+    };
+    const actual = reducer(initialState, action);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should handle GET_COMMENTS_SUCCESS', () => {
+    const initialState = { posts: {}, pendingVotes: [] };
+    const action = commentsActions.getCommentsSuccess(responseC, 256);
+
+    const expected = {
+      posts: {
+        41: { title: 'some comment 1' },
+        42: { title: 'some comment 2' },
+        43: { title: 'some comment 3' },
+      },
+      pendingVotes: [],
     };
     const actual = reducer(initialState, action);
 

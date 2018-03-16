@@ -15,7 +15,6 @@ describe('comments reducer', () => {
 
   it('should return initial state', () => {
     const expected = {
-      byId: {},
       replies: {},
       loading: false,
     };
@@ -29,7 +28,6 @@ describe('comments reducer', () => {
     const action = actions.getComments(222);
 
     const expected = {
-      byId: {},
       replies: {},
       loading: true,
     };
@@ -43,11 +41,6 @@ describe('comments reducer', () => {
     const action = actions.getCommentsSuccess(payload, 222);
 
     const expected = {
-      byId: {
-        522: { id: 522 },
-        523: { id: 523 },
-        524: { id: 524 },
-      },
       replies: {
         222: [522, 523, 524],
       },
