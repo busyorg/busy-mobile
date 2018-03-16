@@ -4,8 +4,12 @@ import { normalize } from 'normalizr';
 import parsePost from '../../helpers/parsePost';
 import { postSchema, postsSchema, userSchema, commentsSchema } from './schemas';
 
+const options = {
+  timeout: 50000,
+};
+
 function Client() {
-  this.client = createClient('https://api.steemit.com');
+  this.client = createClient('https://api.steemit.com', options);
 }
 
 Client.prototype.sendAsync = function sendAsync(message, params) {
