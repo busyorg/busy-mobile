@@ -43,3 +43,4 @@ export const getUserFollowingCount = (state, name) =>
 export const getUserMetadata = (state, name) => fromUsers.getUserMetadata(state.users, name);
 export const getUserDisplayName = (state, name) => fromUsers.getUserDisplayName(state.users, name);
 export const getUserAbout = (state, name) => fromUsers.getUserAbout(state.users, name);
+export const getUserCover = (state, name) => fromUsers.getUserCover(state.users, name);

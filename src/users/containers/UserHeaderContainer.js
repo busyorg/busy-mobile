@@ -5,6 +5,7 @@ import {
   getUserFollowingCount,
   getUserDisplayName,
   getUserAbout,
+  getUserCover,
 } from '../../reducers';
 import { getUser } from '../actions';
 import UserHeader from '../components/UserHeader';
@@ -15,6 +16,7 @@ const mapStateToProps = (state, { name }) => ({
   followingCount: getUserFollowingCount(state, name),
   displayName: getUserDisplayName(state, name),
   about: getUserAbout(state, name),
+  cover: getUserCover(state, name),
 });
 
 export default connect(mapStateToProps, { getUser })(UserHeader);

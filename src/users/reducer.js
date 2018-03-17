@@ -43,3 +43,5 @@ export const getUserDisplayName = (state, name) =>
   _.get(getUserMetadata(state, name), 'profile.name', '');
 export const getUserAbout = (state, name) =>
   _.get(getUserMetadata(state, name), 'profile.about', '');
+export const getUserCover = (state, name) =>
+  _.get(getUserMetadata(state, name), 'profile.cover_image');

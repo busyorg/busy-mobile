@@ -42,10 +42,22 @@ const Footer = styled.View`
   padding-top: 16px;
 `;
 
-const UserHeader = ({ name, displayName, about, postCount, followerCount, followingCount }) => (
+const DefaultBackground = styled.View`
+  height: 80px;
+`;
+
+const UserHeader = ({
+  name,
+  displayName,
+  about,
+  cover,
+  postCount,
+  followerCount,
+  followingCount,
+}) => (
   <React.Fragment>
     <TopContainer>
-      <ImagePreview source={require('../../../assets/images/cover.jpg')} />
+      {cover ? <ImagePreview source={{ uri: cover }} /> : <DefaultBackground />}
       <AvatarContainer>
         <Avatar size={72} username={name} />
       </AvatarContainer>
@@ -71,6 +83,7 @@ UserHeader.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string,
   about: PropTypes.string,
+  cover: PropTypes.string,
   postCount: PropTypes.number,
   followerCount: PropTypes.number,
   followingCount: PropTypes.number,
@@ -79,6 +92,7 @@ UserHeader.propTypes = {
 UserHeader.defaultProps = {
   displayName: '',
   about: '',
+  cover: '',
   postCount: 0,
   followerCount: 0,
   followingCount: 0,
