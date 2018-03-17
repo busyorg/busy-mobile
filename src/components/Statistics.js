@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import numeral from 'numeral';
 
-function formatNumber(number) {
+function formatNumber(number, displayStyle) {
+  if (displayStyle === 'percent') {
+    return numeral(number).format('0%');
+  }
   let result = '';
   if (number < 10000) {
     result = `${number}`;
@@ -15,30 +18,32 @@ function formatNumber(number) {
 
 const StatisticsContainer = styled.View`
   flex-direction: row;
+  justify-content: space-between;
 `;
 
-const StatisticContainer = styled.View`
-  flex: 1;
-  align-items: center;
-`;
+const StatisticContainer = styled.View``;
 
 const Number = styled.Text`
-  font-weight: bold;
+  font-size: 18px;
 `;
 
 const Title = styled.Text`
   color: rgba(0, 0, 0, 0.54);
 `;
 
-const StatisticsItem = ({ number, title }) => (
+const StatisticsItem = ({ number, title, displayStyle }) => (
   <StatisticContainer>
-    <Number>{formatNumber(number)}</Number>
+    <Number>{formatNumber(number, displayStyle)}</Number>
     <Title>{title}</Title>
   </StatisticContainer>
 );
 StatisticsItem.propTypes = {
   number: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  displayStyle: PropTypes.oneOf(['number', 'percent']),
+};
+StatisticsItem.defaultProps = {
+  displayStyle: 'number',
 };
 
 const Statistics = ({ children }) => <StatisticsContainer>{children}</StatisticsContainer>;

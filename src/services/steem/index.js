@@ -9,7 +9,7 @@ const options = {
 };
 
 function Client() {
-  this.client = createClient('https://steemd.privex.io', options);
+  this.client = createClient('https://api.steemit.com', options);
 }
 
 Client.prototype.sendAsync = function sendAsync(message, params) {

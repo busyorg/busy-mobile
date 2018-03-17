@@ -1,17 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ImagePreview from '../../components/Post/ImagePreview';
 import Avatar from '../../components/Avatar';
 import Statistics from '../../components/Statistics';
 
 const Container = styled.View`
-  padding: 16px;
+  padding: 0 16px 16px;
   background-color: white;
   margin-bottom: 8px;
 `;
 
 const Center = styled.View`
-  align-items: center;
+  position: relative;
+`;
+
+const TopContainer = styled.View`
+  background: white;
+  position: relative;
+  padding-bottom: 16px;
+`;
+
+const AvatarContainer = styled.View`
+  position: absolute;
+  left: 16px;
+  bottom: 0px;
 `;
 
 const Name = styled.Text`
@@ -21,7 +34,6 @@ const Name = styled.Text`
 `;
 
 const About = styled.Text`
-  text-align: center;
   color: rgba(0, 0, 0, 0.54);
   font-size: 14px;
 `;
@@ -31,20 +43,28 @@ const Footer = styled.View`
 `;
 
 const UserHeader = ({ name, displayName, about, postCount, followerCount, followingCount }) => (
-  <Container>
-    <Center>
-      <Avatar size={72} username={name} />
-      <Name>{displayName || name}</Name>
-      <About>{about}</About>
-    </Center>
-    <Footer>
-      <Statistics>
-        <Statistics.Item title="posts" number={postCount} />
-        <Statistics.Item title="followers" number={followerCount} />
-        <Statistics.Item title="following" number={followingCount} />
-      </Statistics>
-    </Footer>
-  </Container>
+  <React.Fragment>
+    <TopContainer>
+      <ImagePreview source={require('../../../assets/images/cover.jpg')} />
+      <AvatarContainer>
+        <Avatar size={72} username={name} />
+      </AvatarContainer>
+    </TopContainer>
+    <Container>
+      <Center>
+        <Name>{displayName || name}</Name>
+        <About>{about}</About>
+      </Center>
+      <Footer>
+        <Statistics>
+          <Statistics.Item title="Posts" number={postCount} />
+          <Statistics.Item title="Followers" number={followerCount} />
+          <Statistics.Item title="Following" number={followingCount} />
+          <Statistics.Item title="Voting power" number={0.98} displayStyle="percent" />
+        </Statistics>
+      </Footer>
+    </Container>
+  </React.Fragment>
 );
 
 UserHeader.propTypes = {
