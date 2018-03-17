@@ -1,22 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import LoadingScreen from '../../components/LoadingScreen';
 import CommentContainer from '../containers/CommentContainer';
 
-const Comments = ({ loading, comments }) => {
-  if (loading) return <LoadingScreen />;
-  return (
-    <ScrollView>
-      {comments.map(comment => <CommentContainer key={comment} id={comment} />)}
-    </ScrollView>
-  );
-};
-Comments.propTypes = {
-  comments: PropTypes.arrayOf(PropTypes.number),
-};
-Comments.defaultProps = {
-  comments: [],
-};
+export default class Comments extends React.Component {
+  static propTypes = {
+    loading: PropTypes.bool,
+    comments: PropTypes.arrayOf(PropTypes.number),
+  };
 
-export default Comments;
+  static defaultProps = {
+    loading: false,
+    comments: [],
+  };
+
+  static renderItem({ item }) {
+    return <CommentContainer id={item} />;
+  }
+
+  static extractKey(item) {
+    return item;
+  }
+
+  render() {
+    const { loading, comments } = this.props;
+    if (loading) return <LoadingScreen />;
+
+    return (
+      <FlatList
+        data={comments}
+        keyExtractor={Comments.extractKey}
+        renderItem={Comments.renderItem}
+      />
+    );
+  }
+}
