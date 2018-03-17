@@ -73,9 +73,7 @@ export default class Comment extends React.PureComponent {
             <Content>
               <Text>{contents}</Text>
             </Content>
-            {shouldShowButton && (
-              <Button title={`Show ${commentCount} children`} onPress={this.loadRepliesClick} />
-            )}
+            {shouldShowButton && <Button title="Show replies" onPress={this.loadRepliesClick} />}
             <CommentsContainer autoload={false} id={id} />
           </React.Fragment>
         </Main>
