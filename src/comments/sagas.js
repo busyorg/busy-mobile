@@ -5,7 +5,6 @@ import { getPostById } from '../reducers';
 
 export function* loadComments(action) {
   const { postId } = action.meta;
-  console.log('getting comments', postId);
 
   const post = yield select(getPostById, postId);
 

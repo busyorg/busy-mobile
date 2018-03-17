@@ -47,7 +47,15 @@ export default class Comment extends React.PureComponent {
     getComments: () => {},
   };
 
-  loadRepliesClick = () => this.props.getComments(this.props.id);
+  constructor(props) {
+    super(props);
+
+    this.loadRepliesClick = this.loadRepliesClick.bind(this);
+  }
+
+  loadRepliesClick() {
+    this.props.getComments(this.props.id);
+  }
 
   render() {
     const {

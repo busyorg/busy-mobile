@@ -7,7 +7,7 @@ import sc2 from '../../services/sc2';
 import { logout } from '../../auth/actions';
 import ToolbarMenu from '../../components/ToolbarMenu';
 
-class ProfileMenu extends React.Component {
+class ProfileMenu extends React.PureComponent {
   static propTypes = {
     logout: PropTypes.func,
   };
@@ -16,13 +16,19 @@ class ProfileMenu extends React.Component {
     logout: () => {},
   };
 
-  handleSelect = async id => {
+  constructor(props) {
+    super(props);
+
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  async handleSelect(id) {
     if (id === 1) {
       await SecureStore.deleteItemAsync('accessToken');
       sc2.setAccessToken(null);
       this.props.logout();
     }
-  };
+  }
 
   render() {
     return (

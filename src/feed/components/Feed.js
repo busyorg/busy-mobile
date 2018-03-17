@@ -40,6 +40,17 @@ class Feed extends React.Component {
     refreshFeed: () => {},
   };
 
+  constructor(props) {
+    super(props);
+
+    this.handleEndReached = this.handleEndReached.bind(this);
+    this.handleRefresh = this.handleRefresh.bind(this);
+    this.handleUserNavigate = this.handleUserNavigate.bind(this);
+    this.handlePostNavigate = this.handlePostNavigate.bind(this);
+    this.handleCommentsNavigate = this.handleCommentsNavigate.bind(this);
+    this.renderLoading = this.renderLoading.bind(this);
+  }
+
   componentDidMount() {
     const { sortBy, tag, loading, list, userLoading } = this.props;
 
@@ -58,29 +69,29 @@ class Feed extends React.Component {
     }
   }
 
-  handleEndReached = () => {
+  handleEndReached() {
     const { sortBy, tag, loading } = this.props;
     if (!loading) {
       this.props.getMoreFeed(sortBy, tag);
     }
-  };
+  }
 
-  handleRefresh = () => {
+  handleRefresh() {
     const { sortBy, tag } = this.props;
     this.props.refreshFeed(sortBy, tag);
-  };
+  }
 
-  handleUserNavigate = name => {
+  handleUserNavigate(name) {
     this.props.navigation.navigate('User', { name });
-  };
+  }
 
-  handlePostNavigate = id => {
+  handlePostNavigate(id) {
     this.props.navigation.navigate('Post', { id });
-  };
+  }
 
-  handleCommentsNavigate = id => {
+  handleCommentsNavigate(id) {
     this.props.navigation.navigate('Comments', { id });
-  };
+  }
 
   renderItem = ({ item }) => (
     <FeedPostContainer
@@ -91,13 +102,13 @@ class Feed extends React.Component {
     />
   );
 
-  renderLoading = () => {
+  renderLoading() {
     const { loading } = this.props;
 
     if (loading) return <Loading />;
 
     return null;
-  };
+  }
 
   render() {
     const { list, loading, refreshing, userLoading, header } = this.props;

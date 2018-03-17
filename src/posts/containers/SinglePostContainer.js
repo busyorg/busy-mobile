@@ -7,7 +7,7 @@ import { getPostById, getAuthUser, getIsPostPendingVote } from '../../reducers';
 import { votePost } from '../actions';
 import SinglePost from '../components/SinglePost';
 
-class SinglePostContainer extends React.Component {
+class SinglePostContainer extends React.PureComponent {
   static propTypes = {
     navigation: PropTypes.shape().isRequired,
     id: PropTypes.number.isRequired,
@@ -18,19 +18,27 @@ class SinglePostContainer extends React.Component {
     author: null,
   };
 
-  handleUserNavigate = () => {
+  constructor(props) {
+    super(props);
+
+    this.handleUserNavigate = this.handleUserNavigate.bind(this);
+    this.handleTagNavigate = this.handleTagNavigate.bind(this);
+    this.handleCommentsNavigate = this.handleCommentsNavigate.bind(this);
+  }
+
+  handleUserNavigate() {
     const { author } = this.props;
     this.props.navigation.navigate('User', { name: author });
-  };
+  }
 
-  handleTagNavigate = tag => {
+  handleTagNavigate(tag) {
     this.props.navigation.navigate('Tag', { tag });
-  };
+  }
 
-  handleCommentsNavigate = () => {
+  handleCommentsNavigate() {
     const { id } = this.props;
     this.props.navigation.navigate('Comments', { id });
-  };
+  }
 
   render() {
     return (

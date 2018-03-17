@@ -58,14 +58,20 @@ class SinglePost extends React.PureComponent {
     onCommentsNavigate: () => {},
   };
 
-  handleLikeClick = () => {
+  constructor(props) {
+    super(props);
+
+    this.handleLikeClick = this.handleLikeClick.bind(this);
+  }
+
+  handleLikeClick() {
     const { id, pendingVote, upvoted } = this.props;
 
     if (pendingVote) return;
 
     const weight = upvoted ? 0 : 10000;
     this.props.votePost(id, weight);
-  };
+  }
 
   render() {
     const {

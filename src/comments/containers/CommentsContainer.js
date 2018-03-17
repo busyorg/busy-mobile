@@ -34,6 +34,7 @@ class CommentsContainer extends React.Component {
   }
 
   render() {
+    // return null;
     return <Comments {...this.props} />;
   }
 }

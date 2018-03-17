@@ -45,29 +45,38 @@ export default class PostFeed extends React.PureComponent {
     onCommentsNavigate: () => {},
   };
 
-  handleLikeClick = () => {
+  constructor(props) {
+    super(props);
+
+    this.handleLikeClick = this.handleLikeClick.bind(this);
+    this.handleUserClick = this.handleUserClick.bind(this);
+    this.handlePostClick = this.handlePostClick.bind(this);
+    this.handleCommentsClick = this.handleCommentsClick.bind(this);
+  }
+
+  handleLikeClick() {
     const { id, pendingVote, upvoted } = this.props;
 
     if (pendingVote) return;
 
     const weight = upvoted ? 0 : 10000;
     this.props.votePost(id, weight);
-  };
+  }
 
-  handleUserPress = () => {
+  handleUserClick() {
     const { author } = this.props;
     this.props.onUserNavigate(author);
-  };
+  }
 
-  handlePostPress = () => {
+  handlePostClick() {
     const { id } = this.props;
     this.props.onPostNavigate(id);
-  };
+  }
 
-  handleCommentsClick = () => {
+  handleCommentsClick() {
     const { id } = this.props;
     this.props.onCommentsNavigate(id);
-  };
+  }
 
   render() {
     const {
@@ -85,8 +94,8 @@ export default class PostFeed extends React.PureComponent {
 
     return (
       <Container>
-        <Header author={author} created={created} onPress={this.handleUserPress} />
-        <CrossTouchable onPress={this.handlePostPress}>
+        <Header author={author} created={created} onPress={this.handleUserClick} />
+        <CrossTouchable onPress={this.handlePostClick}>
           <View>
             {image && (
               <ImagePreview source={{ uri: `https://steemitimages.com/400x400/${image}` }} />
