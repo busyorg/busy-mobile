@@ -26,4 +26,23 @@ describe('comments actions', () => {
 
     expect(actual).toEqual(expected);
   });
+
+  it('should create REFRESH_COMMENTS_REQUEST action', () => {
+    const postId = 22;
+
+    const expected = { type: actions.REFRESH_COMMENTS.REQUEST, meta: { postId } };
+    const actual = actions.refreshComments(postId);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should create REFRESH_COMMETNS_SUCCESS action', () => {
+    const postId = 22;
+    const payload = { entities: { comments: { 522: { id: 522 } } }, result: [522] };
+
+    const expected = { type: actions.REFRESH_COMMENTS.SUCCESS, meta: { postId }, payload };
+    const actual = actions.refreshCommentsSuccess(payload, postId);
+
+    expect(actual).toEqual(expected);
+  });
 });

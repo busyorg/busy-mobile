@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import { combineReducers } from 'redux';
-import { GET_COMMENTS } from './actions';
+import { GET_COMMENTS, REFRESH_COMMENTS } from './actions';
 
 function replies(state = [], action) {
   switch (action.type) {
     case GET_COMMENTS.SUCCESS:
       return [...state, ...action.payload.result];
+    case REFRESH_COMMENTS.SUCCESS:
+      return action.payload.result;
     default:
       return state;
   }
@@ -14,9 +16,12 @@ function replies(state = [], action) {
 function loading(state = false, action) {
   switch (action.type) {
     case GET_COMMENTS.REQUEST:
+    case REFRESH_COMMENTS.REQUEST:
       return true;
     case GET_COMMENTS.SUCCESS:
     case GET_COMMENTS.ERROR:
+    case REFRESH_COMMENTS.SUCCESS:
+    case REFRESH_COMMENTS.ERROR:
       return false;
     default:
       return state;
@@ -46,6 +51,9 @@ export default function(state = {}, action) {
     case GET_COMMENTS.REQUEST:
     case GET_COMMENTS.SUCCESS:
     case GET_COMMENTS.ERROR:
+    case REFRESH_COMMENTS.REQUEST:
+    case REFRESH_COMMENTS.SUCCESS:
+    case REFRESH_COMMENTS.ERROR:
       return {
         ...state,
         [action.meta.postId]: {

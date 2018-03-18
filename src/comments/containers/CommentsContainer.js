@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getComments } from '../actions';
+import { getComments, refreshComments } from '../actions';
 import { getIsCommentsLoading, getCommentsIdsByPostId } from '../../reducers';
 import Comments from '../components/Comments';
 
@@ -34,7 +34,6 @@ class CommentsContainer extends React.Component {
   }
 
   render() {
-    // return null;
     return <Comments {...this.props} />;
   }
 }
@@ -46,5 +45,6 @@ export default connect(
   }),
   {
     getComments,
+    refreshComments,
   },
 )(CommentsContainer);

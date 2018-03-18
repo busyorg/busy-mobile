@@ -14,22 +14,22 @@ describe('comments reducer', () => {
   };
 
   it('should return initial state', () => {
-    const expected = {
-      replies: {},
-      loading: false,
-    };
+    const expected = {};
     const actual = reducer(undefined, {});
 
     expect(actual).toEqual(expected);
   });
 
   it('should handle GET_COMMENTS_REQUEST', () => {
-    const initialState = { byId: {}, replies: {}, loading: false };
+    const initialState = {};
     const action = actions.getComments(222);
 
     const expected = {
-      replies: {},
-      loading: true,
+      222: {
+        loaded: false,
+        loading: true,
+        replies: [],
+      },
     };
     const actual = reducer(initialState, action);
 
@@ -37,14 +37,65 @@ describe('comments reducer', () => {
   });
 
   it('should handle GET_COMMENTS_SUCCESS', () => {
-    const initialState = { byId: {}, replies: {}, loading: true };
+    const initialState = {
+      222: {
+        loaded: false,
+        loading: true,
+        replies: [],
+      },
+    };
     const action = actions.getCommentsSuccess(payload, 222);
 
     const expected = {
-      replies: {
-        222: [522, 523, 524],
+      222: {
+        loaded: true,
+        loading: false,
+        replies: [522, 523, 524],
       },
-      loading: false,
+    };
+    const actual = reducer(initialState, action);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should handle REFRESH_COMMENTS_REQUEST', () => {
+    const initialState = {
+      222: {
+        loaded: true,
+        loading: false,
+        replies: [11, 12, 13],
+      },
+    };
+    const action = actions.refreshComments(222);
+
+    const expected = {
+      222: {
+        loaded: true,
+        loading: true,
+        replies: [11, 12, 13],
+      },
+    };
+    const actual = reducer(initialState, action);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should handle REFRESH_COMMENTS_SUCCESS', () => {
+    const initialState = {
+      222: {
+        loaded: true,
+        loading: true,
+        replies: [11, 12, 13],
+      },
+    };
+    const action = actions.refreshCommentsSuccess(payload, 222);
+
+    const expected = {
+      222: {
+        loaded: true,
+        loading: false,
+        replies: [522, 523, 524],
+      },
     };
     const actual = reducer(initialState, action);
 
