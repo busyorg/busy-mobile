@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { View } from 'react-native';
 import styled from 'styled-components';
+import BButton from '../../components/BButton';
 import ImagePreview from '../../components/Post/ImagePreview';
 import Avatar from '../../components/Avatar';
 import Statistics from '../../components/Statistics';
@@ -12,7 +14,10 @@ const Container = styled.View`
 `;
 
 const Center = styled.View`
-  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const TopContainer = styled.View`
@@ -64,9 +69,14 @@ const UserHeader = ({
     </TopContainer>
     <Container>
       <Center>
-        <Name>{displayName || name}</Name>
-        <About>{about}</About>
+        <View>
+          <Name>{displayName || name}</Name>
+        </View>
+        <View>
+          <BButton title="Follow" />
+        </View>
       </Center>
+      <About>{about}</About>
       <Footer>
         <Statistics>
           <Statistics.Item title="Posts" number={postCount} />
