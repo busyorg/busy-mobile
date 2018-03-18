@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
-import BusyRefreshControl from '../../components/BusyRefreshControl';
+import BRefreshControl from '../../components/BRefreshControl';
 import LoadingScreen from '../../components/LoadingScreen';
 import CommentContainer from '../containers/CommentContainer';
 
@@ -43,7 +43,7 @@ export default class Comments extends React.Component {
 
     return (
       <FlatList
-        refreshControl={<BusyRefreshControl refreshing={loading} onRefresh={this.handleRefresh} />}
+        refreshControl={<BRefreshControl refreshing={loading} onRefresh={this.handleRefresh} />}
         data={comments}
         keyExtractor={Comments.extractKey}
         renderItem={Comments.renderItem}

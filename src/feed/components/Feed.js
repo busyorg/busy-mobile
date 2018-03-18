@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import styled from 'styled-components';
-import BusyRefreshControl from '../../components/BusyRefreshControl';
+import BRefreshControl from '../../components/BRefreshControl';
 import FeedPostContainer from '../containers/FeedPostContainer';
 import FeedSeparator from './FeedSeparator';
 import LoadingScreen from '../../components/LoadingScreen';
@@ -122,7 +122,7 @@ class Feed extends React.Component {
         <FlatList
           removeClippedSubviews
           refreshControl={
-            <BusyRefreshControl refreshing={refreshing} onRefresh={this.handleRefresh} />
+            <BRefreshControl refreshing={refreshing} onRefresh={this.handleRefresh} />
           }
           data={list}
           renderItem={this.renderItem}
