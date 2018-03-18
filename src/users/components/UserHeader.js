@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import styled from 'styled-components';
 import BButton from '../../components/BButton';
+import FollowButtonContainer from '../containers/FollowButtonContainer';
 import ImagePreview from '../../components/Post/ImagePreview';
 import Avatar from '../../components/Avatar';
 import Statistics from '../../components/Statistics';
@@ -73,7 +74,7 @@ const UserHeader = ({
           <Name>{displayName || name}</Name>
         </View>
         <View>
-          <BButton title="Follow" />
+          <FollowButtonContainer username={name} />
         </View>
       </Center>
       <About>{about}</About>

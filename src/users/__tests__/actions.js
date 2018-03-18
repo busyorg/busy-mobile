@@ -18,4 +18,36 @@ describe('users actions', () => {
 
     expect(actual).toEqual(expected);
   });
+
+  it('should create FOLLOW_USER.REQUEST action', () => {
+    const expected = { type: actions.FOLLOW_USER.REQUEST, meta: { username } };
+    const actual = actions.followUser(username);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should craete FOLLOW_USER.SUCCESS action', () => {
+    const payload = { success: true };
+
+    const expected = { type: actions.FOLLOW_USER.SUCCESS, payload, meta: { username } };
+    const actual = actions.followUserSuccess(payload, username);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should create UNFOLLOW_USER.REQUEST action', () => {
+    const expected = { type: actions.UNFOLLOW_USER.REQUEST, meta: { username } };
+    const actual = actions.unfollowUser(username);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should craete UNFOLLOW_USER.SUCCESS action', () => {
+    const payload = { success: true };
+
+    const expected = { type: actions.UNFOLLOW_USER.SUCCESS, payload, meta: { username } };
+    const actual = actions.unfollowUserSuccess(payload, username);
+
+    expect(actual).toEqual(expected);
+  });
 });
