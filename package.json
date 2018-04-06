@@ -1,10 +1,13 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "name": "busy-mobile",
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "private": true,
   "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "test:watch:all": "jest --watchAll",
     "flow": "flow"
   },
   "jest": {
@@ -13,15 +16,15 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "@expo/vector-icons": "^6.2.2",
-    "expo": "^25.0.0",
+    "expo": "^26.0.0",
     "lightrpc": "0.0.5",
     "lodash": "^4.17.5",
     "moment": "^2.20.1",
     "normalizr": "^3.2.4",
     "numeral": "^2.0.6",
     "prop-types": "^15.6.0",
-    "react": "16.2.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
+    "react": "16.3.0-alpha.1",
+    "react-native": "0.54.0",
     "react-native-render-html": "^3.9.0",
     "react-navigation": "^1.0.0-beta.27",
     "react-redux": "^5.0.6",
@@ -42,6 +45,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1",
     "flow-bin": "0.56.0",
-    "jest-expo": "^25.0.0"
+    "jest-expo": "^25.0.0",
+    "react-native-scripts": "1.13.1",
+    "react-test-renderer": "16.3.0-alpha.1"
   }
 }
