@@ -8,11 +8,13 @@ import { getPostById, getAuthUser, getIsPostPendingVote } from '../../reducers';
 import { votePost } from '../actions';
 import SinglePost from '../components/SinglePost';
 
-type Props = {
+import type { Post } from '../../types';
+
+type OwnProps = {
   navigation: Object,
-  id: number,
-  author: string,
 };
+
+type Props = Post & OwnProps;
 
 class SinglePostContainer extends React.PureComponent<Props> {
   handleUserNavigate = () => {

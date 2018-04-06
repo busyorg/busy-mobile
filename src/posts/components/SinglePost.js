@@ -9,6 +9,8 @@ import Header from '../../components/Post/Header';
 import Tags from '../../components/Post/Tags';
 import Footer from '../../components/Post/Footer';
 
+import type { Post } from '../../types';
+
 const Body = styled.View`
   padding: 16px;
 `;
@@ -23,23 +25,14 @@ const TagsContainer = styled.View`
   padding-bottom: 8px;
 `;
 
-type Props = {
-  id: number,
-  author: string,
-  created: string,
-  title: string,
-  htmlBody: string,
-  tags: Array<string>,
-  upvoted: boolean,
-  pendingVote: boolean,
-  upvoteCount: number,
-  commentCount: number,
-  payout: number,
+type OwnProps = {
   votePost: (postId: number, weight: number) => void,
   onUserNavigate: (username: string) => void,
   onTagNavigate: (tag: string) => void,
   onCommentsNavigate: (postId: number) => void,
 };
+
+type Props = Post & OwnProps;
 
 class SinglePost extends React.PureComponent<Props> {
   static defaultProps = {
