@@ -4,7 +4,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:watch:all": "jest --watchAll"
+    "test:watch:all": "jest --watchAll",
+    "flow": "flow"
   },
   "jest": {
     "preset": "jest-expo"
@@ -33,12 +34,14 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
+    "babel-preset-flow": "^6.23.0",
     "eslint": "^4.17.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1",
+    "flow-bin": "^0.69.0",
     "jest-expo": "^25.0.0"
   }
 }
