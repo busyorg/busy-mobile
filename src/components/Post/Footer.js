@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ActivityIndicator } from 'react-native';
 import styled from 'styled-components';
 import numeral from 'numeral';
@@ -34,6 +35,16 @@ const CounterText = styled.Text`
   margin-left: 8px;
 `;
 
+type Props = {
+  upvoteCount: number,
+  commentCount: number,
+  payout: number,
+  upvoted: boolean,
+  pendingVote: boolean,
+  onLikeClick: Function,
+  onCommentsClick: Function,
+};
+
 const Footer = ({
   upvoteCount,
   commentCount,
@@ -42,7 +53,7 @@ const Footer = ({
   upvoted,
   onLikeClick,
   onCommentsClick,
-}) => {
+}: Props) => {
   let likeIcon = null;
   if (pendingVote) {
     likeIcon = <ActivityIndicator size="small" />;
@@ -79,15 +90,6 @@ const Footer = ({
       </Data>
     </Container>
   );
-};
-Footer.propTypes = {
-  upvoteCount: PropTypes.number,
-  commentCount: PropTypes.number,
-  payout: PropTypes.number,
-  upvoted: PropTypes.bool,
-  pendingVote: PropTypes.bool,
-  onLikeClick: PropTypes.func,
-  onCommentsClick: PropTypes.func,
 };
 Footer.defaultProps = {
   upvoteCount: 0,

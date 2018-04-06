@@ -1,12 +1,20 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAuthUser, getIsAuthLoading } from '../../reducers';
 import LoadingScreen from '../../components/LoadingScreen';
 import Login from '../../auth/Login';
 import UserProfileContainer from '../../users/containers/UserProfileContainer';
 
-const ProfileContainer = ({ loading, user }) => {
+type Props = {
+  loading: boolean,
+  user: {
+    name: string,
+  },
+};
+
+const ProfileContainer = ({ loading, user }: Props) => {
   if (loading) {
     return <LoadingScreen />;
   }
@@ -16,10 +24,6 @@ const ProfileContainer = ({ loading, user }) => {
   }
 
   return <Login />;
-};
-ProfileContainer.propTypes = {
-  loading: PropTypes.bool,
-  user: PropTypes.shape(),
 };
 ProfileContainer.defaultProps = {
   loading: false,

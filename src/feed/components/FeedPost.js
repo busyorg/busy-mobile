@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import CrossTouchable from '../../components/CrossTouchable';
 import Container from '../../components/Container';
@@ -9,30 +10,26 @@ import Title from '../../components/Post/Title';
 import Body from '../../components/Post/Body';
 import Footer from '../../components/Post/Footer';
 
-export default class PostFeed extends React.PureComponent {
-  static propTypes = {
-    id: PropTypes.number.isRequired,
-    author: PropTypes.string,
-    title: PropTypes.string,
-    created: PropTypes.string,
-    excerpt: PropTypes.string,
-    upvoteCount: PropTypes.number,
-    commentCount: PropTypes.number,
-    payout: PropTypes.number,
-    upvoted: PropTypes.bool,
-    pendingVote: PropTypes.bool,
-    image: PropTypes.string,
-    votePost: PropTypes.func,
-    onPostNavigate: PropTypes.func,
-    onUserNavigate: PropTypes.func,
-    onCommentsNavigate: PropTypes.func,
-  };
+type Props = {
+  id: number,
+  author: string,
+  title: string,
+  created: string,
+  excerpt: string,
+  upvoteCount: number,
+  commentCount: number,
+  payout: number,
+  upvoted: boolean,
+  pendingVote: boolean,
+  image: string,
+  votePost: (postId: number, weight: number) => void,
+  onUserNavigate: (username: string) => void,
+  onPostNavigate: (postId: number) => void,
+  onCommentsNavigate: (postId: number) => void,
+};
 
+export default class PostFeed extends React.PureComponent<Props> {
   static defaultProps = {
-    author: '',
-    title: '',
-    created: '',
-    excerpt: '',
     upvoteCount: 0,
     commentCount: 0,
     payout: 0,
@@ -45,38 +42,29 @@ export default class PostFeed extends React.PureComponent {
     onCommentsNavigate: () => {},
   };
 
-  constructor(props) {
-    super(props);
-
-    this.handleLikeClick = this.handleLikeClick.bind(this);
-    this.handleUserClick = this.handleUserClick.bind(this);
-    this.handlePostClick = this.handlePostClick.bind(this);
-    this.handleCommentsClick = this.handleCommentsClick.bind(this);
-  }
-
-  handleLikeClick() {
+  handleLikeClick = () => {
     const { id, pendingVote, upvoted } = this.props;
 
     if (pendingVote) return;
 
     const weight = upvoted ? 0 : 10000;
     this.props.votePost(id, weight);
-  }
+  };
 
-  handleUserClick() {
+  handleUserClick = () => {
     const { author } = this.props;
     this.props.onUserNavigate(author);
-  }
+  };
 
-  handlePostClick() {
+  handlePostClick = () => {
     const { id } = this.props;
     this.props.onPostNavigate(id);
-  }
+  };
 
-  handleCommentsClick() {
+  handleCommentsClick = () => {
     const { id } = this.props;
     this.props.onCommentsNavigate(id);
-  }
+  };
 
   render() {
     const {

@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
@@ -7,33 +8,21 @@ import { getPostById, getAuthUser, getIsPostPendingVote } from '../../reducers';
 import { votePost } from '../actions';
 import SinglePost from '../components/SinglePost';
 
-class SinglePostContainer extends React.PureComponent {
-  static propTypes = {
-    navigation: PropTypes.shape().isRequired,
-    id: PropTypes.number.isRequired,
-    author: PropTypes.string,
-  };
+type Props = {
+  navigation: Object,
+  id: number,
+  author: string,
+};
 
-  static defaultProps = {
-    author: null,
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.handleUserNavigate = this.handleUserNavigate.bind(this);
-    this.handleTagNavigate = this.handleTagNavigate.bind(this);
-    this.handleCommentsNavigate = this.handleCommentsNavigate.bind(this);
-  }
-
-  handleUserNavigate() {
+class SinglePostContainer extends React.PureComponent<Props> {
+  handleUserNavigate = () => {
     const { author } = this.props;
     this.props.navigation.navigate('User', { name: author });
-  }
+  };
 
-  handleTagNavigate(tag) {
+  handleTagNavigate = (tag: string) => {
     this.props.navigation.navigate('Tag', { tag });
-  }
+  };
 
   handleCommentsNavigate() {
     const { id } = this.props;

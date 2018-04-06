@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { AppLoading, Font } from 'expo';
 import styled from 'styled-components';
@@ -13,15 +14,21 @@ const Container = styled.View`
   background-color: #fff;
 `;
 
-export default class App extends React.Component {
-  static propTypes = { skipLoadingScreen: PropTypes.bool };
+type Props = {
+  skipLoadingScreen: boolean,
+};
 
+type State = {
+  isLoadingComplete: boolean,
+};
+
+export default class App extends React.Component<Props, State> {
   static defaultProps = { skipLoadingScreen: false };
 
   state = { isLoadingComplete: false };
 
-  loadResourcesAsync = async () =>
-    Promise.all([
+  loadResourcesAsync = async () => {
+    await Promise.all([
       Font.loadAsync({
         ...Ionicons.font,
         ...MaterialIcons.font,
@@ -29,25 +36,16 @@ export default class App extends React.Component {
       }),
       initialize(store),
     ]);
-
-  handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
-    console.warn(error);
   };
 
-  handleFinishLoading = () => {
+  handleFinishLoading = (): void => {
     this.setState({ isLoadingComplete: true });
   };
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
-        <AppLoading
-          startAsync={this.loadResourcesAsync}
-          onError={this.handleLoadingError}
-          onFinish={this.handleFinishLoading}
-        />
+        <AppLoading startAsync={this.loadResourcesAsync} onFinish={this.handleFinishLoading} />
       );
     }
     return (

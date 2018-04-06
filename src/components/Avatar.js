@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const AvatarImage = styled.Image`
@@ -8,15 +9,14 @@ const AvatarImage = styled.Image`
   border-radius: ${({ size }) => size / 2}px;
 `;
 
-const Avatar = ({ username, size }) => (
-  <AvatarImage size={size} source={{ uri: `https://steemitimages.com/u/${username}/avatar` }} />
-);
-
-Avatar.propTypes = {
-  username: PropTypes.string,
-  size: PropTypes.number,
+type Props = {
+  username: string,
+  size: number,
 };
 
+const Avatar = ({ username, size }: Props) => (
+  <AvatarImage size={size} source={{ uri: `https://steemitimages.com/u/${username}/avatar` }} />
+);
 Avatar.defaultProps = {
   username: 'a',
   size: 32,

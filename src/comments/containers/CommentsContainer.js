@@ -1,23 +1,26 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getComments, refreshComments } from '../actions';
 import { getIsCommentsLoading, getCommentsIdsByPostId } from '../../reducers';
 import Comments from '../components/Comments';
 
-class CommentsContainer extends React.Component {
+type Props = {
+  id: number,
+  autoload: boolean,
+  loading: boolean,
+  comments: Array<number>,
+  getComments: (postId: number) => void,
+};
+
+class CommentsContainer extends React.Component<Props> {
   static navigationOptions = {
     title: 'Comments',
   };
 
-  static propTypes = {
-    id: PropTypes.number.isRequired,
-    loading: PropTypes.bool,
-    comments: PropTypes.arrayOf(PropTypes.number),
-    getComments: PropTypes.func,
-  };
-
   static defaultProps = {
+    autoload: false,
     loading: false,
     comments: [],
     getComments: () => {},

@@ -1,3 +1,5 @@
+// @flow
+
 import { StackNavigator } from 'react-navigation';
 
 import Colors from '../constants/Colors';

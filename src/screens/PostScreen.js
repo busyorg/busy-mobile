@@ -1,14 +1,15 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import SinglePostContainer from '../posts/containers/SinglePostContainer';
 
-export default class PostScreen extends React.Component {
+type Props = {
+  navigation: Object,
+};
+
+export default class PostScreen extends React.Component<Props> {
   static navigationOptions = {
     title: 'Post',
-  };
-
-  static propTypes = {
-    navigation: PropTypes.shape().isRequired,
   };
 
   render() {

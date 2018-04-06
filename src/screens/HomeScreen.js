@@ -1,21 +1,28 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { MaterialIcons } from '@expo/vector-icons';
 import ToolbarMenu from '../components/ToolbarMenu';
 import FeedContainer from '../feed/containers/FeedContainer';
 
-export default class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
+import type { SortBy } from '../types';
+
+type Props = {
+  navigation: Object,
+};
+
+type State = {
+  sort: SortBy,
+};
+
+export default class HomeScreen extends React.Component<Props, State> {
+  static navigationOptions = ({ navigation }: { navigation: Object }) => {
     const params = navigation.state.params || {};
 
     return {
       title: params.tag || 'Feed',
       headerRight: params.headerRight,
     };
-  };
-
-  static propTypes = {
-    navigation: PropTypes.shape().isRequired,
   };
 
   state = {
@@ -42,7 +49,7 @@ export default class HomeScreen extends React.Component {
     });
   };
 
-  getSort = id => {
+  getSort = (id: number) => {
     switch (id) {
       case 0:
         return 'trending';
@@ -57,7 +64,7 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  handleSelect = id => {
+  handleSelect = (id: number) => {
     const sort = this.getSort(id);
     this.setState({
       sort,

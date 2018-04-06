@@ -1,5 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import { FlatList } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import styled from 'styled-components';
@@ -9,25 +10,27 @@ import FeedSeparator from './FeedSeparator';
 import LoadingScreen from '../../components/LoadingScreen';
 import Loading from '../../components/Loading';
 
+import type { SortBy } from '../../types';
+
 const Container = styled.View`
   flex: 1;
 `;
 
-class Feed extends React.Component {
-  static propTypes = {
-    navigation: PropTypes.shape().isRequired,
-    sortBy: PropTypes.string.isRequired,
-    tag: PropTypes.string,
-    list: PropTypes.arrayOf(PropTypes.number),
-    loading: PropTypes.bool,
-    refreshing: PropTypes.bool,
-    userLoading: PropTypes.bool,
-    header: PropTypes.node,
-    getFeed: PropTypes.func,
-    getMoreFeed: PropTypes.func,
-    refreshFeed: PropTypes.func,
-  };
+type Props = {
+  navigation: Object,
+  sortBy: SortBy,
+  tag: string,
+  list: Array<number>,
+  loading: boolean,
+  refreshing: boolean,
+  userLoading: boolean,
+  header: React.Node,
+  getFeed: (sortBy: SortBy, tag: string) => void,
+  getMoreFeed: (sortBy: SortBy, tag: string) => void,
+  refreshFeed: (sortBy: SortBy, tag: string) => void,
+};
 
+class Feed extends React.Component<Props> {
   static defaultProps = {
     tag: null,
     list: [],
@@ -39,17 +42,6 @@ class Feed extends React.Component {
     getMoreFeed: () => {},
     refreshFeed: () => {},
   };
-
-  constructor(props) {
-    super(props);
-
-    this.handleEndReached = this.handleEndReached.bind(this);
-    this.handleRefresh = this.handleRefresh.bind(this);
-    this.handleUserNavigate = this.handleUserNavigate.bind(this);
-    this.handlePostNavigate = this.handlePostNavigate.bind(this);
-    this.handleCommentsNavigate = this.handleCommentsNavigate.bind(this);
-    this.renderLoading = this.renderLoading.bind(this);
-  }
 
   componentDidMount() {
     const { sortBy, tag, loading, list, userLoading } = this.props;
@@ -69,29 +61,29 @@ class Feed extends React.Component {
     }
   }
 
-  handleEndReached() {
+  handleEndReached = () => {
     const { sortBy, tag, loading } = this.props;
     if (!loading) {
       this.props.getMoreFeed(sortBy, tag);
     }
-  }
+  };
 
-  handleRefresh() {
+  handleRefresh = () => {
     const { sortBy, tag } = this.props;
     this.props.refreshFeed(sortBy, tag);
-  }
+  };
 
-  handleUserNavigate(name) {
+  handleUserNavigate = (name: string) => {
     this.props.navigation.navigate('User', { name });
-  }
+  };
 
-  handlePostNavigate(id) {
+  handlePostNavigate = (id: number) => {
     this.props.navigation.navigate('Post', { id });
-  }
+  };
 
-  handleCommentsNavigate(id) {
+  handleCommentsNavigate = (id: number) => {
     this.props.navigation.navigate('Comments', { id });
-  }
+  };
 
   renderItem = ({ item }) => (
     <FeedPostContainer
@@ -126,7 +118,7 @@ class Feed extends React.Component {
           }
           data={list}
           renderItem={this.renderItem}
-          keyExtractor={item => item}
+          keyExtractor={(item: any) => item}
           onEndReached={this.handleEndReached}
           ItemSeparatorComponent={FeedSeparator}
           ListHeaderComponent={header}

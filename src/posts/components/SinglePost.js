@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ScrollView, Dimensions } from 'react-native';
 import styled from 'styled-components';
 import HTML from 'react-native-render-html';
@@ -22,30 +23,26 @@ const TagsContainer = styled.View`
   padding-bottom: 8px;
 `;
 
-class SinglePost extends React.PureComponent {
-  static propTypes = {
-    id: PropTypes.number.isRequired,
-    author: PropTypes.string,
-    created: PropTypes.string,
-    title: PropTypes.string,
-    htmlBody: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string),
-    upvoted: PropTypes.bool,
-    pendingVote: PropTypes.bool,
-    upvoteCount: PropTypes.number,
-    commentCount: PropTypes.number,
-    payout: PropTypes.number,
-    votePost: PropTypes.func,
-    onUserNavigate: PropTypes.func,
-    onTagNavigate: PropTypes.func,
-    onCommentsNavigate: PropTypes.func,
-  };
+type Props = {
+  id: number,
+  author: string,
+  created: string,
+  title: string,
+  htmlBody: string,
+  tags: Array<string>,
+  upvoted: boolean,
+  pendingVote: boolean,
+  upvoteCount: number,
+  commentCount: number,
+  payout: number,
+  votePost: (postId: number, weight: number) => void,
+  onUserNavigate: (username: string) => void,
+  onTagNavigate: (tag: string) => void,
+  onCommentsNavigate: (postId: number) => void,
+};
 
+class SinglePost extends React.PureComponent<Props> {
   static defaultProps = {
-    author: '',
-    created: '',
-    title: '',
-    htmlBody: '',
     tags: [],
     upvoted: false,
     pendingVote: false,
@@ -58,20 +55,14 @@ class SinglePost extends React.PureComponent {
     onCommentsNavigate: () => {},
   };
 
-  constructor(props) {
-    super(props);
-
-    this.handleLikeClick = this.handleLikeClick.bind(this);
-  }
-
-  handleLikeClick() {
+  handleLikeClick = () => {
     const { id, pendingVote, upvoted } = this.props;
 
     if (pendingVote) return;
 
     const weight = upvoted ? 0 : 10000;
     this.props.votePost(id, weight);
-  }
+  };
 
   render() {
     const {

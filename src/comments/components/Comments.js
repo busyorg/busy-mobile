@@ -1,41 +1,36 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
 import BRefreshControl from '../../components/BRefreshControl';
 import LoadingScreen from '../../components/LoadingScreen';
 import CommentContainer from '../containers/CommentContainer';
 
-export default class Comments extends React.Component {
-  static propTypes = {
-    id: PropTypes.number.isRequired,
-    loading: PropTypes.bool,
-    comments: PropTypes.arrayOf(PropTypes.number),
-    refreshComments: PropTypes.func,
-  };
+type Props = {
+  id: number,
+  loading: boolean,
+  comments: Array<number>,
+  refreshComments: (postId: number) => void,
+};
 
+export default class Comments extends React.Component<Props> {
   static defaultProps = {
     loading: false,
     comments: [],
     refreshComments: () => {},
   };
 
-  static renderItem({ item }) {
-    return <CommentContainer id={item} />;
+  static renderItem(item: { item: number }) {
+    return <CommentContainer id={item.item} />;
   }
 
-  static extractKey(item) {
+  static extractKey(item: any) {
     return item;
   }
 
-  constructor(props) {
-    super(props);
-
-    this.handleRefresh = this.handleRefresh.bind(this);
-  }
-
-  handleRefresh() {
+  handleRefresh = () => {
     this.props.refreshComments(this.props.id);
-  }
+  };
 
   render() {
     const { loading, comments } = this.props;

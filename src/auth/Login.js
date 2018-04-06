@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button } from 'react-native';
 import { connect } from 'react-redux';
 import { AuthSession, SecureStore } from 'expo';
@@ -13,11 +14,11 @@ const Container = styled.View`
   justify-content: center;
 `;
 
-class Login extends React.Component {
-  static propTypes = {
-    login: PropTypes.func,
-  };
+type Props = {
+  login: () => void,
+};
 
+class Login extends React.Component<Props> {
   static defaultProps = {
     login: () => {},
   };

@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import CrossTouchable from './CrossTouchable';
 
@@ -15,17 +16,18 @@ const Text = styled.Text`
   font-weight: bold;
 `;
 
-const BButton = ({ title, onPress }) => (
+type Props = {
+  title: string,
+  onPress: Function,
+};
+
+const BButton = ({ title, onPress }: Props) => (
   <CrossTouchable onPress={onPress}>
     <Container>
       <Text>{title}</Text>
     </Container>
   </CrossTouchable>
 );
-BButton.propTypes = {
-  title: PropTypes.string,
-  onPress: PropTypes.func,
-};
 BButton.defaultProps = {
   title: '',
   onPress: () => {},

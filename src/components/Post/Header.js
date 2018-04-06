@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 import styled from 'styled-components';
 import moment from 'moment';
@@ -21,7 +22,13 @@ const Date = styled.Text`
   color: rgba(0, 0, 0, 0.54);
 `;
 
-const Header = ({ author, created, onPress }) => (
+type Props = {
+  author: string,
+  created: string,
+  onPress: Function,
+};
+
+const Header = ({ author, created, onPress }: Props) => (
   <CrossTouchable onPress={onPress}>
     <Container>
       <Avatar size={32} username={author} />
@@ -32,13 +39,6 @@ const Header = ({ author, created, onPress }) => (
     </Container>
   </CrossTouchable>
 );
-
-Header.propTypes = {
-  author: PropTypes.string.isRequired,
-  created: PropTypes.string.isRequired,
-  onPress: PropTypes.func,
-};
-
 Header.defaultProps = {
   onPress: () => {},
 };

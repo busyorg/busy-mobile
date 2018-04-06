@@ -1,5 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import { Platform, UIManager, findNodeHandle, ActionSheetIOS } from 'react-native';
 import styled from 'styled-components';
 import CrossTouchable from './CrossTouchable';
@@ -13,20 +14,21 @@ const IconContainer = styled.View`
   margin: 16px;
 `;
 
-export default class PopupMenu extends React.Component {
-  static propTypes = {
-    title: PropTypes.string,
-    options: PropTypes.arrayOf(PropTypes.string),
-    onSelect: PropTypes.func,
-  };
+type Props = {
+  title: string,
+  options: Array<string>,
+  children: React.Node,
+  onSelect: (id: number) => void,
+};
 
+export default class PopupMenu extends React.Component<Props> {
   static defaultProps = {
-    title: undefined,
+    title: '',
     options: [],
     onSelect: () => {},
   };
 
-  onRef = icon => {
+  onRef = (icon: ?React.Node) => {
     this.icon = icon;
   };
 
@@ -54,6 +56,8 @@ export default class PopupMenu extends React.Component {
       );
     }
   };
+
+  icon: ?React.Node;
 
   render() {
     return (

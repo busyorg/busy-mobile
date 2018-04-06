@@ -1,5 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import { Text, Button } from 'react-native';
 import styled from 'styled-components';
 import Colors from '../../constants/Colors';
@@ -32,30 +33,27 @@ const Username = styled.Text`
   color: ${Colors.secondaryText};
 `;
 
-export default class Comment extends React.PureComponent {
-  static propTypes = {
-    author: PropTypes.string.isRequired,
-    contents: PropTypes.string.isRequired,
-    commentCount: PropTypes.number,
-    level: PropTypes.number,
-    getComments: PropTypes.func,
-  };
+type Props = {
+  id: number,
+  author: string,
+  contents: string,
+  commentCount: number,
+  level: number,
+  commentsLoading: boolean,
+  commentsLoaded: boolean,
+  getComments: (postId: number) => void,
+};
 
+export default class Comment extends React.PureComponent<Props> {
   static defaultProps = {
     commentCount: 0,
     level: 1,
     getComments: () => {},
   };
 
-  constructor(props) {
-    super(props);
-
-    this.loadRepliesClick = this.loadRepliesClick.bind(this);
-  }
-
-  loadRepliesClick() {
+  loadRepliesClick = () => {
     this.props.getComments(this.props.id);
-  }
+  };
 
   render() {
     const {

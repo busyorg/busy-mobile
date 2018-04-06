@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,28 +9,22 @@ import sc2 from '../../services/sc2';
 import { logout } from '../../auth/actions';
 import ToolbarMenu from '../../components/ToolbarMenu';
 
-class ProfileMenu extends React.PureComponent {
-  static propTypes = {
-    logout: PropTypes.func,
-  };
+type Props = {
+  logout: () => void,
+};
 
+class ProfileMenu extends React.PureComponent<Props> {
   static defaultProps = {
     logout: () => {},
   };
 
-  constructor(props) {
-    super(props);
-
-    this.handleSelect = this.handleSelect.bind(this);
-  }
-
-  async handleSelect(id) {
+  handleSelect = id => {
     if (id === 1) {
-      await SecureStore.deleteItemAsync('accessToken');
+      SecureStore.deleteItemAsync('accessToken');
       sc2.setAccessToken(null);
       this.props.logout();
     }
-  }
+  };
 
   render() {
     return (

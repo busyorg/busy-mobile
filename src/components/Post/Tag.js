@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import CrossTouchable from '../CrossTouchable';
 
@@ -15,17 +16,18 @@ const Text = styled.Text`
   margin-bottom: 2px;
 `;
 
-const Tag = ({ name, onPress }) => (
+type Props = {
+  name: string,
+  onPress: Function,
+};
+
+const Tag = ({ name, onPress }: Props) => (
   <CrossTouchable onPress={onPress}>
     <Container>
       <Text>{name}</Text>
     </Container>
   </CrossTouchable>
 );
-Tag.propTypes = {
-  name: PropTypes.string.isRequired,
-  onPress: PropTypes.func,
-};
 Tag.defaultProps = {
   onPress: () => {},
 };

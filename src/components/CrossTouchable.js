@@ -1,7 +1,13 @@
+// @flow
+
 import React from 'react';
 import { TouchableNativeFeedback, TouchableWithoutFeedback, Platform } from 'react-native';
 
-const CrossTouchable = ({ circle, ...props }) => {
+type Props = {
+  circle: boolean,
+};
+
+const CrossTouchable = ({ circle, ...props }: Props) => {
   if (Platform.OS === 'ios') return <TouchableWithoutFeedback {...props} />;
   if (circle)
     return (
@@ -11,6 +17,9 @@ const CrossTouchable = ({ circle, ...props }) => {
       />
     );
   return <TouchableNativeFeedback {...props} />;
+};
+CrossTouchable.defaultProps = {
+  circle: false,
 };
 
 export default CrossTouchable;
