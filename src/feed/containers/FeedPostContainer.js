@@ -1,5 +1,7 @@
-import { connect } from 'react-redux';
+// @flow
+
 import _ from 'lodash';
+import { connect } from 'react-redux';
 import { votePost } from '../../posts/actions';
 import { getPostById, getAuthUser, getIsPostPendingVote } from '../../reducers';
 import FeedPost from '../components/FeedPost';

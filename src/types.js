@@ -1,5 +1,19 @@
 // @flow
 
+export type AsyncType = {
+  ACTION: string,
+  REQUEST: string,
+  SUCCESS: string,
+  ERROR: string,
+};
+
+export type Action = {
+  type: string,
+  payload?: Object,
+  error?: Object,
+  meta?: Object,
+};
+
 export type Post = {
   id: number,
   author: string,
@@ -7,8 +21,6 @@ export type Post = {
   title: string,
   htmlBody: string,
   tags: Array<string>,
-  upvoted: boolean,
-  pendingVote: boolean,
   upvoteCount: number,
   commentCount: number,
   payout: number,

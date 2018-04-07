@@ -1,3 +1,5 @@
+// @flow
+
 import { Alert } from 'react-native';
 
 export default function showAuthDialog() {

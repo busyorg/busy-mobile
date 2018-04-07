@@ -1,7 +1,11 @@
+// @flow
+
 import _ from 'lodash';
 import Remarkable from 'remarkable';
 import striptags from 'striptags';
 import { calculatePayout } from '../helpers/steemitHelpers';
+
+import type { Post } from '../types';
 
 const md = new Remarkable({
   html: true, // remarkable renders first then sanitize runs...
@@ -11,7 +15,7 @@ const md = new Remarkable({
   quotes: '“”‘’',
 });
 
-export default function parsePost(post) {
+export default function parsePost(post: Object): Post {
   const newPost = {};
 
   let metadata = _.attempt(JSON.parse, post.json_metadata);

@@ -12,6 +12,8 @@ import type { Post } from '../../types';
 
 type OwnProps = {
   navigation: Object,
+  upvoted: boolean,
+  pendingVote: boolean,
 };
 
 type Props = Post & OwnProps;

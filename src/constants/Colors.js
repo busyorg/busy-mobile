@@ -1,3 +1,5 @@
+// @flow
+
 export default {
   primary: '#2088ff',
   secondary: '#0274dc',

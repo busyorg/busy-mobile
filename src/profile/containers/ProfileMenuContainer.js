@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { SecureStore } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,7 +17,7 @@ class ProfileMenu extends React.PureComponent<Props> {
     logout: () => {},
   };
 
-  handleSelect = id => {
+  handleSelect = (id: number): void => {
     if (id === 1) {
       SecureStore.deleteItemAsync('accessToken');
       sc2.setAccessToken(null);

@@ -26,6 +26,8 @@ const TagsContainer = styled.View`
 `;
 
 type OwnProps = {
+  upvoted: boolean,
+  pendingVote: boolean,
   votePost: (postId: number, weight: number) => void,
   onUserNavigate: (username: string) => void,
   onTagNavigate: (tag: string) => void,

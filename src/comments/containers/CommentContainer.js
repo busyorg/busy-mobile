@@ -1,3 +1,5 @@
+// @flow
+
 import { connect } from 'react-redux';
 import { getPostById, getIsCommentsLoaded, getIsCommentsLoading } from '../../reducers';
 import { getComments } from '../actions';

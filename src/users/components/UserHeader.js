@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
-import BButton from '../../components/BButton';
 import FollowButtonContainer from '../containers/FollowButtonContainer';
 import ImagePreview from '../../components/Post/ImagePreview';
 import Avatar from '../../components/Avatar';
@@ -52,6 +52,16 @@ const DefaultBackground = styled.View`
   height: 80px;
 `;
 
+type Props = {
+  name: string,
+  displayName: string,
+  about: string,
+  cover: string,
+  postCount: number,
+  followerCount: number,
+  followingCount: number,
+};
+
 const UserHeader = ({
   name,
   displayName,
@@ -60,7 +70,7 @@ const UserHeader = ({
   postCount,
   followerCount,
   followingCount,
-}) => (
+}: Props) => (
   <React.Fragment>
     <TopContainer>
       {cover ? <ImagePreview source={{ uri: cover }} /> : <DefaultBackground />}
@@ -89,17 +99,6 @@ const UserHeader = ({
     </Container>
   </React.Fragment>
 );
-
-UserHeader.propTypes = {
-  name: PropTypes.string.isRequired,
-  displayName: PropTypes.string,
-  about: PropTypes.string,
-  cover: PropTypes.string,
-  postCount: PropTypes.number,
-  followerCount: PropTypes.number,
-  followingCount: PropTypes.number,
-};
-
 UserHeader.defaultProps = {
   displayName: '',
   about: '',

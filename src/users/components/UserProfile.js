@@ -1,15 +1,16 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import UserHeaderContainer from '../containers/UserHeaderContainer';
 import FeedContainer from '../../feed/containers/FeedContainer';
 
-export default class UserProfile extends React.Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    loading: PropTypes.bool,
-    getUser: PropTypes.func,
-  };
+type Props = {
+  name: string,
+  loading: boolean,
+  getUser: (username: string) => void,
+};
 
+export default class UserProfile extends React.Component<Props> {
   static defaultProps = {
     loading: true,
     getUser: () => {},

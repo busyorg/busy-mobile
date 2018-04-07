@@ -1,28 +1,23 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { followUser } from '../actions';
 import BButton from '../../components/BButton';
 
-class FollowButtonContainer extends React.Component {
-  static propTypes = {
-    username: PropTypes.string.isRequired,
-    followUser: PropTypes.func,
-  };
+type Props = {
+  username: string,
+  followUser: (username: string) => void,
+};
 
+class FollowButtonContainer extends React.Component<Props> {
   static defaultProps = {
     followUser: () => {},
   };
 
-  constructor(props) {
-    super(props);
-
-    this.handlePress = this.handlePress.bind(this);
-  }
-
-  handlePress() {
+  handlePress = () => {
     this.props.followUser(this.props.username);
-  }
+  };
 
   render() {
     return <BButton onPress={this.handlePress} {...this.props} />;

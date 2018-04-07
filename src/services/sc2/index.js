@@ -1,3 +1,5 @@
+// @flow
+
 import sc2 from 'sc2-sdk';
 
 const api = sc2.Initialize({

@@ -1,30 +1,56 @@
+// @flow
+
 import { combineReducers } from 'redux';
 import { GET_POST, VOTE_POST } from './actions';
 import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from '../feed/actions';
 import { GET_COMMENTS } from '../comments/actions';
 
-function posts(state = {}, action) {
+import type { Action, Post } from '../types';
+
+type Posts = {
+  [number]: Post,
+};
+type PendingVotes = Array<number>;
+
+type State = {
+  posts: Posts,
+  pendingVotes: PendingVotes,
+};
+
+function posts(state: Posts = {}, action: Action): Posts {
   switch (action.type) {
     case GET_POST.SUCCESS:
     case GET_FEED.SUCCESS:
     case GET_MORE_FEED.SUCCESS:
     case REFRESH_FEED.SUCCESS:
-      return { ...state, ...action.payload.entities.posts };
+      if (action.payload && action.payload.entities) {
+        return { ...state, ...action.payload.entities.posts };
+      }
+      return state;
     case GET_COMMENTS.SUCCESS:
-      return { ...state, ...action.payload.entities.comments };
+      if (action.payload && action.payload.comments) {
+        return { ...state, ...action.payload.entities.comments };
+      }
+      return state;
     default:
       return state;
   }
 }
 
-function pendingVotes(state = [], action) {
+function pendingVotes(state: PendingVotes = [], action: Action): PendingVotes {
   switch (action.type) {
     case VOTE_POST.REQUEST:
-      return [...state, action.meta.postId];
+      if (action.meta && action.meta.postId) {
+        return [...state, action.meta.postId];
+      }
+      return state;
     case VOTE_POST.ERROR:
-      return state.filter(postId => postId !== action.meta.postId);
+      if (action.meta && action.meta.postId) {
+        return state.filter(postId => postId !== action.meta.postId);
+      }
+      return state;
     case GET_POST.SUCCESS:
-      if (action.meta && action.meta.refresh) {
+      if (action.meta && action.meta.refresh && action.payload && action.payload.result) {
         return state.filter(postId => postId !== action.payload.result);
       }
       return state;
@@ -33,10 +59,13 @@ function pendingVotes(state = [], action) {
   }
 }
 
-export default combineReducers({
+const reducer: (state: ?State, action: Action) => State = combineReducers({
   posts,
   pendingVotes,
 });
 
-export const getPostById = (state, id) => state.posts[id];
-export const getIsPostPendingVote = (state, id) => state.pendingVotes.indexOf(id) !== -1;
+export default reducer;
+
+export const getPostById = (state: State, id: number) => state.posts[id];
+export const getIsPostPendingVote = (state: State, id: number) =>
+  state.pendingVotes.indexOf(id) !== -1;

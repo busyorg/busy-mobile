@@ -1,8 +1,21 @@
+// @flow
+
 import _ from 'lodash';
 import { combineReducers } from 'redux';
 import { GET_USER } from './actions';
 
-function loading(state = false, action) {
+import type { Action } from '../types';
+
+type Users = {
+  [string]: Object,
+};
+
+type State = {
+  users: Users,
+  loading: boolean,
+};
+
+function loading(state: boolean = false, action: Action): boolean {
   switch (action.type) {
     case GET_USER.REQUEST:
       return true;
@@ -13,13 +26,16 @@ function loading(state = false, action) {
   }
 }
 
-function users(state = {}, action) {
+function users(state: Users = {}, action: Action): Users {
   switch (action.type) {
     case GET_USER.SUCCESS:
-      return {
-        ...state,
-        ...action.payload.entities.users,
-      };
+      if (action.payload && action.payload.entities) {
+        return {
+          ...state,
+          ...action.payload.entities.users,
+        };
+      }
+      return state;
     default:
       return state;
   }
@@ -30,18 +46,19 @@ export default combineReducers({
   users,
 });
 
-export const getUsersLoading = state => state.loading;
-export const getUserByName = (state, name) => _.get(state, `users[${name}]`, {});
-export const getUserPostCount = (state, name) => _.get(getUserByName(state, name), 'post_count', 0);
-export const getUserFollowerCount = (state, name) =>
+export const getUsersLoading = (state: State): boolean => state.loading;
+export const getUserByName = (state: State, name: string) => _.get(state, `users[${name}]`, {});
+export const getUserPostCount = (state: State, name: string) =>
+  _.get(getUserByName(state, name), 'post_count', 0);
+export const getUserFollowerCount = (state: State, name: string) =>
   _.get(getUserByName(state, name), 'follower_count', 0);
-export const getUserFollowingCount = (state, name) =>
+export const getUserFollowingCount = (state: State, name: string) =>
   _.get(getUserByName(state, name), 'following_count', 0);
-export const getUserMetadata = (state, name) =>
+export const getUserMetadata = (state: State, name: string) =>
   _.get(getUserByName(state, name), 'json_metadata', {});
-export const getUserDisplayName = (state, name) =>
+export const getUserDisplayName = (state: State, name: string) =>
   _.get(getUserMetadata(state, name), 'profile.name', '');
-export const getUserAbout = (state, name) =>
+export const getUserAbout = (state: State, name: string) =>
   _.get(getUserMetadata(state, name), 'profile.about', '');
-export const getUserCover = (state, name) =>
+export const getUserCover = (state: State, name: string) =>
   _.get(getUserMetadata(state, name), 'profile.cover_image');

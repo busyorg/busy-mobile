@@ -1,3 +1,5 @@
+// @flow
+
 import { connect } from 'react-redux';
 import { getFeedIds, getFeedLoading, getFeedRefreshing } from '../../reducers';
 import { getFeed, getMoreFeed, refreshFeed } from '../actions';
