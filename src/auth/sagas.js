@@ -9,7 +9,7 @@ export function* login() {
 }
 
 function* watchLogin() {
-  yield takeEvery(authActions.LOGIN.REQUEST, login);
+  yield takeEvery('@auth/LOGIN_REQUEST', login);
 }
 
 export default function* authSagas() {

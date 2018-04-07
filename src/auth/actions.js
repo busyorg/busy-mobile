@@ -1,12 +1,22 @@
 // @flow
 
-import createAsyncType from '../helpers/createAsyncType';
-
 import type { Action } from '../types';
 
-export const LOGIN = createAsyncType('@auth/LOGIN');
-export const LOGOUT = '@auth/LOGOUT';
+export function login(): Action {
+  return {
+    type: '@auth/LOGIN_REQUEST',
+  };
+}
 
-export const login = (): Action => ({ type: LOGIN.REQUEST });
-export const loginSuccess = (payload: Object): Action => ({ type: LOGIN.SUCCESS, payload });
-export const logout = (): Action => ({ type: LOGOUT });
+export function loginSuccess(payload: Object): Action {
+  return {
+    type: '@auth/LOGIN_SUCCESS',
+    payload,
+  };
+}
+
+export function logout(): Action {
+  return {
+    type: '@auth/LOGOUT',
+  };
+}

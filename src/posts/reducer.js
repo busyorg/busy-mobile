@@ -1,9 +1,6 @@
 // @flow
 
 import { combineReducers } from 'redux';
-import { GET_POST, VOTE_POST } from './actions';
-import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from '../feed/actions';
-import { GET_COMMENTS } from '../comments/actions';
 
 import type { Action, Post } from '../types';
 
@@ -19,19 +16,13 @@ type State = {
 
 function posts(state: Posts = {}, action: Action): Posts {
   switch (action.type) {
-    case GET_POST.SUCCESS:
-    case GET_FEED.SUCCESS:
-    case GET_MORE_FEED.SUCCESS:
-    case REFRESH_FEED.SUCCESS:
-      if (action.payload && action.payload.entities) {
-        return { ...state, ...action.payload.entities.posts };
-      }
-      return state;
-    case GET_COMMENTS.SUCCESS:
-      if (action.payload && action.payload.comments) {
-        return { ...state, ...action.payload.entities.comments };
-      }
-      return state;
+    case '@posts/GET_POST_SUCCESS':
+    case '@feed/GET_FEED_SUCCESS':
+    case '@feed/GET_MORE_FEED_SUCCESS':
+    case '@feed/REFRESH_FEED_SUCCESS':
+      return { ...state, ...action.payload.entities.posts };
+    case '@comments/GET_COMMENTS_SUCCESS':
+      return { ...state, ...action.payload.entities.comments };
     default:
       return state;
   }
@@ -39,21 +30,17 @@ function posts(state: Posts = {}, action: Action): Posts {
 
 function pendingVotes(state: PendingVotes = [], action: Action): PendingVotes {
   switch (action.type) {
-    case VOTE_POST.REQUEST:
-      if (action.meta && action.meta.postId) {
-        return [...state, action.meta.postId];
-      }
-      return state;
-    case VOTE_POST.ERROR:
-      if (action.meta && action.meta.postId) {
-        return state.filter(postId => postId !== action.meta.postId);
-      }
-      return state;
-    case GET_POST.SUCCESS:
-      if (action.meta && action.meta.refresh && action.payload && action.payload.result) {
-        return state.filter(postId => postId !== action.payload.result);
-      }
-      return state;
+    case '@posts/VOTE_POST_REQUEST': {
+      return [...state, action.meta.postId];
+    }
+    case '@posts/VOTE_POST_ERROR': {
+      const { postId } = action.meta;
+      return state.filter(id => id !== postId);
+    }
+    case '@posts/GET_POST_SUCCESS': {
+      const postId = action.payload.result;
+      return state.filter(id => id !== postId);
+    }
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import { call, put, select, take, fork } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import steem from '../../services/steem';
 import * as actions from '../actions';
 import { getLastPostId, getPostById } from '../../reducers';
@@ -26,7 +26,14 @@ describe('feed sagas', () => {
       const sortBy = 'trending';
       const tag = undefined;
 
-      const saga = sagas.loadFeed(sortBy, tag);
+      const action = {
+        meta: {
+          sortBy,
+          tag,
+        },
+      };
+
+      const saga = sagas.loadFeed(action);
 
       let next = saga.next();
       expect(next.value).toEqual(call([steem, steem.getGlobal], sortBy));
@@ -42,7 +49,14 @@ describe('feed sagas', () => {
       const sortBy = 'created';
       const tag = 'busy';
 
-      const saga = sagas.loadFeed(sortBy, tag);
+      const action = {
+        meta: {
+          sortBy,
+          tag,
+        },
+      };
+
+      const saga = sagas.loadFeed(action);
 
       let next = saga.next();
       expect(next.value).toEqual(call([steem, steem.getTag], tag, sortBy));
@@ -58,7 +72,14 @@ describe('feed sagas', () => {
       const sortBy = 'trending';
       const tag = undefined;
 
-      const saga = sagas.loadMoreFeed(sortBy);
+      const action = {
+        meta: {
+          sortBy,
+          tag,
+        },
+      };
+
+      const saga = sagas.loadMoreFeed(action);
 
       let next = saga.next();
       expect(next.value).toEqual(select(getLastPostId, sortBy, tag));
@@ -82,7 +103,14 @@ describe('feed sagas', () => {
       const sortBy = 'created';
       const tag = 'busy';
 
-      const saga = sagas.loadMoreFeed(sortBy, tag);
+      const action = {
+        meta: {
+          sortBy,
+          tag,
+        },
+      };
+
+      const saga = sagas.loadMoreFeed(action);
 
       let next = saga.next();
       expect(next.value).toEqual(select(getLastPostId, sortBy, tag));
@@ -106,7 +134,14 @@ describe('feed sagas', () => {
       const sortBy = 'trending';
       const tag = undefined;
 
-      const saga = sagas.refreshFeed(sortBy, tag);
+      const action = {
+        meta: {
+          sortBy,
+          tag,
+        },
+      };
+
+      const saga = sagas.refreshFeed(action);
 
       let next = saga.next();
       expect(next.value).toEqual(call([steem, steem.getGlobal], sortBy));
@@ -122,7 +157,14 @@ describe('feed sagas', () => {
       const sortBy = 'created';
       const tag = 'busy';
 
-      const saga = sagas.refreshFeed(sortBy, tag);
+      const action = {
+        meta: {
+          sortBy,
+          tag,
+        },
+      };
+
+      const saga = sagas.refreshFeed(action);
 
       let next = saga.next();
       expect(next.value).toEqual(call([steem, steem.getTag], tag, sortBy));
@@ -132,63 +174,6 @@ describe('feed sagas', () => {
 
       next = saga.next();
       expect(next.done).toBe(true);
-    });
-  });
-
-  describe('watchers', () => {
-    const action = {
-      meta: {
-        sortBy: 'trending',
-        tag: 'busy',
-      },
-    };
-
-    test('watchLoadFeed', () => {
-      const watcher = sagas.watchLoadFeed();
-
-      let next;
-      for (let i = 0; i < 5; i += 1) {
-        next = watcher.next();
-        expect(next.value).toEqual(take(actions.GET_FEED.REQUEST));
-
-        next = watcher.next(action);
-        expect(next.value).toEqual(fork(sagas.loadFeed, action.meta.sortBy, action.meta.tag));
-      }
-
-      next = watcher.next(action);
-      expect(next.done).toBe(false);
-    });
-
-    test('watchLoadMoreFeed', () => {
-      const watcher = sagas.watchLoadMoreFeed();
-
-      let next;
-      for (let i = 0; i < 5; i += 1) {
-        next = watcher.next();
-        expect(next.value).toEqual(take(actions.GET_MORE_FEED.REQUEST));
-
-        next = watcher.next(action);
-        expect(next.value).toEqual(fork(sagas.loadMoreFeed, action.meta.sortBy, action.meta.tag));
-      }
-
-      next = watcher.next(action);
-      expect(next.done).toBe(false);
-    });
-
-    test('watchRefreshFeed', () => {
-      const watcher = sagas.watchRefreshFeed();
-
-      let next;
-      for (let i = 0; i < 5; i += 1) {
-        next = watcher.next();
-        expect(next.value).toEqual(take(actions.REFRESH_FEED.REQUEST));
-
-        next = watcher.next(action);
-        expect(next.value).toEqual(fork(sagas.refreshFeed, action.meta.sortBy, action.meta.tag));
-      }
-
-      next = watcher.next(action);
-      expect(next.done).toBe(false);
     });
   });
 });

@@ -2,7 +2,6 @@
 
 import _ from 'lodash';
 import { combineReducers } from 'redux';
-import { GET_USER } from './actions';
 
 import type { Action } from '../types';
 
@@ -17,9 +16,9 @@ type State = {
 
 function loading(state: boolean = false, action: Action): boolean {
   switch (action.type) {
-    case GET_USER.REQUEST:
+    case '@users/GET_USER_REQUEST':
       return true;
-    case GET_USER.SUCCESS:
+    case '@users/GET_USER_SUCCESS':
       return false;
     default:
       return state;
@@ -28,14 +27,11 @@ function loading(state: boolean = false, action: Action): boolean {
 
 function users(state: Users = {}, action: Action): Users {
   switch (action.type) {
-    case GET_USER.SUCCESS:
-      if (action.payload && action.payload.entities) {
-        return {
-          ...state,
-          ...action.payload.entities.users,
-        };
-      }
-      return state;
+    case '@users/GET_USER_SUCCESS':
+      return {
+        ...state,
+        ...action.payload.entities.users,
+      };
     default:
       return state;
   }

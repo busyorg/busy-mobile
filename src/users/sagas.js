@@ -41,15 +41,15 @@ export function* unfollowUser(action) {
 }
 
 function* watchGetUser() {
-  yield takeEvery(usersActions.GET_USER.REQUEST, getUser);
+  yield takeEvery('@users/GET_USER_REQUEST', getUser);
 }
 
 function* watchFollowUser() {
-  yield takeEvery(usersActions.FOLLOW_USER.REQUEST, followUser);
+  yield takeEvery('@users/FOLLOW_USER_REQUEST', followUser);
 }
 
 function* watchUnfollowUser() {
-  yield takeEvery(usersActions.FOLLOW_USER.REQUEST, followUser);
+  yield takeEvery('@users/UNFOLLOW_USER_REQUEST', followUser);
 }
 
 export default function* usersSagas() {

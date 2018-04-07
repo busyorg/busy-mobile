@@ -2,7 +2,6 @@
 
 import _ from 'lodash';
 import { combineReducers } from 'redux';
-import { GET_FEED, GET_MORE_FEED, REFRESH_FEED } from './actions';
 
 import type { Action, SortBy } from '../types';
 
@@ -24,15 +23,15 @@ type State = {
 
 function ids(state: Ids = [], action: Action): Ids {
   switch (action.type) {
-    case GET_FEED.REQUEST:
+    case '@feed/GET_FEED_REQUEST':
       return [];
-    case GET_FEED.SUCCESS:
-    case GET_MORE_FEED.SUCCESS:
+    case '@feed/GET_FEED_SUCCESS':
+    case '@feed/GET_MORE_FEED_SUCCESS':
       if (action.payload && action.payload.result) {
         return [...state, ...action.payload.result];
       }
       return state;
-    case REFRESH_FEED.SUCCESS:
+    case '@feed/REFRESH_FEED_SUCCESS':
       if (action.payload && action.payload.result) {
         return action.payload.result;
       }
@@ -44,11 +43,11 @@ function ids(state: Ids = [], action: Action): Ids {
 
 function loading(state: boolean = false, action: Action): boolean {
   switch (action.type) {
-    case GET_FEED.REQUEST:
-    case GET_MORE_FEED.REQUEST:
+    case '@feed/GET_FEED_REQUEST':
+    case '@feed/GET_MORE_FEED_REQUEST':
       return true;
-    case GET_FEED.SUCCESS:
-    case GET_MORE_FEED.SUCCESS:
+    case '@feed/GET_FEED_SUCCESS':
+    case '@feed/GET_MORE_FEED_SUCCESS':
       return false;
     default:
       return state;
@@ -57,31 +56,38 @@ function loading(state: boolean = false, action: Action): boolean {
 
 function refreshing(state: boolean = false, action: Action): boolean {
   switch (action.type) {
-    case REFRESH_FEED.REQUEST:
+    case '@feed/REFRESH_FEED_REQUEST':
       return true;
-    case REFRESH_FEED.SUCCESS:
+    case '@feed/REFRESH_FEED_SUCCESS':
       return false;
     default:
       return state;
   }
 }
 
-const feed: (state: Feed, action: Action) => State = combineReducers({
+const feed: (state: Feed, action: Action) => Feed = combineReducers({
   ids,
   loading,
   refreshing,
 });
 
 export default function reducer(state: State = {}, action: Action): State {
-  if (action.meta && action.meta.sortBy) {
-    const feedName = getFeedName(action.meta.sortBy, action.meta.tag);
-    return { ...state, [feedName]: feed(state[feedName], action) };
+  switch (action.type) {
+    case '@feed/GET_FEED_REQUEST':
+    case '@feed/GET_FEED_SUCCESS':
+    case '@feed/GET_MORE_FEED_REQUEST':
+    case '@feed/GET_MORE_FEED_SUCCESS':
+    case '@feed/REFRESH_FEED_REQUEST':
+    case '@feed/REFRESH_FEED_SUCCESS': {
+      const feedName = getFeedName(action.meta.sortBy, action.meta.tag);
+      return { ...state, [feedName]: feed(state[feedName], action) };
+    }
+    default:
+      return state;
   }
-
-  return state;
 }
 
-const getFeed = (state, sortBy, tag) => _.get(state, getFeedName(sortBy, tag));
+const getFeed = (state, sortBy, tag) => _.get(state, getFeedName(sortBy, tag), {});
 
 export const getFeedIds = (state: State, sortBy: SortBy, tag: string) =>
   getFeed(state, sortBy, tag).ids;

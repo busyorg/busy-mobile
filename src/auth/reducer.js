@@ -1,7 +1,6 @@
 // @flow
 
 import { combineReducers } from 'redux';
-import { LOGIN, LOGOUT } from './actions';
 
 import type { Action } from '../types';
 
@@ -10,11 +9,11 @@ export type State = {
   user?: Object,
 };
 
-function loading(state: boolean = false, action): boolean {
+function loading(state: boolean = false, action: Action): boolean {
   switch (action.type) {
-    case LOGIN.REQUEST:
+    case '@auth/LOGIN_REQUEST':
       return true;
-    case LOGIN.SUCCESS:
+    case '@auth/LOGIN_SUCCESS':
       return false;
     default:
       return state;
@@ -23,9 +22,9 @@ function loading(state: boolean = false, action): boolean {
 
 function user(state: ?Object = null, action: Action): ?Object {
   switch (action.type) {
-    case LOGIN.SUCCESS:
+    case '@auth/LOGIN_SUCCESS':
       return action.payload;
-    case LOGOUT:
+    case '@auth/LOGOUT':
       return null;
     default:
       return state;

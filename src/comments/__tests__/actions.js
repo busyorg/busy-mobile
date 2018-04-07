@@ -5,7 +5,7 @@ describe('comments actions', () => {
     const postId = 251225;
 
     const expected = {
-      type: actions.GET_COMMENTS.REQUEST,
+      type: '@comments/GET_COMMENTS_REQUEST',
       meta: { postId },
     };
     const actual = actions.getComments(postId);
@@ -18,7 +18,7 @@ describe('comments actions', () => {
     const payload = { entities: { comments: { 522: { id: 522 } } }, result: [522] };
 
     const expected = {
-      type: actions.GET_COMMENTS.SUCCESS,
+      type: '@comments/GET_COMMENTS_SUCCESS',
       meta: { postId },
       payload,
     };
@@ -30,7 +30,7 @@ describe('comments actions', () => {
   it('should create REFRESH_COMMENTS_REQUEST action', () => {
     const postId = 22;
 
-    const expected = { type: actions.REFRESH_COMMENTS.REQUEST, meta: { postId } };
+    const expected = { type: '@comments/REFRESH_COMMENTS_REQUEST', meta: { postId } };
     const actual = actions.refreshComments(postId);
 
     expect(actual).toEqual(expected);
@@ -40,7 +40,7 @@ describe('comments actions', () => {
     const postId = 22;
     const payload = { entities: { comments: { 522: { id: 522 } } }, result: [522] };
 
-    const expected = { type: actions.REFRESH_COMMENTS.SUCCESS, meta: { postId }, payload };
+    const expected = { type: '@comments/REFRESH_COMMENTS_SUCCESS', meta: { postId }, payload };
     const actual = actions.refreshCommentsSuccess(payload, postId);
 
     expect(actual).toEqual(expected);

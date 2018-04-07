@@ -1,22 +1,16 @@
 // @flow
 
-import createAsyncType from '../helpers/createAsyncType';
-
 import type { Action } from '../types';
 
-export const GET_USER = createAsyncType('@users/GET_USER');
-export const FOLLOW_USER = createAsyncType('@users/FOLLOW_USER');
-export const UNFOLLOW_USER = createAsyncType('@users/UNFOLLOW_USER');
-
 export const getUser = (username: string): Action => ({
-  type: GET_USER.REQUEST,
+  type: '@users/GET_USER_REQUEST',
   meta: {
     username,
   },
 });
 
 export const getUserSuccess = (payload: Object, username: string): Action => ({
-  type: GET_USER.SUCCESS,
+  type: '@users/GET_USER_SUCCESS',
   payload,
   meta: {
     username,
@@ -25,14 +19,14 @@ export const getUserSuccess = (payload: Object, username: string): Action => ({
 
 export function followUser(username: string): Action {
   return {
-    type: FOLLOW_USER.REQUEST,
+    type: '@users/FOLLOW_USER_REQUEST',
     meta: { username },
   };
 }
 
 export function followUserSuccess(payload: Object, username: string): Action {
   return {
-    type: FOLLOW_USER.SUCCESS,
+    type: '@users/FOLLOW_USER_SUCCESS',
     meta: { username },
     payload,
   };
@@ -40,14 +34,14 @@ export function followUserSuccess(payload: Object, username: string): Action {
 
 export function unfollowUser(username: string): Action {
   return {
-    type: UNFOLLOW_USER.REQUEST,
+    type: '@users/UNFOLLOW_USER_REQUEST',
     meta: { username },
   };
 }
 
 export function unfollowUserSuccess(payload: Object, username: string): Action {
   return {
-    type: UNFOLLOW_USER.SUCCESS,
+    type: '@users/UNFOLLOW_USER_SUCCESS',
     meta: { username },
     payload,
   };

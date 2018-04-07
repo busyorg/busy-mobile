@@ -2,7 +2,6 @@
 
 import _ from 'lodash';
 import { combineReducers } from 'redux';
-import { GET_COMMENTS, REFRESH_COMMENTS } from './actions';
 
 import type { Action } from '../types';
 
@@ -20,42 +19,33 @@ export type State = {
 
 function replies(state: Replies = [], action: Action): Replies {
   switch (action.type) {
-    case GET_COMMENTS.SUCCESS:
-      if (action.payload && action.payload.result) {
-        return [...state, ...action.payload.result];
-      }
-      return state;
-    case REFRESH_COMMENTS.SUCCESS:
-      if (action.payload && action.payload.result) {
-        return action.payload.result;
-      }
-      return state;
+    case '@comments/GET_COMMENTS_SUCCESS':
+      return [...state, ...action.payload.result];
+    case '@comments/REFRESH_COMMENTS_SUCCESS':
+      return action.payload.result;
     default:
       return state;
   }
 }
 
-function loading(state: boolean = false, action): boolean {
+function loading(state: boolean = false, action: Action): boolean {
   switch (action.type) {
-    case GET_COMMENTS.REQUEST:
-    case REFRESH_COMMENTS.REQUEST:
+    case '@comments/GET_COMMENTS_REQUEST':
+    case '@comments/REFRESH_COMMENTS_REQUEST':
       return true;
-    case GET_COMMENTS.SUCCESS:
-    case GET_COMMENTS.ERROR:
-    case REFRESH_COMMENTS.SUCCESS:
-    case REFRESH_COMMENTS.ERROR:
+    case '@comments/GET_COMMENTS_SUCCESS':
+    case '@comments/REFRESH_COMMENTS_SUCCESS':
       return false;
     default:
       return state;
   }
 }
 
-function loaded(state: boolean = false, action): boolean {
+function loaded(state: boolean = false, action: Action): boolean {
   switch (action.type) {
-    case GET_COMMENTS.REQUEST:
-    case GET_COMMENTS.ERROR:
+    case '@comments/GET_COMMENTS_REQUEST':
       return false;
-    case GET_COMMENTS.SUCCESS:
+    case '@comments/GET_COMMENTS_SUCCESS':
       return true;
     default:
       return state;
@@ -70,24 +60,17 @@ const byId: (state: ById, action: Action) => ById = combineReducers({
 
 export default function(state: State = {}, action: Action): State {
   switch (action.type) {
-    case GET_COMMENTS.REQUEST:
-    case GET_COMMENTS.SUCCESS:
-    case GET_COMMENTS.ERROR:
-    case REFRESH_COMMENTS.REQUEST:
-    case REFRESH_COMMENTS.SUCCESS:
-    case REFRESH_COMMENTS.ERROR:
-      if (action.meta && action.meta.postId) {
-        return {
-          ...state,
-          [action.meta.postId]: {
-            ...state[action.meta.postId],
-            ...byId(state[action.meta.postId], action),
-          },
-        };
-      }
-
-      return state;
-
+    case '@comments/GET_COMMENTS_REQUEST':
+    case '@comments/GET_COMMENTS_SUCCESS':
+    case '@comments/REFRESH_COMMENTS_REQUEST':
+    case '@comments/REFRESH_COMMENTS_SUCCESS':
+      return {
+        ...state,
+        [action.meta.postId]: {
+          ...state[action.meta.postId],
+          ...byId(state[action.meta.postId], action),
+        },
+      };
     default:
       return state;
   }

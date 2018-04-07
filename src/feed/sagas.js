@@ -1,9 +1,11 @@
-import { all, put, take, call, fork, select } from 'redux-saga/effects';
+import { all, put, takeEvery, call, select } from 'redux-saga/effects';
 import steem from '../services/steem';
 import * as feedActions from './actions';
 import { getLastPostId, getPostById } from '../reducers';
 
-export function* loadFeed(sortBy, tag) {
+export function* loadFeed({ meta }) {
+  const { sortBy, tag } = meta;
+
   let result;
   if (tag) {
     result = yield call([steem, steem.getTag], tag, sortBy);
@@ -14,7 +16,9 @@ export function* loadFeed(sortBy, tag) {
   yield put(feedActions.getFeedSuccess(result, sortBy, tag));
 }
 
-export function* loadMoreFeed(sortBy, tag) {
+export function* loadMoreFeed({ meta }) {
+  const { sortBy, tag } = meta;
+
   const postId = yield select(getLastPostId, sortBy, tag);
   const lastPost = yield select(getPostById, postId);
 
@@ -28,7 +32,9 @@ export function* loadMoreFeed(sortBy, tag) {
   yield put(feedActions.getMoreFeedSuccess(result, sortBy, tag));
 }
 
-export function* refreshFeed(sortBy, tag) {
+export function* refreshFeed({ meta }) {
+  const { sortBy, tag } = meta;
+
   let result;
   if (tag) {
     result = yield call([steem, steem.getTag], tag, sortBy);
@@ -40,27 +46,15 @@ export function* refreshFeed(sortBy, tag) {
 }
 
 export function* watchLoadFeed() {
-  while (true) {
-    const { meta } = yield take(feedActions.GET_FEED.REQUEST);
-    const { sortBy, tag } = meta;
-    yield fork(loadFeed, sortBy, tag);
-  }
+  yield takeEvery('@feed/GET_FEED_REQUEST', loadFeed);
 }
 
 export function* watchLoadMoreFeed() {
-  while (true) {
-    const { meta } = yield take(feedActions.GET_MORE_FEED.REQUEST);
-    const { sortBy, tag } = meta;
-    yield fork(loadMoreFeed, sortBy, tag);
-  }
+  yield takeEvery('@feed/GET_MORE_FEED_REQUEST', loadMoreFeed);
 }
 
 export function* watchRefreshFeed() {
-  while (true) {
-    const { meta } = yield take(feedActions.REFRESH_FEED.REQUEST);
-    const { sortBy, tag } = meta;
-    yield fork(refreshFeed, sortBy, tag);
-  }
+  yield takeEvery('@feed/REFRESH_FEED_REQUEST', refreshFeed);
 }
 
 export default function* feedSagas() {

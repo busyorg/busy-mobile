@@ -2,7 +2,7 @@ import { all, takeEvery, select, call, put } from 'redux-saga/effects';
 import steem from '../services/steem';
 import sc2 from '../services/sc2';
 import showAuthDialog from '../helpers/showAuthDialog';
-import { VOTE_POST, GET_POST, getPost, getPostSuccess, votePostError } from './actions';
+import { getPost, getPostSuccess, votePostError } from './actions';
 import { getPostById, getAuthUser } from '../reducers';
 
 export function* loadPost(action) {
@@ -32,11 +32,11 @@ export function* votePost(action) {
 }
 
 function* watchLoadPost() {
-  yield takeEvery(GET_POST.REQUEST, loadPost);
+  yield takeEvery('@posts/GET_POST_REQUEST', loadPost);
 }
 
 function* watchVotePost() {
-  yield takeEvery(VOTE_POST.REQUEST, votePost);
+  yield takeEvery('@posts/VOTE_POST_REQUEST', votePost);
 }
 
 export default function* postsSagas() {

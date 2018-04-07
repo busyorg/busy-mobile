@@ -5,7 +5,7 @@ describe('feed actions', () => {
     const sortBy = 'active';
     const tag = 'busy';
 
-    const expected = { type: actions.GET_FEED.REQUEST, meta: { sortBy, tag } };
+    const expected = { type: '@feed/GET_FEED_REQUEST', meta: { sortBy, tag } };
 
     const actual = actions.getFeed(sortBy, tag);
 
@@ -17,7 +17,7 @@ describe('feed actions', () => {
     const tag = 'programming';
     const payload = [{ id: 42 }];
 
-    const expected = { type: actions.GET_FEED.SUCCESS, meta: { sortBy, tag }, payload };
+    const expected = { type: '@feed/GET_FEED_SUCCESS', meta: { sortBy, tag }, payload };
 
     const actual = actions.getFeedSuccess(payload, sortBy, tag);
 
@@ -28,7 +28,7 @@ describe('feed actions', () => {
     const sortBy = 'trending';
     const tag = 'steem';
 
-    const expected = { type: actions.GET_MORE_FEED.REQUEST, meta: { sortBy, tag } };
+    const expected = { type: '@feed/GET_MORE_FEED_REQUEST', meta: { sortBy, tag } };
 
     const actual = actions.getMoreFeed(sortBy, tag);
 
@@ -40,7 +40,7 @@ describe('feed actions', () => {
     const tag = 'steemit';
     const payload = [{ id: 21 }];
 
-    const expected = { type: actions.GET_MORE_FEED.SUCCESS, meta: { sortBy, tag }, payload };
+    const expected = { type: '@feed/GET_MORE_FEED_SUCCESS', meta: { sortBy, tag }, payload };
 
     const actual = actions.getMoreFeedSuccess(payload, sortBy, tag);
 
@@ -51,7 +51,7 @@ describe('feed actions', () => {
     const sortBy = 'trending';
     const tag = 'steem';
 
-    const expected = { type: actions.REFRESH_FEED.REQUEST, meta: { sortBy, tag } };
+    const expected = { type: '@feed/REFRESH_FEED_REQUEST', meta: { sortBy, tag } };
 
     const actual = actions.refreshFeed(sortBy, tag);
 
@@ -63,7 +63,7 @@ describe('feed actions', () => {
     const tag = 'steemit';
     const payload = [{ id: 21 }];
 
-    const expected = { type: actions.REFRESH_FEED.SUCCESS, meta: { sortBy, tag }, payload };
+    const expected = { type: '@feed/REFRESH_FEED_SUCCESS', meta: { sortBy, tag }, payload };
 
     const actual = actions.refreshFeedSuccess(payload, sortBy, tag);
 

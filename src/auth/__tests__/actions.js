@@ -3,7 +3,7 @@ import * as fromActions from '../actions';
 describe('auth actions', () => {
   it('should create login request action', () => {
     const expected = {
-      type: fromActions.LOGIN.REQUEST,
+      type: '@auth/LOGIN_REQUEST',
     };
     const actual = fromActions.login();
 
@@ -17,7 +17,7 @@ describe('auth actions', () => {
     };
 
     const expected = {
-      type: fromActions.LOGIN.SUCCESS,
+      type: '@auth/LOGIN_SUCCESS',
       payload,
     };
     const actual = fromActions.loginSuccess(payload);
@@ -27,7 +27,7 @@ describe('auth actions', () => {
 
   it('should create logout action', () => {
     const expected = {
-      type: fromActions.LOGOUT,
+      type: '@auth/LOGOUT',
     };
     const actual = fromActions.logout();
 

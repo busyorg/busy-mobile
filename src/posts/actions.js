@@ -9,7 +9,7 @@ export const GET_POST = createAsyncType('@posts/GET_POST');
 export const VOTE_POST = createAsyncType('@posts/VOTE_POST');
 
 export const getPost = (author: string, permlink: string, refresh: boolean = false): Action => ({
-  type: GET_POST.REQUEST,
+  type: '@posts/GET_POST_REQUEST',
   meta: { author, permlink, refresh },
 });
 
@@ -19,13 +19,13 @@ export const getPostSuccess = (
   permlink: string,
   refresh: boolean = false,
 ): Action => ({
-  type: GET_POST.SUCCESS,
+  type: '@posts/GET_POST_SUCCESS',
   meta: { author, permlink, refresh },
   payload,
 });
 
 export const votePost = (postId: number, weight: number = 10000): Action => ({
-  type: VOTE_POST.REQUEST,
+  type: '@posts/VOTE_POST_REQUEST',
   meta: {
     postId,
     weight,
@@ -34,7 +34,7 @@ export const votePost = (postId: number, weight: number = 10000): Action => ({
 
 export function votePostError(postId: number): Action {
   return {
-    type: VOTE_POST.ERROR,
+    type: '@posts/VOTE_POST_ERROR',
     meta: {
       postId,
     },

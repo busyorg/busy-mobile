@@ -5,7 +5,7 @@ describe('posts actions', () => {
     const postId = 4525;
     const weight = 525;
 
-    const expected = { type: actions.VOTE_POST.REQUEST, meta: { postId, weight } };
+    const expected = { type: '@posts/VOTE_POST_REQUEST', meta: { postId, weight } };
     const actual = actions.votePost(postId, weight);
 
     expect(actual).toEqual(expected);
@@ -14,7 +14,7 @@ describe('posts actions', () => {
   it('should create VOTE_POST.REQUEST action with default weight', () => {
     const postId = 4525;
 
-    const expected = { type: actions.VOTE_POST.REQUEST, meta: { postId, weight: 10000 } };
+    const expected = { type: '@posts/VOTE_POST_REQUEST', meta: { postId, weight: 10000 } };
     const actual = actions.votePost(postId);
 
     expect(actual).toEqual(expected);
@@ -25,7 +25,7 @@ describe('posts actions', () => {
     const permlink = 'my-post';
 
     const expected = {
-      type: actions.GET_POST.REQUEST,
+      type: '@posts/GET_POST_REQUEST',
       meta: { author, permlink, refresh: false },
     };
     const actual = actions.getPost(author, permlink);
@@ -42,7 +42,7 @@ describe('posts actions', () => {
     };
 
     const expected = {
-      type: actions.GET_POST.SUCCESS,
+      type: '@posts/GET_POST_SUCCESS',
       payload,
       meta: { author, permlink, refresh: false },
     };

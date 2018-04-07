@@ -1,11 +1,6 @@
 import { all, takeEvery, select, call, put } from 'redux-saga/effects';
 import steem from '../services/steem';
-import {
-  GET_COMMENTS,
-  REFRESH_COMMENTS,
-  getCommentsSuccess,
-  refreshCommentsSuccess,
-} from './actions';
+import { getCommentsSuccess, refreshCommentsSuccess } from './actions';
 import { getPostById } from '../reducers';
 
 export function* loadComments(action) {
@@ -33,11 +28,11 @@ export function* refreshComments(action) {
 }
 
 function* watchLoadComments() {
-  yield takeEvery(GET_COMMENTS.REQUEST, loadComments);
+  yield takeEvery('@comments/GET_COMMENTS_REQUEST', loadComments);
 }
 
 function* watchRefreshComments() {
-  yield takeEvery(REFRESH_COMMENTS.REQUEST, refreshComments);
+  yield takeEvery('@comments/REFRESH_COMMENTS_REQUEST', refreshComments);
 }
 
 export default function* commentsSagas() {
