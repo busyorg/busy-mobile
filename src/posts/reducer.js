@@ -20,9 +20,8 @@ function posts(state: Posts = {}, action: Action): Posts {
     case '@feed/GET_FEED_SUCCESS':
     case '@feed/GET_MORE_FEED_SUCCESS':
     case '@feed/REFRESH_FEED_SUCCESS':
-      return { ...state, ...action.payload.entities.posts };
     case '@comments/GET_COMMENTS_SUCCESS':
-      return { ...state, ...action.payload.entities.comments };
+      return { ...state, ...action.payload.entities.posts };
     default:
       return state;
   }

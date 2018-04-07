@@ -28,7 +28,7 @@ describe('posts reducer', () => {
 
   const responseC = {
     entities: {
-      comments: {
+      posts: {
         41: { title: 'some comment 1' },
         42: { title: 'some comment 2' },
         43: { title: 'some comment 3' },

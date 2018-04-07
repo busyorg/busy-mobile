@@ -1,6 +1,6 @@
 // @flow
 
-import type { Action } from '../types';
+import type { Action, User } from '../types';
 
 export function login(): Action {
   return {
@@ -8,7 +8,7 @@ export function login(): Action {
   };
 }
 
-export function loginSuccess(payload: Object): Action {
+export function loginSuccess(payload: User): Action {
   return {
     type: '@auth/LOGIN_SUCCESS',
     payload,

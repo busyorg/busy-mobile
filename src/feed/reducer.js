@@ -26,16 +26,10 @@ function ids(state: Ids = [], action: Action): Ids {
     case '@feed/GET_FEED_REQUEST':
       return [];
     case '@feed/GET_FEED_SUCCESS':
-    case '@feed/GET_MORE_FEED_SUCCESS':
-      if (action.payload && action.payload.result) {
-        return [...state, ...action.payload.result];
-      }
-      return state;
     case '@feed/REFRESH_FEED_SUCCESS':
-      if (action.payload && action.payload.result) {
-        return action.payload.result;
-      }
-      return state;
+      return action.payload.result;
+    case '@feed/GET_MORE_FEED_SUCCESS':
+      return [...state, ...action.payload.result];
     default:
       return state;
   }

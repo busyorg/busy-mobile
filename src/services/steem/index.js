@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { createClient } from 'lightrpc';
 import { normalize } from 'normalizr';
 import parsePost from '../../helpers/parsePost';
-import { postSchema, postsSchema, userSchema, commentsSchema } from './schemas';
+import { postSchema, postsSchema, userSchema } from './schemas';
 
 const options = {
   timeout: 50000,
@@ -82,7 +82,7 @@ Client.prototype.getPost = async function getPost(author, permlink) {
 Client.prototype.getComments = async function getComments(author, permlink) {
   let result = await this.sendAsync('get_content_replies', [author, permlink]);
   result = result.map(parsePost);
-  return normalize(result, commentsSchema);
+  return normalize(result, postsSchema);
 };
 
 export default new Client();

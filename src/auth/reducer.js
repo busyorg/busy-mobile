@@ -2,11 +2,11 @@
 
 import { combineReducers } from 'redux';
 
-import type { Action } from '../types';
+import type { Action, User } from '../types';
 
 export type State = {
   loading: boolean,
-  user?: Object,
+  user?: User,
 };
 
 function loading(state: boolean = false, action: Action): boolean {
@@ -20,7 +20,7 @@ function loading(state: boolean = false, action: Action): boolean {
   }
 }
 
-function user(state: ?Object = null, action: Action): ?Object {
+function user(state: ?User = null, action: Action): ?User {
   switch (action.type) {
     case '@auth/LOGIN_SUCCESS':
       return action.payload;
@@ -38,5 +38,5 @@ const auth: (state: ?State, action: Action) => State = combineReducers({
 
 export default auth;
 
-export const getIsAuthLoading = (state: State) => state.loading;
-export const getAuthUser = (state: State) => state.user;
+export const getIsAuthLoading = (state: State): boolean => state.loading;
+export const getAuthUser = (state: State): ?User => state.user;

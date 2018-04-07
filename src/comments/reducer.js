@@ -20,7 +20,6 @@ export type State = {
 function replies(state: Replies = [], action: Action): Replies {
   switch (action.type) {
     case '@comments/GET_COMMENTS_SUCCESS':
-      return [...state, ...action.payload.result];
     case '@comments/REFRESH_COMMENTS_SUCCESS':
       return action.payload.result;
     default:

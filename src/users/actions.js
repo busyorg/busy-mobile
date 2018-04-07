@@ -1,6 +1,6 @@
 // @flow
 
-import type { Action } from '../types';
+import type { Action, UserResponse } from '../types';
 
 export const getUser = (username: string): Action => ({
   type: '@users/GET_USER_REQUEST',
@@ -9,7 +9,7 @@ export const getUser = (username: string): Action => ({
   },
 });
 
-export const getUserSuccess = (payload: Object, username: string): Action => ({
+export const getUserSuccess = (payload: UserResponse, username: string): Action => ({
   type: '@users/GET_USER_SUCCESS',
   payload,
   meta: {

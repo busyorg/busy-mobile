@@ -3,10 +3,10 @@
 import _ from 'lodash';
 import { combineReducers } from 'redux';
 
-import type { Action } from '../types';
+import type { Action, User } from '../types';
 
 type Users = {
-  [string]: Object,
+  [string]: User,
 };
 
 type State = {
@@ -43,7 +43,8 @@ export default combineReducers({
 });
 
 export const getUsersLoading = (state: State): boolean => state.loading;
-export const getUserByName = (state: State, name: string) => _.get(state, `users[${name}]`, {});
+export const getUserByName = (state: State, name: string): User =>
+  _.get(state, `users[${name}]`, {});
 export const getUserPostCount = (state: State, name: string) =>
   _.get(getUserByName(state, name), 'post_count', 0);
 export const getUserFollowerCount = (state: State, name: string) =>

@@ -1,12 +1,6 @@
 // @flow
 
-import createAsyncType from '../helpers/createAsyncType';
-
-import type { Action, Post } from '../types';
-
-export const GET_POST = createAsyncType('@posts/GET_POST');
-
-export const VOTE_POST = createAsyncType('@posts/VOTE_POST');
+import type { Action, PostResponse } from '../types';
 
 export const getPost = (author: string, permlink: string, refresh: boolean = false): Action => ({
   type: '@posts/GET_POST_REQUEST',
@@ -14,7 +8,7 @@ export const getPost = (author: string, permlink: string, refresh: boolean = fal
 });
 
 export const getPostSuccess = (
-  payload: Post,
+  payload: PostResponse,
   author: string,
   permlink: string,
   refresh: boolean = false,

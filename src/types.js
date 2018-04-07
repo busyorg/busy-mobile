@@ -1,5 +1,10 @@
 // @flow
 
+export type User = {
+  id: number,
+  name: string,
+};
+
 export type Post = {
   id: number,
   author: string,
@@ -12,14 +17,34 @@ export type Post = {
   payout: number,
 };
 
-export type SortBy = 'trending' | 'created' | 'active' | 'hot' | 'trending';
-
-export type AsyncType = {
-  ACTION: string,
-  REQUEST: string,
-  SUCCESS: string,
-  ERROR: string,
+export type PostResponse = {
+  result: number,
+  entities: {
+    posts: {
+      [number]: Post,
+    },
+  },
 };
+
+export type PostsResponse = {
+  result: Array<number>,
+  entities: {
+    posts: {
+      [number]: Post,
+    },
+  },
+};
+
+export type UserResponse = {
+  result: string,
+  entities: {
+    users: {
+      [string]: User,
+    },
+  },
+};
+
+export type SortBy = 'trending' | 'created' | 'active' | 'hot' | 'trending';
 
 type AuthAction =
   | {|
@@ -27,7 +52,7 @@ type AuthAction =
     |}
   | {|
       type: '@auth/LOGIN_SUCCESS',
-      payload: Object,
+      payload: User,
     |}
   | {|
       type: '@auth/LOGOUT',
@@ -42,7 +67,7 @@ type CommentsAction =
     |}
   | {|
       type: '@comments/GET_COMMENTS_SUCCESS',
-      payload: Object,
+      payload: PostsResponse,
       meta: {
         postId: number,
       },
@@ -55,7 +80,7 @@ type CommentsAction =
     |}
   | {|
       type: '@comments/REFRESH_COMMENTS_SUCCESS',
-      payload: Object,
+      payload: PostsResponse,
       meta: {
         postId: number,
       },
@@ -71,7 +96,7 @@ type FeedAction =
     |}
   | {|
       type: '@feed/GET_FEED_SUCCESS',
-      payload: Object,
+      payload: PostsResponse,
       meta: {
         sortBy: SortBy,
         tag: string,
@@ -86,7 +111,7 @@ type FeedAction =
     |}
   | {|
       type: '@feed/GET_MORE_FEED_SUCCESS',
-      payload: Object,
+      payload: PostsResponse,
       meta: {
         sortBy: SortBy,
         tag: string,
@@ -101,7 +126,7 @@ type FeedAction =
     |}
   | {|
       type: '@feed/REFRESH_FEED_SUCCESS',
-      payload: Object,
+      payload: PostsResponse,
       meta: {
         sortBy: SortBy,
         tag: string,
@@ -119,7 +144,7 @@ type PostsAction =
     |}
   | {|
       type: '@posts/GET_POST_SUCCESS',
-      payload: any,
+      payload: PostResponse,
       meta: {
         author: string,
         permlink: string,
@@ -149,7 +174,7 @@ type UsersAction =
     }
   | {
       type: '@users/GET_USER_SUCCESS',
-      payload: Object,
+      payload: UserResponse,
       meta: {
         username: string,
       },
